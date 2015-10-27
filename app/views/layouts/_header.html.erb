@@ -1,29 +1,62 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="container">
-    <%= link_to "24-7 Online Clinic", root_path, id: "logo" %>
-    <nav>
-      <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Home", root_path %></li>
-        <li><%= link_to "Help", help_path %></li>
-        <% if logged_in? %>
-          <li><%= link_to "Users", users_path %></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              Account <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-              <li><%= link_to "Profile", current_user %></li>
-              <li><%= link_to "Settings", edit_user_path(current_user) %></li>
-              <li class="divider"></li>
-              <li>
-                <%= link_to "Log out", logout_path, method: "delete" %>
-              </li>
-            </ul>
+<header>
+  <nav class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">24-7 Online Clinic</a>
+      </div>
+        <div class="collapse navbar-collapse" id="navbar">  
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <%= link_to root_path do %>
+            <span class="glyphicon glyphicon-home"></span>&nbsp;Home
+           <% end %>
           </li>
-        <% else %>
-          <li><%= link_to "Log in", login_path %></li>
-        <% end %>
-      </ul>
-    </nav>
-  </div>
+          <li><%= link_to help_path do %>
+            <span class="glyphicon glyphicon-plus"></span>&nbsp;Help
+            <% end %>
+          </li>
+          <% if logged_in? %>        
+            <li>
+                <%= link_to users_path do%>
+                <span class="glyphicon glyphicon-th-list"></span>&nbsp;Users
+                <% end %>
+            </li>                           
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account</a>
+              <ul class="dropdown-menu" role="menu">
+                <li>
+                   <%= link_to current_user do %>
+                   <span class="glyphicon glyphicon-user"></span>&nbsp;Profile
+                   <% end %>
+                   </li>
+                <li>
+                  <%= link_to edit_user_path(current_user) do %>
+                    <span class="glyphicon glyphicon-cog"></span>&nbsp;Settings
+                  <% end %>
+                </li>
+                <li class="divider"></li>
+                <li>
+                   <%= link_to logout_path, method: :delete do %>
+                   <span class="glyphicon glyphicon-log-out"></span>&nbsp;Log out
+                   <% end %>
+                </li>
+              </ul>
+            </li>
+            <% else %>
+            <li>
+              <%= link_to login_path do %>
+              <span class="glyphicon glyphicon-log-in"></span>&nbsp;Log in
+            <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </nav>
 </header>
