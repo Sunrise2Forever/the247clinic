@@ -6,6 +6,8 @@ gem 'faker',                '1.4.2'
 gem 'will_paginate',           '3.0.7'
 gem 'bootstrap-will_paginate', '0.0.10'
 gem 'bootstrap-sass',       '3.2.0.0'
+gem 'momentjs-rails', '2.10.6'
+gem 'bootstrap3-datetimepicker-rails', '4.17.37'
 gem 'sass-rails',   '5.0.2'
 gem 'uglifier',     '2.5.3'
 gem 'coffee-rails', '4.1.0'
@@ -14,6 +16,7 @@ gem 'turbolinks',   '2.3.0'
 gem 'jbuilder',     '2.2.3'
 gem 'sdoc',         '0.4.0', group: :doc
 gem 'http_accept_language'
+gem 'rails-i18n', '~> 4.0.0'
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'

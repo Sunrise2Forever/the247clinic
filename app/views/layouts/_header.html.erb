@@ -14,11 +14,11 @@
         <ul class="nav navbar-nav navbar-right">
           <li>
             <%= link_to root_path do %>
-            <span class="glyphicon glyphicon-home"></span>&nbsp;Home
+            <span class="glyphicon glyphicon-home"></span>&nbsp;<%= t('content.home') %>
            <% end %>
           </li>
           <li><%= link_to help_path do %>
-            <span class="glyphicon glyphicon-plus"></span>&nbsp;Help
+            <span class="glyphicon glyphicon-question-sign"></span>&nbsp;<%= t('content.help') %>
             <% end %>
           </li>
           <% if logged_in? %>        
@@ -51,11 +51,12 @@
             <% else %>
             <li>
               <%= link_to login_path do %>
-              <span class="glyphicon glyphicon-log-in"></span>&nbsp;Log in
+              <span class="glyphicon glyphicon-log-in"></span>&nbsp;<%= t('title.login') %>
             <% end %>
             </li>
           <% end %>
         </ul>
+        <p class="navbar-text navbar-right navbar-link locale"><%= link_to t('menu.languages.en'), change_locale_path(:en) %> | <%= link_to t('menu.languages.zh-CN'), change_locale_path('zh-CN') %> | <%= link_to t('menu.languages.zh-TW'), change_locale_path('zh-TW') %></p> 
       </div>
     </div>
   </nav>

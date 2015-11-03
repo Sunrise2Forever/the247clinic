@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessor :remember_token, :activation_token, :reset_token
+  attr_accessor :remember_token, :activation_token, :reset_token, :password_confirmation
   before_save :downcase_email
   before_save :create_activation_digest
   validates :name,  presence: true, length: { maximum: 50 }

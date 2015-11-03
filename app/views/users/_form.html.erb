@@ -10,11 +10,34 @@
     <%= f.label :mspnum %>
     <%= f.text_field :mspnum, class: 'form-control' %>
     
+    <%= f.label :address1 %>
+    <%= f.text_field :address1, class: 'form-control' %>    
+    <%= f.label :address2 %>
+    <%= f.text_field :address2, class: 'form-control' %>       
+    <%= f.label :city %>
+    <%= f.select :city, class: 'form-control' do %> 
+      <% [['Vancouver', 1], ['Richmond', 2], ['Burnaby', 3], ['Surrey', 4], ['North Vancouver', 5]].each do |c| -%>
+        <%= content_tag(:option, c.first, value: c.last) %>
+      <% end %>
+    <% end %>   
+    <%= f.label :country %>
+    <%= f.text_field :country, class: 'form-control' %>    
+    <%= f.label :provincestate %>
+    <%= f.text_field :provincestate, class: 'form-control' %> 
+    <%= f.label :zipcode %>
+    <%= f.text_field :zipcode, class: 'form-control' %>   
+    <%= f.label :phone %>
+    <%= f.telephone_field :phone, class: 'form-control' %>   
+    <%= f.label :gender %>
+    <%= f.text_field :gender, class: 'form-control' %>   
+    <%= f.label :birthdate %>
+    <%= f.date_select :birthdate, class: 'form-control' %>   
+    
     <%= f.label :password %>
     <%= f.password_field :password, class: 'form-control' %>
 
     <%= f.label :password_confirmation, "Confirmation" %>
     <%= f.password_field :password_confirmation, class: 'form-control' %>
 
-  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+  <%= f.submit class: "btn btn-primary" %>
 <% end %>

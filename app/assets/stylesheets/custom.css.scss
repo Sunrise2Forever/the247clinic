@@ -60,6 +60,7 @@ p {
 }
 
 
+
 /* header */
 
 #logo {
@@ -190,4 +191,8 @@ input {
     padding: 10px 0;
     border-bottom: 1px solid $gray-lighter;
   }
+}
+
+.locale {
+  font-size: 10px;
 }
