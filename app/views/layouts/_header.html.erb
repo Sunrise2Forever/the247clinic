@@ -21,7 +21,12 @@
             <span class="glyphicon glyphicon-question-sign"></span>&nbsp;<%= t('content.help') %>
             <% end %>
           </li>
-          <% if logged_in? %>        
+          <% if logged_in? %>
+            <li>
+              <%= link_to video_sessions_path do%>
+                <span class="glyphicon glyphicon-th-list"></span>&nbsp;Dashboard
+              <% end %>
+            </li>
             <li>
                 <%= link_to users_path do%>
                 <span class="glyphicon glyphicon-th-list"></span>&nbsp;Users

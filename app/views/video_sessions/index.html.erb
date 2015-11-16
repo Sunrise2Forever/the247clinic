@@ -1,0 +1,19 @@
+<% provide(:title, "Dashboard") %>
+<h1>Pending Video Sessions</h1>
+
+<div class="row">
+  <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-12">
+    <% if @video_sessions.count > 0 %>
+      <ul class="users">
+        <% @video_sessions.each do |video_session| %>
+          <li>
+            <%= link_to video_session.user.name, video_session_path(video_session) %>
+            <%= link_to 'View', video_session_path(video_session), class: 'pull-right' %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      No pending video sessions.
+    <% end %>
+  </div>
+</div>

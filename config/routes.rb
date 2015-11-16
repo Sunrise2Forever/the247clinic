@@ -25,6 +25,16 @@ Rails.application.routes.draw do
    
     resources :users
     resources :sessions
+    resources :video_sessions do
+      member do
+        get 'edit/callback', to: 'video_sessions#callback'
+        get 'edit/message', to: 'video_sessions#message'
+        patch 'finish', to: 'video_sessions#finish'
+        patch 'update/callback', to: 'video_sessions#update_callback'
+        patch 'update/message', to: 'video_sessions#update_message'
+        patch 'update/feedback', to: 'video_sessions#update_feedback'
+      end
+    end
     resources :account_activations, only: [:edit]
     resources :password_resets,     only: [:new, :create, :edit, :update]
     

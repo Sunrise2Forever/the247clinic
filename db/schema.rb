@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151029174822) do
+ActiveRecord::Schema.define(version: 20151115192127) do
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
@@ -36,6 +36,21 @@ ActiveRecord::Schema.define(version: 20151029174822) do
     t.string   "phone"
     t.string   "gender"
     t.date     "birthdate"
+  end
+
+  create_table "video_sessions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.text     "symptom"
+    t.datetime "start_time"
+    t.datetime "finish_time"
+    t.text     "message"
+    t.text     "callback"
+    t.text     "feedback"
+    t.text     "notes"
+    t.integer  "doctor_id"
+    t.string   "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
 end

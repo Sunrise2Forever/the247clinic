@@ -1,0 +1,14 @@
+<% provide(:title, "New Symptom") %>
+<h1>New Symptom</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+    <%= form_for(:video_session, url: video_sessions_path) do |f| %>
+
+      <%= f.label "Please indicate below with the symptoms that you're having and what kind of medical attention your require." %>
+      <%= f.text_area :symptom, rows: 8, class: 'form-control' %>
+
+      <%= f.submit 'Start Online Session', class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
