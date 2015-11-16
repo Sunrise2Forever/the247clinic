@@ -22,13 +22,16 @@ class VideoSessionsController < ApplicationController
   end
 
   def show
-    @video_session = VideoSession.pending.find_by(id: params[:id])
+    @video_session = VideoSession.find_by(id: params[:id])
     if @video_session
       @is_doctor =  (@video_session.user_id != current_user.id)
       if @is_doctor and @video_session.status == 'pending'
         @video_session.status = :started
         @video_session.start_time = Time.now
         @video_session.save
+      end
+      if @video_session.status != 'started' and @video_session.status != 'pending'
+        redirect_to root_path
       end
     end
   end

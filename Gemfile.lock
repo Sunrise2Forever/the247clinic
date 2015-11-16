@@ -68,6 +68,8 @@ GEM
     faker (1.4.2)
       i18n (~> 0.5)
     ffi (1.9.10)
+    figaro (1.1.1)
+      thor (~> 0.14)
     formatador (0.2.5)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
@@ -84,6 +86,7 @@ GEM
       guard (~> 2.0)
       minitest (>= 3.0)
     http_accept_language (2.0.5)
+    httpclient (2.7.0.1)
     i18n (0.7.0)
     jbuilder (2.2.3)
       activesupport (>= 3.0.0, < 5)
@@ -131,6 +134,11 @@ GEM
       pry (>= 0.9.10)
     puma (2.11.1)
       rack (>= 1.1, < 2.0)
+    pusher (0.15.1)
+      httpclient (~> 2.5)
+      multi_json (~> 1.0)
+      pusher-signature (~> 0.1.8)
+    pusher-signature (0.1.8)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -220,6 +228,7 @@ DEPENDENCIES
   byebug (= 3.4.0)
   coffee-rails (= 4.1.0)
   faker (= 1.4.2)
+  figaro
   guard-minitest (= 2.3.1)
   http_accept_language
   jbuilder (= 2.2.3)
@@ -230,6 +239,7 @@ DEPENDENCIES
   pg (= 0.17.1)
   pry-rails
   puma (= 2.11.1)
+  pusher
   rails (= 4.2.2)
   rails-i18n (~> 4.0.0)
   rails_12factor (= 0.0.2)
