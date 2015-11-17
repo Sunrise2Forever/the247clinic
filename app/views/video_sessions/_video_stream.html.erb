@@ -1,14 +1,11 @@
 <div id="chat" data-api-key=<%= Pusher.key %> data-auth-endpoint=<%= pusher_auth_path %> ></div>
-<div id="remoteVideos"></div>
-<div class="row">
-  <div class="col-md-4 col-sm-4 col-xs-5">
+<div id="videos">
+  <div id="remoteVideos"></div>
+  <div id="localVideoContainer" class="col-md-4 col-sm-4 col-xs-5">
     <video id="localVideo" autoplay=true muted="muted"></video>
   </div>
-  <div class="col-md-8 col-sm-8 col-xs-7">
-    <div class="dl dl-horizontal" id="messages"></div>
-  </div>
+  <div class="dl dl-horizontal" id="messages"></div>
 </div>
-
 <script>
   init_video_session(<%= current_user.id %>, "<%= current_user.name %>", <%= @video_session.id %>, <%= @video_session.user_id %>);
 </script>

@@ -86,6 +86,7 @@ function init_video_session(current_user_id, current_user_name, video_session_id
     }
 
     function appendMessage(name, message) {
+      $messages.show();
       $messages.append('<dt>' + name + '</dt>');
       $messages.append('<dd>' + message + '</dd>');
     }
