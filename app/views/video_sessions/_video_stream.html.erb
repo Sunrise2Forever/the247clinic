@@ -10,5 +10,5 @@
 </div>
 
 <script>
-  init_video_session(<%= current_user.id %>, "<%= current_user.name %>");
+  init_video_session(<%= current_user.id %>, "<%= current_user.name %>", <%= @video_session.id %>, <%= @video_session.user_id %>);
 </script>

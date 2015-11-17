@@ -8,16 +8,18 @@
         <%= render 'video_stream' %>
       </div>
       <div class="form-group">
-        <%= button_to 'Mute / Pause Session', video_session_path(@video_session), method: :get, class: "btn btn-primary" %>
+        <%= button_tag 'Mute / Pause Session', id: "mute_video_stream", class: "btn btn-primary form-control" %>
       </div>
       <div class="form-group">
-        <%= button_to 'Take Photo', video_session_path(@video_session), method: :get, class: "btn btn-primary" %>
+        <%= button_tag 'Take Photo', id: "take_photo", class: "btn btn-primary form-control" %>
       </div>
+      <canvas class="form-group" id="taken_photo">
+      </canvas>
       <%= form_for(@video_session, url: finish_video_session_path(@video_session)) do |f| %>
         <%= f.label :notes %>
         <%= f.text_area :notes, rows: 3, class: 'form-control' %>
 
-        <%= f.submit 'End Session', class: "btn btn-primary" %>
+        <%= f.submit 'End Session', id: "finish_video_session", class: "btn btn-primary" %>
       <% end %>
     </div>
   </div>
@@ -37,7 +39,7 @@
         <%= button_to 'Leave Message', edit_message_video_session_path(@video_session), method: :get, class: "btn btn-primary" %>
       </div>
       <div class="form-group">
-        <%= button_to 'End Session', finish_video_session_path(@video_session), method: :patch, class: "btn btn-primary" %>
+        <%= button_to 'End Session', finish_video_session_path(@video_session), method: :patch, id: "finish_video_session", class: "btn btn-primary" %>
       </div>
     </div>
   </div>

@@ -28,13 +28,14 @@ var mediaOptions = {
   }
 };
 
-function init_video_session(id, name) {
+function init_video_session(current_user_id, current_user_name, video_session_id, video_session_user_id) {
 
   var $messages = $('#messages');
+  var $mute_video_stream = false;
 
   var currentUser = {
-    name: name,
-    id: id,
+    name: current_user_name,
+    id: current_user_id,
     stream: undefined
   };
 
@@ -55,14 +56,13 @@ function init_video_session(id, name) {
       }
     });
 
-    var channel = pusher.subscribe('presence-chat');
+    var channel = pusher.subscribe('presence-chat-' + video_session_id);
     var peers = {};
 
     function lookForPeers() {
       for (var userId in channel.members.members) {
         if (userId != currentUser.id) {
           var member = channel.members.members[userId];
-
           peers[userId] = initiateConnection(userId, member.name)
         }
       }
@@ -75,12 +75,14 @@ function init_video_session(id, name) {
       video[0].src = window.URL.createObjectURL(stream);
       $('#remoteVideos').append(video);
 
+      /*
       var preview = $("<li data-user-id='" + userId + "'>");
       preview.append("<video autoplay/>");
       preview.append("<div class='name'>" + userName + "</div></li>")
       preview.find('video')[0].src = window.URL.createObjectURL(stream);
 
       $('#allVideos').append(preview);
+      */
     }
 
     function appendMessage(name, message) {
@@ -132,12 +134,21 @@ function init_video_session(id, name) {
 
       if (peer === undefined) {
         peer = setupPeer(signal.userId, signal.userName, false);
+        peers[signal.userId] = peer;
       }
 
       peer.on('ready', function() {
         appendMessage(signal.userName, '<em>Connected</em>');
       });
       peer.signal(signal.data)
+    });
+
+    channel.bind('client-finish-video-session-' + currentUser.id, function(data) {
+      if (currentUser.id == video_session_user_id) {
+        window.location.href = "/video_sessions/" + video_session_id + "/edit/feedback";
+      } else {
+        window.location.href = "/video_sessions/" + video_session_id + "/edit/notes";
+      }
     });
 
     var speech = hark(currentUser.stream);
@@ -148,6 +159,7 @@ function init_video_session(id, name) {
         peer.send('__SPEAKING__');
       }
     });
+
 
     $('#send-message').submit(function(e) {
       e.preventDefault();
@@ -161,6 +173,45 @@ function init_video_session(id, name) {
         peer.send(message);
       }
       appendMessage(currentUser.name, message);
+    });
+
+    $('#mute_video_stream').click(function(e) {
+      if ($('#remoteVideos video').length > 0) {
+        $mute_video_stream = !$mute_video_stream;
+        var userId = $('#remoteVideos video')[0].dataset.userId;
+        var peer = peers[userId];
+        if ($mute_video_stream) {
+          $('#remoteVideos video')[0].pause();
+          //$('#localVideo')[0].pause();
+        } else {
+          $('#remoteVideos video')[0].play();
+          //$('#localVideo')[0].play();
+        }
+      }
+    });
+
+    $('#take_photo').click(function(e) {
+      if ($('#remoteVideos video').length > 0) {
+        $('#taken_photo')[0].width = $('#remoteVideos video').innerWidth() / 2;
+        $('#taken_photo')[0].height = $('#remoteVideos video').innerHeight() / 2;
+        $('#taken_photo')[0].getContext('2d').drawImage($('#remoteVideos video')[0],
+            0, 0, $('#remoteVideos video')[0].videoWidth, $('#remoteVideos video')[0].videoHeight,
+            0, 0, $('#taken_photo')[0].width, $('#taken_photo')[0].height
+        );
+        $('#taken_photo').show();
+      }
+    });
+
+    $('#finish_video_session').click(function(e) {
+      if ($('#remoteVideos video').length > 0) {
+        var userId = $('#remoteVideos video')[0].dataset.userId;
+        var peer = peers[userId];
+        if (peer) {
+          channel.trigger('client-finish-video-session-' + userId, {
+            userId: currentUser.id
+          });
+        }
+      }
     });
   }
 }

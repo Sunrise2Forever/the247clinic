@@ -31,10 +31,13 @@ Rails.application.routes.draw do
       member do
         get 'edit/callback', to: 'video_sessions#callback'
         get 'edit/message', to: 'video_sessions#message'
+        get 'edit/feedback', to: 'video_sessions#feedback'
+        get 'edit/notes', to: 'video_sessions#notes'
         patch 'finish', to: 'video_sessions#finish'
         patch 'update/callback', to: 'video_sessions#update_callback'
         patch 'update/message', to: 'video_sessions#update_message'
         patch 'update/feedback', to: 'video_sessions#update_feedback'
+        patch 'update/notes', to: 'video_sessions#update_notes'
       end
     end
     resources :account_activations, only: [:edit]

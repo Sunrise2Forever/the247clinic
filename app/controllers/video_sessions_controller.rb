@@ -28,9 +28,13 @@ class VideoSessionsController < ApplicationController
       if @is_doctor and @video_session.status == 'pending'
         @video_session.status = :started
         @video_session.start_time = Time.now
+        @video_session.doctor_id = current_user.id
         @video_session.save
       end
       if @video_session.status != 'started' and @video_session.status != 'pending'
+        redirect_to root_path
+      end
+      if @video_session.status == 'started' and @video_session.user_id != current_user.id and @video_session.doctor_id != current_user.id
         redirect_to root_path
       end
     end
@@ -46,6 +50,17 @@ class VideoSessionsController < ApplicationController
 
   def callback
     @video_session = current_user.video_sessions.find_by(id: params[:id])
+  end
+
+  def feedback
+    @video_session = current_user.video_sessions.find_by(id: params[:id])
+  end
+
+  def notes
+    @video_session = VideoSession.find_by(id: params[:id])
+    if @video_session.status != 'finished' or @video_session.doctor_id != current_user.id
+      redirect_to root_path
+    end
   end
 
   def finish
@@ -112,6 +127,24 @@ class VideoSessionsController < ApplicationController
     else
       flash[:danger] = @video_session.errors.full_messages.first
       render :feedback
+    end
+  end
+
+  def update_notes
+    @video_session = VideoSession.find_by(id: params[:id])
+    if @video_session.status != 'finished' or @video_session.doctor_id != current_user.id
+      redirect_to root_path
+    end
+    @video_session.notes = params[:video_session][:notes]
+    if @video_session.notes.blank?
+      flash[:danger] = "Notes can't be blank"
+      render :notes
+    elsif @video_session.save
+      flash[:success] = "Write notes successfully"
+      redirect_to root_path
+    else
+      flash[:danger] = @video_session.errors.full_messages.first
+      render :notes
     end
   end
 

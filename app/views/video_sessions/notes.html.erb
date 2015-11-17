@@ -1,0 +1,14 @@
+<% provide(:title, "Write Notes") %>
+<h1>Write Notes</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+    <%= form_for(@video_session, url: update_notes_video_session_path(@video_session)) do |f| %>
+
+      <%= f.label :notes %>
+      <%= f.text_area :notes, rows: 8, class: 'form-control' %>
+
+      <%= f.submit 'Submit notes', class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
