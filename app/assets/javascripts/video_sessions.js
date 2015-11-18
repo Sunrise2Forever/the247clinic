@@ -99,6 +99,7 @@ function init_video_session(current_user_id, current_user_name, video_session_id
       }
       $("[data-user-id='" + userId + "']").remove();
       appendMessage(name, '<em>Disconnected</em>');
+      $('#waiting-message').show();
     }
 
     function setupPeer(peerUserId, peerUserName, initiator) {
@@ -139,6 +140,7 @@ function init_video_session(current_user_id, current_user_name, video_session_id
       }
 
       peer.on('ready', function() {
+        $('#waiting-message').hide();
         appendMessage(signal.userName, '<em>Connected</em>');
       });
       peer.signal(signal.data)

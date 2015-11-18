@@ -24,7 +24,12 @@
           <% if logged_in? %>
             <li>
               <%= link_to video_sessions_path do%>
-                <span class="glyphicon glyphicon-th-list"></span>&nbsp;Dashboard
+                <span class="glyphicon glyphicon-dashboard"></span>&nbsp;Dashboard
+              <% end %>
+            </li>
+            <li>
+              <%= link_to video_sessions_path(type: 'history') do%>
+                <span class="glyphicon glyphicon-time"></span>&nbsp;History
               <% end %>
             </li>
             <% if current_user.admin? %>

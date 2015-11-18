@@ -1,12 +1,19 @@
 <% provide(:title, 'All users') %>
 <h1>All users</h1>
+<table class="table">
+  <tr>
+    <th>Avatar</th>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  <tr>
+    <% @users.each do |user| %>
+      <%= render user %>
+    <% end %>
+  </tr>
+</table>
 
 <%= will_paginate @users %>
-
-<ul class="users">
-  <% @users.each do |user| %>
-    <%= render user %>
-  <% end %>
-</ul>
-
-<%= will_paginate %>

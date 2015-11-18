@@ -18,6 +18,11 @@ class VideoSessionsController < ApplicationController
   end
 
   def index
+    if params[:type] == 'history'
+      @video_sessions = VideoSession.where('user_id = ? OR doctor_id = ?', current_user.id, current_user.id).order(created_at: :desc).paginate(page: params[:page], per_page: 10)
+      render 'history'
+      return
+    end
     @video_sessions = VideoSession.pending.where.not(user_id: current_user.id)
   end
 
