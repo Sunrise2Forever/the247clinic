@@ -25,7 +25,11 @@ Rails.application.routes.draw do
 
     post 'pusher/auth'
    
-    resources :users
+    resources :users do
+      member do
+        post 'reactivate'
+      end
+    end
     resources :sessions
     resources :video_sessions do
       member do

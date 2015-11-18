@@ -1,3 +1,12 @@
-<% provide(:title, 'Logged in') %>
-<h1>Logged In</h1>
-<%= button_to "New symptom", action: sessions_index_path, class: "btn btn-primary" %>
+<% provide(:title, 'All users') %>
+<h1>All users</h1>
+
+<%= will_paginate @users %>
+
+<ul class="users">
+  <% @users.each do |user| %>
+    <%= render user %>
+  <% end %>
+</ul>
+
+<%= will_paginate %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151115192127) do
+ActiveRecord::Schema.define(version: 20151119042343) do
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20151115192127) do
     t.string   "phone"
     t.string   "gender"
     t.date     "birthdate"
+    t.string   "user_type"
   end
 
   create_table "video_sessions", force: :cascade do |t|
