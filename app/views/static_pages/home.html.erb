@@ -5,7 +5,19 @@
   </h2>
 
   <% if logged_in? %>
-    <%= link_to 'New Video Session', new_video_session_path, class: "btn btn-lg btn-primary" %>
+    <% @call_back = CallBack.where('user_id = ? OR doctor_id = ?', current_user.id, current_user.id).where.not(scheduled_time: nil).first %>
+    <% if @call_back %>
+      <div class="form-group">
+        <% if @call_back.user_id == current_user.id %>
+          <p>Doctor <%= @call_back.doctor.name %> has scheduled meeting with you at <%= @call_back.scheduled_time %>.</p>
+        <% else %>
+          <p>You have has scheduled meeting with patient <%= @call_back.user.name %> at <%= @call_back.scheduled_time %>.</p>
+        <% end %>
+
+        <p>Please click <%= link_to 'here', video_sessions_url %> to go to Pending Call Backs page.</p>
+      </div>
+    <% end %>
+    <%= link_to 'New Video Session', new_video_session_path, class: "btn btn-primary" %>
   <% else %>
     <%= link_to t('content.signup_now'), signup_path, class: "btn btn-lg btn-primary" %>
   <% end %>

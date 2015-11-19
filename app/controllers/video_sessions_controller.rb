@@ -1,5 +1,4 @@
-class VideoSessionsController < ApplicationController
-  before_action :logged_in_user
+class VideoSessionsController < AuthenticateController
 
   def new
 
@@ -24,6 +23,7 @@ class VideoSessionsController < ApplicationController
       return
     end
     @video_sessions = VideoSession.pending.where.not(user_id: current_user.id)
+    @call_backs = CallBack.where('user_id = ? OR doctor_id = ?', current_user.id, current_user.id)
   end
 
   def show
@@ -37,10 +37,10 @@ class VideoSessionsController < ApplicationController
         @video_session.save
       end
       if @video_session.status != 'started' and @video_session.status != 'pending'
-        redirect_to root_path
+        redirect_to video_sessions_path
       end
       if @video_session.status == 'started' and @video_session.user_id != current_user.id and @video_session.doctor_id != current_user.id
-        redirect_to root_path
+        redirect_to video_sessions_path
       end
     end
   end
@@ -64,7 +64,7 @@ class VideoSessionsController < ApplicationController
   def notes
     @video_session = VideoSession.find_by(id: params[:id])
     if @video_session.status != 'finished' or @video_session.doctor_id != current_user.id
-      redirect_to root_path
+      redirect_to video_sessions_path
     end
   end
 
@@ -78,7 +78,7 @@ class VideoSessionsController < ApplicationController
         @video_session.finish_time = Time.now
         @video_session.status = :finished
         @video_session.save
-        redirect_to root_path
+        redirect_to video_sessions_path
       else
         @video_session.finish_time = Time.now
         @video_session.status = :finished
@@ -97,7 +97,7 @@ class VideoSessionsController < ApplicationController
       render :message
     elsif  @video_session.save
       flash[:success] = "Leave message successfully"
-      redirect_to root_path
+      redirect_to video_sessions_path
     else
       flash[:danger] = @video_session.errors.full_messages.first
       render :message
@@ -113,7 +113,7 @@ class VideoSessionsController < ApplicationController
       render :callback
     elsif @video_session.save
       flash[:success] = "Leave callback successfully"
-      redirect_to root_path
+      redirect_to video_sessions_path
     else
       flash[:danger] = @video_session.errors.full_messages.first
       render :callback
@@ -128,7 +128,7 @@ class VideoSessionsController < ApplicationController
       render :feedback
     elsif @video_session.save
       flash[:success] = "Submit feedback successfully"
-      redirect_to root_path
+      redirect_to video_sessions_path
     else
       flash[:danger] = @video_session.errors.full_messages.first
       render :feedback
@@ -138,7 +138,7 @@ class VideoSessionsController < ApplicationController
   def update_notes
     @video_session = VideoSession.find_by(id: params[:id])
     if @video_session.status != 'finished' or @video_session.doctor_id != current_user.id
-      redirect_to root_path
+      redirect_to video_sessions_path
     end
     @video_session.notes = params[:video_session][:notes]
     if @video_session.notes.blank?
@@ -146,17 +146,10 @@ class VideoSessionsController < ApplicationController
       render :notes
     elsif @video_session.save
       flash[:success] = "Write notes successfully"
-      redirect_to root_path
+      redirect_to video_sessions_path
     else
       flash[:danger] = @video_session.errors.full_messages.first
       render :notes
-    end
-  end
-
-  def logged_in_user
-    unless logged_in?
-      flash[:danger] = "Please log in."
-      redirect_to login_url
     end
   end
 

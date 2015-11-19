@@ -1,0 +1,7 @@
+<h1>24-7 Online Clinic</h1>
+
+<p>Hi <%= @call_back.user.name %>,</p>
+
+<p>Doctor <%= @call_back.doctor.name %> has scheduled meeting with you at <%= @call_back.scheduled_time %>.</p>
+
+<p>Please click <%= link_to 'here', video_sessions_url %> to go to Pending Call Backs page.</p>

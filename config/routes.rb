@@ -42,8 +42,11 @@ Rails.application.routes.draw do
         patch 'update/message', to: 'video_sessions#update_message'
         patch 'update/feedback', to: 'video_sessions#update_feedback'
         patch 'update/notes', to: 'video_sessions#update_notes'
+
+        resources :call_backs, only: [:new, :create]
       end
     end
+    resources :call_backs, only: [:edit, :update, :destroy]
     resources :account_activations, only: [:edit]
     resources :password_resets,     only: [:new, :create, :edit, :update]
     

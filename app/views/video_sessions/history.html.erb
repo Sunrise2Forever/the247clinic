@@ -19,9 +19,9 @@
         <td><%= video_session.user.name %></td>
         <td><%= video_session.symptom %></td>
         <td><%= video_session.created_at %></td>
-        <td><%= video_session.doctor.try(:name) || '-' %></td>
-        <td><%= video_session.start_time || '-' %></td>
-        <td><%= video_session.finish_time || '-' %></td>
+        <td><%= video_session.doctor.try(:name) %></td>
+        <td><%= video_session.start_time %></td>
+        <td><%= video_session.finish_time %></td>
         <td><%= video_session.status == 'finished' ? 'complete' : 'incomplete' %></td>
       </tr>
     <% end %>

@@ -5,7 +5,7 @@
     <td><%= link_to "Change Password", edit_user_path(user) %></td>
     <td><%= link_to "Reset Password", { controller: 'password_resets', action: 'create', password_reset: { email: user.email }}, method: :post %></td>
     <td><%= link_to "Reactivation", { controller: 'users', action: 'reactivate', id: user.id }, method: :post %></td>
-    <td><%= link_to "Delete", user, method: :delete, data: { confirm: "You sure?" } %></td>
+    <td><%= link_to "Delete", user, method: :delete, data: { confirm: "Are you sure?" } %></td>
   <% else %>
     <td>-</td>
     <td>-</td>
