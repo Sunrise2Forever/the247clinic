@@ -128,7 +128,7 @@ class VideoSessionsController < AuthenticateController
       render :feedback
     elsif @video_session.save
       flash[:success] = "Submit feedback successfully"
-      redirect_to video_sessions_path
+      redirect_to root_path
     else
       flash[:danger] = @video_session.errors.full_messages.first
       render :feedback
