@@ -4,7 +4,7 @@
   <%= f.label :user_type %>
   <%= f.select :user_type, class: 'form-control' do %>
     <%= content_tag(:option, 'Patient', value: 'patient') %>
-    <%= content_tag(:option, 'Doctor', value: 'doctor') %>
+    <%= content_tag(:option, 'Doctor', value: 'doctor', selected: @user.doctor?) %>
   <% end %>
 
   <%= f.label :name %>
