@@ -44,9 +44,16 @@ Rails.application.routes.draw do
         patch 'update/notes', to: 'video_sessions#update_notes'
 
         resources :call_backs, only: [:new, :create]
+        resources :messages, only: [:new, :create]
       end
     end
     resources :call_backs, only: [:edit, :update, :destroy]
+    resources :messages, only: [:show, :index, :update] do
+      member do
+        resources :answers, only: [:create]
+      end
+    end
+
     resources :account_activations, only: [:edit]
     resources :password_resets,     only: [:new, :create, :edit, :update]
     

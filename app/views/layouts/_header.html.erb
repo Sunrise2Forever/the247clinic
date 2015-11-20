@@ -32,6 +32,11 @@
                 <span class="glyphicon glyphicon-time"></span>&nbsp;History
               <% end %>
             </li>
+            <li>
+              <%= link_to '/messages' do%>
+                <span class="glyphicon glyphicon-envelope"></span>&nbsp;Messages
+              <% end %>
+            </li>
             <% if current_user.admin? %>
               <li>
                   <%= link_to users_path do%>

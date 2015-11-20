@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   has_many :video_sessions, dependent: :destroy
+  has_many :messages, dependent: :destroy
 
   # Returns the hash digest of the given string.
   def User.digest(string)

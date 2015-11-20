@@ -1,30 +1,32 @@
 <% provide(:title, "Dashboard") %>
-<h1>Pending Video Sessions</h1>
+<% if current_user.doctor? %>
+  <h1>Pending Video Sessions</h1>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
-    <% if @video_sessions.count > 0 %>
-      <table class="table">
-        <tr>
-          <th>No</th>
-          <th>Created Time</th>
-          <th>User</th>
-          <th></th>
-        </tr>
-        <% @video_sessions.each do |video_session| %>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+      <% if @video_sessions.count > 0 %>
+        <table class="table">
           <tr>
-            <td><%= video_session.id %></td>
-            <td><%= video_session.created_at %></td>
-            <td><%= video_session.user.name %></td>
-            <td><%= link_to 'View', video_session_path(video_session) %></td>
+            <th>No</th>
+            <th>Created Time</th>
+            <th>User</th>
+            <th></th>
           </tr>
-        <% end %>
-      </table>
-    <% else %>
-      No pending video sessions.
-    <% end %>
+          <% @video_sessions.each do |video_session| %>
+            <tr>
+              <td><%= video_session.id %></td>
+              <td><%= video_session.created_at %></td>
+              <td><%= video_session.user.name %></td>
+              <td><%= link_to 'View', video_session_path(video_session) %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% else %>
+        <div class="text-center">No pending video sessions.</div>
+      <% end %>
+    </div>
   </div>
-</div>
+<% end %>
 
 <h1>Pending Call Backs</h1>
 
@@ -57,5 +59,5 @@
     <% end %>
   </table>
 <% else %>
-  <div>No Call Backs.</div>
+  <div class="text-center">No Call Backs.</div>
 <% end %>

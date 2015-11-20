@@ -1,0 +1,30 @@
+<% provide(:title, "Pending messages") %>
+<h1>Pending messages</h1>
+
+<% if @messages.count > 0 %>
+  <table class="table">
+    <tr>
+      <th>No</th>
+      <th>User</th>
+      <th>Message</th>
+      <th>Created Time</th>
+      <th></th>
+      <th></th>
+    </tr>
+    <% @messages.each do |message| %>
+      <tr>
+        <td><%= message.id %></td>
+        <td><%= message.user.name %></td>
+        <td><%= message.message %></td>
+        <td><%= message.created_at %></td>
+        <td><%= link_to 'View', message_path(message) %></td>
+        <td>
+          <%= link_to 'End', message_path(message), method: :put if current_user.doctor? %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <div class="text-center"><%= will_paginate @messages %></div>
+<% else %>
+  <div class="text-center">No pending messages.</div>
+<% end %>
