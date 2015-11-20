@@ -49,14 +49,6 @@ class VideoSessionsController < AuthenticateController
     @video_session = current_user.video_sessions.find_by(id: params[:id])
   end
 
-  def message
-    @video_session = current_user.video_sessions.find_by(id: params[:id])
-  end
-
-  def callback
-    @video_session = current_user.video_sessions.find_by(id: params[:id])
-  end
-
   def feedback
     @video_session = current_user.video_sessions.find_by(id: params[:id])
   end
@@ -85,38 +77,6 @@ class VideoSessionsController < AuthenticateController
         @video_session.save
         render :feedback
       end
-    end
-  end
-
-  def update_message
-    @video_session = current_user.video_sessions.find_by(id: params[:id])
-    @video_session.message = params[:video_session][:message]
-    @video_session.status = :left
-    if @video_session.message.blank?
-      flash[:danger] = "Message can't be blank"
-      render :message
-    elsif  @video_session.save
-      flash[:success] = "Leave message successfully"
-      redirect_to video_sessions_path
-    else
-      flash[:danger] = @video_session.errors.full_messages.first
-      render :message
-    end
-  end
-
-  def update_callback
-    @video_session = current_user.video_sessions.find_by(id: params[:id])
-    @video_session.callback = params[:video_session][:callback]
-    @video_session.status = :left
-    if @video_session.callback.blank?
-      flash[:danger] = "Callback can't be blank"
-      render :callback
-    elsif @video_session.save
-      flash[:success] = "Leave callback successfully"
-      redirect_to video_sessions_path
-    else
-      flash[:danger] = @video_session.errors.full_messages.first
-      render :callback
     end
   end
 
