@@ -77,6 +77,8 @@ class VideoSessionsController < AuthenticateController
         @video_session.save
         render :feedback
       end
+    else
+      redirect_to video_sessions_path
     end
   end
 
