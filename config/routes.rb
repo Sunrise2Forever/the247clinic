@@ -43,7 +43,7 @@ Rails.application.routes.draw do
         resources :messages, only: [:new, :create]
       end
     end
-    resources :call_backs, only: [:edit, :update, :destroy]
+    resources :call_backs, only: [:edit, :update, :destroy, :show]
     resources :messages, only: [:show, :index, :update] do
       member do
         resources :answers, only: [:create]

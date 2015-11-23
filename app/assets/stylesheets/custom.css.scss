@@ -59,6 +59,12 @@ p {
   line-height: 1.7em;
 }
 
+.navbar-fixed-top,
+.navbar-fixed-bottom {
+  .navbar-collapse {
+    max-height: 480px;
+  }
+}
 
 
 /* header */

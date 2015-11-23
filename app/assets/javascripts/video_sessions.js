@@ -15,6 +15,7 @@ var guid = (function() {
 })();
 
 var channel;
+var webrtc;
 
 function init_video_session(current_user_id, current_user_name, video_session_id, video_session_user_id) {
   var $messages = $('#messages');
@@ -55,7 +56,7 @@ function init_video_session(current_user_id, current_user_name, video_session_id
 
   function start() {
     // create our webrtc connection
-    var webrtc = new SimpleWebRTC({
+    webrtc = new SimpleWebRTC({
       // the id/element dom element that will hold "our" video
       localVideoEl: 'localVideo',
       // the id/element dom element that will hold remote videos
@@ -94,6 +95,15 @@ function init_video_session(current_user_id, current_user_name, video_session_id
       $('#waiting-message').hide();
       appendMessage(peer_user_name, '<em>Connected</em>');
     });
+
+    webrtc.on('mute', function(data){
+      if ($('#remoteVideos video').length > 0)
+        $('#remoteVideos video')[0].pause();
+    })
+    webrtc.on('unmute', function(data){
+      if ($('#remoteVideos video').length > 0)
+        $('#remoteVideos video')[0].play();
+    })
 
     webrtc.on('videoRemoved', function (video, peer) {
       console.log('video removed ', peer);
@@ -143,10 +153,12 @@ function init_video_session(current_user_id, current_user_name, video_session_id
         $mute_video_stream = !$mute_video_stream;
         if ($mute_video_stream) {
           $('#remoteVideos video')[0].pause();
-          //$('#localVideo')[0].pause();
+          $('#localVideo')[0].pause();
+          webrtc.mute();
         } else {
           $('#remoteVideos video')[0].play();
-          //$('#localVideo')[0].play();
+          $('#localVideo')[0].play();
+          webrtc.unmute();
         }
       }
     });
@@ -168,7 +180,28 @@ function init_video_session(current_user_id, current_user_name, video_session_id
         userId: currentUser.id
       });
     });
-  }
 
+    if (currentUser.id == video_session_user_id) {
+      window.addEventListener('beforeunload', function(e) {
+        if (e.target.location.pathname == '/video_sessions/' + video_session_id) {
+          $.ajax({ type: "POST", url: '/video_sessions/' + video_session_id + '/call_backs', success: function() {}, dataType: 'json' });
+        }
+      }, false);
+
+      $('a').on('click', function() {
+        if (webrtc) {
+          webrtc.leaveRoom();
+        }
+        $.ajax({ type: "POST", url: '/video_sessions/' + video_session_id + '/call_backs', success: function() {}, dataType: 'json' });
+      });
+    } else {
+      $('a').on('click', function() {
+        if (webrtc) {
+          webrtc.leaveRoom();
+        }
+      });
+    }
+
+  }
 }
 

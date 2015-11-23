@@ -15,7 +15,7 @@
           <% @video_sessions.each do |video_session| %>
             <tr>
               <td><%= video_session.id %></td>
-              <td><%= video_session.created_at %></td>
+              <td><%= video_session.created_at.strftime("%B %-d, %Y %I:%M %P") %></td>
               <td><%= video_session.user.name %></td>
               <td><%= link_to 'View', video_session_path(video_session) %></td>
             </tr>
@@ -44,13 +44,16 @@
     <% @call_backs.each do |call_back| %>
       <tr>
         <td><%= call_back.id %></td>
-        <td><%= call_back.created_at %></td>
+        <td><%= call_back.created_at.strftime("%B %-d, %Y %I:%M %P") %></td>
         <td><%= call_back.user.name %></td>
         <td><%= call_back.doctor.try(:name) %></td>
-        <td><%= call_back.scheduled_time %></td>
+        <td><%= call_back.scheduled_time.strftime("%B %-d, %Y %I:%M %P") if call_back.scheduled_time %></td>
         <% if current_user.id == call_back.doctor_id %>
           <td><%= link_to 'Edit', edit_call_back_path(call_back) %></td>
           <td><%= link_to 'Delete', call_back, method: :delete, data: { confirm: "Are you sure?" } %> </td>
+        <% elsif current_user.id == call_back.user_id and call_back.scheduled_time.present? and call_back.scheduled_time <= Time.zone.now %>
+          <td></td>
+          <td><%= link_to 'Start', call_back_path(call_back) %></td>
         <% else %>
           <td></td>
           <td></td>
@@ -58,6 +61,7 @@
       </tr>
     <% end %>
   </table>
+  <div class="text-center"><%= will_paginate @call_backs %></div>
 <% else %>
   <div class="text-center">No Call Backs.</div>
 <% end %>

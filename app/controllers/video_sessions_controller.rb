@@ -22,8 +22,14 @@ class VideoSessionsController < AuthenticateController
       render 'history'
       return
     end
-    @video_sessions = VideoSession.pending.where.not(user_id: current_user.id)
-    @call_backs = CallBack.where('user_id = ? OR doctor_id = ?', current_user.id, current_user.id)
+    if current_user.doctor?
+      @video_sessions = VideoSession.pending.where.not(user_id: current_user.id)
+                            .joins('LEFT JOIN call_backs ON call_backs.id = call_back_id')
+                            .where('call_back_id IS NULL OR call_backs.doctor_id = ?', current_user.id)
+      @call_backs = CallBack.all.paginate(page: params[:page], per_page: 10)
+    else
+      @call_backs = CallBack.where('user_id = ?', current_user.id).paginate(page: params[:page], per_page: 10)
+    end
   end
 
   def show
