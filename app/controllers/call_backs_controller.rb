@@ -79,10 +79,10 @@ class CallBacksController < AuthenticateController
 
   def show
     call_back = CallBack.find_by(id: params[:id])
-    if call_back and call_back.user_id == current_user.id and call_back.scheduled_time <= Time.zone.now
+    if call_back and (call_back.user_id == current_user.id or call_back.doctor_id == current_user.id) and call_back.scheduled_time <= Time.zone.now
       video_session = call_back.video_session
       if video_session.nil?
-        video_session = call_back.create_video_session(user_id: current_user.id, symptom: 'Scheduled Call Back', status: :pending)
+        video_session = call_back.create_video_session(user_id: call_back.user_id, symptom: 'Scheduled Call Back', status: :pending)
       end
       redirect_to video_session_path(video_session)
     else

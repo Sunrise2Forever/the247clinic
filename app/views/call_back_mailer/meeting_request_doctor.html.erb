@@ -2,6 +2,6 @@
 
 <p>Hi <%= @call_back.doctor.name %>,</p>
 
-<p>You have has scheduled meeting with patient <%= @call_back.user.name %> at <%= @call_back.scheduled_time %>.</p>
+<p>You have has scheduled meeting with patient <%= @call_back.user.name %> at <%= @call_back.scheduled_time.strftime("%B %-d, %Y %I:%M %P") %>.</p>
 
 <p>Please click <%= link_to 'here', video_sessions_url %> to go to Pending Call Backs page.</p>

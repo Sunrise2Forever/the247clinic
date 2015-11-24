@@ -9,9 +9,9 @@
     <% if @call_back %>
       <div class="form-group">
         <% if @call_back.user_id == current_user.id %>
-          <p>Doctor <%= @call_back.doctor.name %> has scheduled meeting with you at <%= @call_back.scheduled_time %>.</p>
+          <p>Doctor <%= @call_back.doctor.name %> has scheduled meeting with you at <%= @call_back.scheduled_time.strftime("%B %-d, %Y %I:%M %P") %>.</p>
         <% else %>
-          <p>You have has scheduled meeting with patient <%= @call_back.user.name %> at <%= @call_back.scheduled_time %>.</p>
+          <p>You have has scheduled meeting with patient <%= @call_back.user.name %> at <%= @call_back.scheduled_time.strftime("%B %-d, %Y %I:%M %P") %>.</p>
         <% end %>
 
         <p>Please click <%= link_to 'here', video_sessions_url %> to go to Pending Call Backs page.</p>

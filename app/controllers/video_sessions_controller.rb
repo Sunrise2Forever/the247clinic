@@ -38,7 +38,7 @@ class VideoSessionsController < AuthenticateController
       @is_doctor =  (@video_session.user_id != current_user.id)
       if @is_doctor and @video_session.status == 'pending'
         @video_session.status = :started
-        @video_session.start_time = Time.now
+        @video_session.start_time = Time.zone.now
         @video_session.doctor_id = current_user.id
         @video_session.save
       end
@@ -73,12 +73,12 @@ class VideoSessionsController < AuthenticateController
       @is_doctor =  (@video_session.user_id != current_user.id)
       if @is_doctor
         @video_session.notes = params[:video_session][:notes]
-        @video_session.finish_time = Time.now
+        @video_session.finish_time = Time.zone.now
         @video_session.status = :finished
         @video_session.save
         redirect_to video_sessions_path
       else
-        @video_session.finish_time = Time.now
+        @video_session.finish_time = Time.zone.now
         @video_session.status = :finished
         @video_session.save
         render :feedback
