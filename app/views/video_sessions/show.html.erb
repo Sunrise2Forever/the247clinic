@@ -15,8 +15,9 @@
       <div class="form-group">
         <%= button_tag 'Take Photo', id: "take_photo", class: "btn btn-primary form-control" %>
       </div>
-      <canvas class="form-group" id="taken_photo">
-      </canvas>
+      <div class="form-group" id="taken_photos">
+
+      </div>
       <div class="form-group">
         <%= button_to 'Schedule Call Back', new_call_back_path(@video_session), method: :get, class: "btn btn-primary form-control" %>
       </div>

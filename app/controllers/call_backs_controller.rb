@@ -62,6 +62,9 @@ class CallBacksController < AuthenticateController
       return
     end
 
+    if @call_back.doctor_id.nil?
+      @call_back.doctor_id = current_user.id
+    end
     if @call_back.save
       flash[:success] = "Updated Call Back successfully"
       redirect_to video_sessions_path
@@ -92,6 +95,6 @@ class CallBacksController < AuthenticateController
 
   def correct_user
     @call_back = CallBack.find_by(id: params[:id])
-    redirect_to video_sessions_path if @call_back.nil? or @call_back.doctor_id != current_user.id
+    redirect_to video_sessions_path if @call_back.nil? or !current_user.doctor? or (@call_back.doctor_id.present? and @call_back.doctor_id != current_user.id)
   end
 end

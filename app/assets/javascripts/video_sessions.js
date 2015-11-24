@@ -165,13 +165,15 @@ function init_video_session(current_user_id, current_user_name, video_session_id
 
     $('#take_photo').click(function (e) {
       if ($('#remoteVideos video').length > 0) {
-        $('#taken_photo')[0].width = $('#remoteVideos video').innerWidth() / 2;
-        $('#taken_photo')[0].height = $('#remoteVideos video').innerHeight() / 2;
-        $('#taken_photo')[0].getContext('2d').drawImage($('#remoteVideos video')[0],
+        var d = document.createElement('canvas');
+        document.getElementById('taken_photos').appendChild(d);
+
+        d.width = $('#remoteVideos video').innerWidth() / 4;
+        d.height = $('#remoteVideos video').innerHeight() / 4;
+        d.getContext('2d').drawImage($('#remoteVideos video')[0],
             0, 0, $('#remoteVideos video')[0].videoWidth, $('#remoteVideos video')[0].videoHeight,
-            0, 0, $('#taken_photo')[0].width, $('#taken_photo')[0].height
+            0, 0, d.width, d.height
         );
-        $('#taken_photo').show();
       }
     });
 

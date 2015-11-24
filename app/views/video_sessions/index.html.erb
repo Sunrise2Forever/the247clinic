@@ -49,14 +49,33 @@
         <td><%= call_back.user.name %></td>
         <td><%= call_back.doctor.try(:name) %></td>
         <td><%= call_back.scheduled_time.strftime("%B %-d, %Y %I:%M %P") if call_back.scheduled_time %></td>
-        <% if (current_user.id == call_back.user_id or current_user.id == call_back.doctor_id) and call_back.scheduled_time.present? and call_back.scheduled_time <= Time.zone.now %>
-          <td><%= link_to 'Start', call_back_path(call_back) %></td>
+
+        <% video_session_status = call_back.video_session.try(:status) %>
+        <% if video_session_status == 'finished' %>
+          <td>complete</td>
+        <% elsif video_session_status == 'callback' %>
+          <td>incomplete</td>
+        <% elsif (current_user.id == call_back.user_id or current_user.id == call_back.doctor_id) and call_back.scheduled_time.present? and call_back.scheduled_time <= Time.zone.now %>
+          <td>
+            <%= link_to call_back_path(call_back), class: 'btn btn-default' do %>
+              <span class="glyphicon glyphicon-play-circle"></span> Start
+            <% end %>
+          </td>
         <% else %>
           <td></td>
         <% end %>
-        <% if current_user.id == call_back.doctor_id %>
-          <td><%= link_to 'Edit', edit_call_back_path(call_back) %></td>
-          <td><%= link_to 'Delete', call_back, method: :delete, data: { confirm: "Are you sure?" } %> </td>
+
+        <% if current_user.id == call_back.doctor_id or (current_user.doctor? and call_back.doctor_id.nil?) %>
+          <td>
+            <%= link_to edit_call_back_path(call_back), class: 'btn btn-default' do %>
+              <span class="glyphicon glyphicon-pencil"></span> Edit
+            <% end %>
+          </td>
+          <td>
+            <%= link_to call_back, method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-default' do %>
+              <span class="glyphicon glyphicon-trash"></span> Delete
+            <% end %>
+          </td>
         <% else %>
           <td></td>
           <td></td>
