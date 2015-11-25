@@ -18,6 +18,14 @@
       <div class="form-group" id="taken_photos">
 
       </div>
+      <canvas></canvas>
+      <%= form_for(@photo, html: { class: 'directUpload', data: { 'form-data' => (@s3_direct_post.fields), 'url' => @s3_direct_post.url, 'host' => URI.parse(@s3_direct_post.url).host } }) do |f| %>
+        <div class="field">
+          <%= f.label :photo_url %><br>
+          <%= f.file_field :photo_url %>
+          <%= f.submit %>
+        </div>
+      <% end %>
       <div class="form-group">
         <%= button_to 'Schedule Call Back', new_call_back_path(@video_session), method: :get, class: "btn btn-primary form-control" %>
       </div>

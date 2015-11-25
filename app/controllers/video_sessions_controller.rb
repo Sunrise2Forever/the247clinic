@@ -35,7 +35,7 @@ class VideoSessionsController < AuthenticateController
   def show
     @video_session = VideoSession.find_by(id: params[:id])
     if @video_session
-      @is_doctor =  (@video_session.user_id != current_user.id)
+      @is_doctor =  (@video_session.user_id != current_user.id and current_user.doctor?)
       if @is_doctor and @video_session.status == 'pending'
         @video_session.status = :started
         @video_session.start_time = Time.zone.now
@@ -47,6 +47,11 @@ class VideoSessionsController < AuthenticateController
       end
       if @video_session.status == 'started' and @video_session.user_id != current_user.id and @video_session.doctor_id != current_user.id
         redirect_to video_sessions_path
+      end
+
+      if current_user.doctor?
+        set_s3_direct_post
+        @photo = Photo.new
       end
     end
   end
@@ -119,6 +124,11 @@ class VideoSessionsController < AuthenticateController
       flash[:danger] = @video_session.errors.full_messages.first
       render :notes
     end
+  end
+
+  private
+  def set_s3_direct_post
+    @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: '201', acl: 'public-read')
   end
 
 end

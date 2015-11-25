@@ -3,6 +3,7 @@ class VideoSession < ActiveRecord::Base
   belongs_to :user
   belongs_to :doctor, class_name: 'User'
   belongs_to :call_back
+  has_many :photos
 
   scope :pending, -> { where(status: :pending) }
   scope :started, -> { where(status: :started) }

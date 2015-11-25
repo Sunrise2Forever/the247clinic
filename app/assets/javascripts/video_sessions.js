@@ -163,17 +163,83 @@ function init_video_session(current_user_id, current_user_name, video_session_id
       }
     });
 
+    var fileInput    = $("input:file");
+    var form         = $('.directUpload');
+    var submitButton = $('input[type="submit"]');
+    var progressBar  = $("<div class='bar'></div>");
+    var barContainer = $("<div class='progress'></div>").append(progressBar);
+    fileInput.after(barContainer);
+    var photo_count = 0;
+
+
     $('#take_photo').click(function (e) {
       if ($('#remoteVideos video').length > 0) {
-        var d = document.createElement('canvas');
-        document.getElementById('taken_photos').appendChild(d);
+        var d = $('canvas')[0];
+        //document.getElementById('taken_photos').appendChild(d);
 
-        d.width = $('#remoteVideos video').innerWidth() / 4;
-        d.height = $('#remoteVideos video').innerHeight() / 4;
+        d.width = $('#remoteVideos video').innerWidth();
+        d.height = $('#remoteVideos video').innerHeight();
         d.getContext('2d').drawImage($('#remoteVideos video')[0],
             0, 0, $('#remoteVideos video')[0].videoWidth, $('#remoteVideos video')[0].videoHeight,
             0, 0, d.width, d.height
         );
+        d.style.display='none';
+
+        var e = document.createElement('img');
+        document.getElementById('taken_photos').appendChild(e);
+        e.src = d.toDataURL('image/png');
+
+        var blob = dataURItoBlob(e.src);
+        blob.name = 'photo_' + video_session_id + '_' + photo_count + '.png';
+        photo_count ++;
+
+        fileInput.fileupload({
+          url:             form.data('url'),
+          type:            'POST',
+          autoUpload:       true,
+          formData:         form.data('form-data'),
+          paramName:        'file',
+          dataType:         'XML',  // S3 returns XML if success_action_status is set to 201
+          replaceFileInput: false,
+          progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            progressBar.css('width', progress + '%')
+          },
+          start: function (e) {
+            submitButton.prop('disabled', true);
+
+            progressBar.
+                css('background', 'green').
+                css('display', 'block').
+                css('width', '0%').
+                text("Loading...");
+          },
+          done: function(e, data) {
+            submitButton.prop('disabled', false);
+            progressBar.text("Uploading done");
+
+            // extract key and generate URL from response
+            var key   = $(data.jqXHR.responseXML).find("Key").text();
+            var url   = '//' + form.data('host') + '/' + key;
+
+            // create hidden field
+            $.ajax({
+              type: "POST",
+              url: '/photos',
+              data: { video_session_id: video_session_id, photo_url: url },
+              success: function() {},
+              dataType: 'json'
+            });
+          },
+          fail: function(e, data) {
+            submitButton.prop('disabled', false);
+
+            progressBar.
+                css("background", "red").
+                text("Failed");
+          }
+        });
+        fileInput.fileupload('add', { files: [blob] });
       }
     });
 
@@ -204,6 +270,26 @@ function init_video_session(current_user_id, current_user_name, video_session_id
       });
     }
 
+  }
+
+  function dataURItoBlob(dataURI) {
+    // convert base64/URLEncoded data component to raw binary data held in a string
+    var byteString;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+      byteString = atob(dataURI.split(',')[1]);
+    else
+      byteString = unescape(dataURI.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to a typed array
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([ia], {type:mimeString});
   }
 }
 
