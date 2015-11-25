@@ -65,3 +65,11 @@
 canvas, .directUpload {
   display: none;
 }
+
+.video-session-taken-photo {
+  float: left;
+  width: 25%;
+  img {
+    width: 100%;
+  }
+}

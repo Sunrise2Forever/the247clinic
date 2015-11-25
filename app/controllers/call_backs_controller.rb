@@ -39,8 +39,6 @@ class CallBacksController < AuthenticateController
           @call_back.doctor_id = current_user.id
           @call_back.user_id = video_session.user_id
           if @call_back.save
-            CallBackMailer.meeting_request_doctor(@call_back).deliver
-            CallBackMailer.meeting_request_user(@call_back).deliver
             flash[:success] = "Scheduled Call Back successfully"
             redirect_to video_sessions_path
           else

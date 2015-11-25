@@ -50,12 +50,7 @@
         <td><%= call_back.doctor.try(:name) %></td>
         <td><%= call_back.scheduled_time.strftime("%B %-d, %Y %I:%M %P") if call_back.scheduled_time %></td>
 
-        <% video_session_status = call_back.video_session.try(:status) %>
-        <% if video_session_status == 'finished' %>
-          <td>complete</td>
-        <% elsif video_session_status == 'callback' %>
-          <td>incomplete</td>
-        <% elsif (current_user.id == call_back.user_id or current_user.id == call_back.doctor_id) and call_back.scheduled_time.present? and call_back.scheduled_time <= Time.zone.now %>
+        <% if (current_user.id == call_back.user_id or current_user.id == call_back.doctor_id) and call_back.scheduled_time.present? and call_back.scheduled_time <= Time.zone.now %>
           <td>
             <%= link_to call_back_path(call_back), class: 'btn btn-default' do %>
               <span class="glyphicon glyphicon-play-circle"></span> Start

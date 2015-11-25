@@ -17,19 +17,17 @@ class VideoSessionsController < AuthenticateController
   end
 
   def index
-    if params[:type] == 'history'
-      @video_sessions = VideoSession.where('user_id = ? OR doctor_id = ?', current_user.id, current_user.id).order(created_at: :desc).paginate(page: params[:page], per_page: 10)
-      render 'history'
-      return
-    end
     if current_user.doctor?
       @video_sessions = VideoSession.pending.where.not(user_id: current_user.id)
                             .joins('LEFT JOIN call_backs ON call_backs.id = call_back_id')
                             .where('call_back_id IS NULL OR call_backs.doctor_id = ?', current_user.id)
-      @call_backs = CallBack.all.paginate(page: params[:page], per_page: 10)
+      @call_backs = CallBack.all
     else
-      @call_backs = CallBack.where('user_id = ?', current_user.id).paginate(page: params[:page], per_page: 10)
+      @call_backs = CallBack.where('call_backs.user_id = ?', current_user.id)
     end
+    @call_backs = @call_backs.joins('LEFT JOIN video_sessions ON call_backs.id = video_sessions.call_back_id')
+                       .where("video_sessions.status IS NULL OR (video_sessions.status <> 'finished' AND video_sessions.status <> 'callback')")
+                       .paginate(page: params[:page], per_page: 10)
   end
 
   def show

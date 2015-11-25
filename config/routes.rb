@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   
     get 'users/new'
   
-    root 'static_pages#home'
+    root 'home#index'
   
     get 'about' =>  'static_pages#about'
   
@@ -50,6 +50,7 @@ Rails.application.routes.draw do
       end
     end
     resources :photos, only: :create
+    resources :history_video_sessions, only: [:index, :show]
 
     resources :account_activations, only: [:edit]
     resources :password_resets,     only: [:new, :create, :edit, :update]
