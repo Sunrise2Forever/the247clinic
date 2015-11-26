@@ -22,49 +22,48 @@
       </div>
     </div>
 
-    <% if @video_session.doctor %>
-      <div class="form-group">
-        <div class="row">
-          <div class="col-md-3 col-sm-4 col-xs-12"><label>Doctor</label></div>
-          <div class="col-md-9 col-sm-8 col-xs-12"><%= @video_session.doctor.name %></div>
-        </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-3 col-sm-4 col-xs-12"><label>Doctor</label></div>
+        <div class="col-md-9 col-sm-8 col-xs-12"><%= @video_session.doctor.try(:name) %></div>
       </div>
-      <div class="form-group">
-        <div class="row">
-          <div class="col-md-3 col-sm-4 col-xs-12"><label>Started Time</label></div>
-          <div class="col-md-9 col-sm-8 col-xs-12"><%= @video_session.start_time.strftime("%B %-d, %Y %I:%M %P") %></div>
-        </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-3 col-sm-4 col-xs-12"><label>Started Time</label></div>
+        <div class="col-md-9 col-sm-8 col-xs-12"><%= @video_session.start_time.strftime("%B %-d, %Y %I:%M %P") if @video_session.start_time %></div>
       </div>
-    <% end %>
+    </div>
 
-    <% if @photos.count > 0 %>
+    <div class="form-group">
       <label>Photos</label>
-      <div class="form-group clearfix">
-        <% @photos.each do |photo| %>
-          <div class="video-session-taken-photo">
-            <%= image_tag photo.photo_url %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-
-    <% if @video_session.finish_time %>
-      <div class="form-group">
-        <div class="row">
-          <div class="col-md-3 col-sm-4 col-xs-12"><label>Ended Time</label></div>
-          <div class="col-md-9 col-sm-8 col-xs-12"><%= @video_session.finish_time.strftime("%B %-d, %Y %I:%M %P") %></div>
+      <% if @photos.count > 0 %>
+        <div class="clearfix">
+          <% @photos.each do |photo| %>
+            <div class="video-session-taken-photo">
+              <%= image_tag photo.photo_url %>
+            </div>
+          <% end %>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
 
-    <% if @video_session.notes %>
-      <div class="form-group">
-        <div class="row">
-          <div class="col-md-3 col-sm-4 col-xs-12"><label>Notes</label></div>
-          <div class="col-md-9 col-sm-8 col-xs-12"><%= @video_session.notes.gsub(/\n/, '<br>').html_safe() %></div>
-        </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-3 col-sm-4 col-xs-12"><label>Ended Time</label></div>
+        <div class="col-md-9 col-sm-8 col-xs-12"><%= @video_session.finish_time.strftime("%B %-d, %Y %I:%M %P") if @video_session.finish_time %></div>
       </div>
-    <% end %>
+    </div>
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-3 col-sm-4 col-xs-12">
+          <label>Notes</label> &nbsp;
+          ( <%= link_to 'Edit', edit_notes_video_session_path(@video_session) if current_user.id == @video_session.doctor_id %> )
+        </div>
+        <div class="col-md-9 col-sm-8 col-xs-12"><%= @video_session.notes.gsub(/\n/, '<br>').html_safe() if @video_session.notes %></div>
+      </div>
+    </div>
 
     <div class="form-group">
       <div class="row">

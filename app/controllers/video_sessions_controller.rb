@@ -64,7 +64,7 @@ class VideoSessionsController < AuthenticateController
 
   def notes
     @video_session = VideoSession.find_by(id: params[:id])
-    if @video_session.status != 'finished' or @video_session.doctor_id != current_user.id
+    if @video_session.doctor_id != current_user.id
       redirect_to video_sessions_path
     end
   end
@@ -108,7 +108,7 @@ class VideoSessionsController < AuthenticateController
 
   def update_notes
     @video_session = VideoSession.find_by(id: params[:id])
-    if @video_session.status != 'finished' or @video_session.doctor_id != current_user.id
+    if @video_session.doctor_id != current_user.id
       redirect_to video_sessions_path
     end
     @video_session.notes = params[:video_session][:notes]
