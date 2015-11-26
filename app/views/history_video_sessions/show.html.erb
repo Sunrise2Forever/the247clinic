@@ -59,7 +59,9 @@
       <div class="row">
         <div class="col-md-3 col-sm-4 col-xs-12">
           <label>Notes</label> &nbsp;
-          ( <%= link_to 'Edit', edit_notes_video_session_path(@video_session) if current_user.id == @video_session.doctor_id %> )
+          <% if current_user.id == @video_session.doctor_id %>
+            ( <%= link_to 'Edit', edit_notes_video_session_path(@video_session)  %> )
+          <% end %>
         </div>
         <div class="col-md-9 col-sm-8 col-xs-12"><%= @video_session.notes.gsub(/\n/, '<br>').html_safe() if @video_session.notes %></div>
       </div>
