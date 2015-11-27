@@ -2,9 +2,15 @@
   <%= render 'shared/error_messages', object: @user %>
 
   <%= f.label :user_type %>
-  <%= f.select :user_type, class: 'form-control' do %>
-    <%= content_tag(:option, 'Patient', value: 'patient') %>
-    <%= content_tag(:option, 'Doctor', value: 'doctor', selected: @user.doctor?) %>
+  <% if @user.id %>
+    <div class='form-control'>
+      <%= @user.user_type_string %>
+    </div>
+  <% else %>
+    <%= f.select :user_type, class: 'form-control' do %>
+      <%= content_tag(:option, 'Patient', value: 'patient') %>
+      <%= content_tag(:option, 'Doctor', value: 'doctor', selected: @user.doctor?) %>
+    <% end %>
   <% end %>
 
   <%= f.label :name %>

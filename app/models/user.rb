@@ -28,6 +28,10 @@ class User < ActiveRecord::Base
     user_type == 'doctor'
   end
 
+  def user_type_string
+    self.admin? ? 'Admin' : (self.doctor? ? 'Doctor' : 'Patient')
+  end
+
   def remember
     self.remember_token = User.new_token
     update_attribute(:remember_digest, User.digest(remember_token))

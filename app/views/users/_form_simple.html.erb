@@ -1,6 +1,12 @@
 <%= form_for(@user) do |f| %>
   <%= render 'shared/error_messages', object: @user %>
 
+  <%= f.label :user_type %>
+  <%= f.select :user_type, class: 'form-control' do %>
+    <%= content_tag(:option, 'Patient', value: 'patient') %>
+    <%= content_tag(:option, 'Doctor', value: 'doctor', selected: @user.doctor?) %>
+  <% end %>
+
   <%= f.label :password %>
   <%= f.password_field :password, class: 'form-control' %>
 
