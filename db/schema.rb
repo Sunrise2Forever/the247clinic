@@ -11,12 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151125065151) do
+ActiveRecord::Schema.define(version: 20151205083402) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
     t.text     "message"
     t.integer  "message_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "appointments", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "clinic_id"
+    t.integer  "doctor_id"
+    t.string   "email"
+    t.string   "phone"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string   "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -27,6 +40,12 @@ ActiveRecord::Schema.define(version: 20151125065151) do
     t.datetime "scheduled_time"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+  end
+
+  create_table "clinics", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -44,6 +63,20 @@ ActiveRecord::Schema.define(version: 20151125065151) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
+
+  create_table "favorite_clinics", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "clinic_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "favorite_doctors", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "doctor_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "messages", force: :cascade do |t|
     t.integer  "user_id"
@@ -84,6 +117,7 @@ ActiveRecord::Schema.define(version: 20151125065151) do
     t.string   "gender"
     t.date     "birthdate"
     t.string   "user_type"
+    t.integer  "clinic_id"
   end
 
   create_table "video_sessions", force: :cascade do |t|

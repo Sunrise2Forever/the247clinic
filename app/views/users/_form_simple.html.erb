@@ -7,6 +7,14 @@
     <%= content_tag(:option, 'Doctor', value: 'doctor', selected: @user.doctor?) %>
   <% end %>
 
+  <div class="select_clinic_section">
+    <%= f.label :clinic %>
+    <%= f.select :clinic_id,
+                 Clinic.all.map { |clinic| [clinic.name, clinic.id] },
+                 { include_blank: true }
+    %>
+  </div>
+
   <%= f.label :password %>
   <%= f.password_field :password, class: 'form-control' %>
 
@@ -15,3 +23,7 @@
 
   <%= f.submit class: "btn btn-primary" %>
 <% end %>
+
+<script type="text/javascript">
+  init_clinic_section('<%= @user.user_type %>');
+</script>

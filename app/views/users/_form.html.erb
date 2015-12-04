@@ -3,7 +3,7 @@
 
   <%= f.label :user_type %>
   <% if @user.id %>
-    <div class='form-control'>
+    <div class='form-control form-group'>
       <%= @user.user_type_string %>
     </div>
   <% else %>
@@ -12,6 +12,14 @@
       <%= content_tag(:option, 'Doctor', value: 'doctor', selected: @user.doctor?) %>
     <% end %>
   <% end %>
+
+  <div class="select_clinic_section">
+    <%= f.label :clinic %>
+    <%= f.select :clinic_id,
+                 Clinic.all.map { |clinic| [clinic.name, clinic.id] },
+                 { include_blank: true }
+    %>
+  </div>
 
   <%= f.label :name %>
   <%= f.text_field :name, class: 'form-control' %>
@@ -56,4 +64,5 @@
 
 <script type="text/javascript">
   $('.input-group').datetimepicker();
+  init_clinic_section('<%= @user.user_type %>');
 </script>

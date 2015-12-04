@@ -1,0 +1,27 @@
+<% provide(:title, "Edit Favorite Clinics") %>
+<h1>Edit Favorite Clinics</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+    <% if @clinics.count > 0 %>
+      <table class="table">
+        <tr>
+          <th>No</th>
+          <th>Name</th>
+          <th></th>
+        </tr>
+        <% @clinics.each do |clinic| %>
+          <tr>
+            <td><%= clinic.id %></td>
+            <td><%= clinic.name %></td>
+            <% if @favorite_clinics.find_by(clinic_id: clinic.id) %>
+              <td><%= link_to 'Remove', { controller: 'favorite_clinics', action: 'remove', clinic_id: clinic.id }, method: :post %></td>
+            <% else %>
+              <td><%= link_to 'Add', { controller: 'favorite_clinics', action: 'create', clinic_id: clinic.id }, method: :post %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+  </div>
+</div>

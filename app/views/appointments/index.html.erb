@@ -1,0 +1,54 @@
+<% provide(:title, "Appointments") %>
+<h1>Appointments</h1>
+
+<% if current_user.doctor? %>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
+      <div class="form-group">
+        <div class="appointment-calendar">&nbsp;</div>
+      </div>
+    </div>
+  </div>
+  <%= render 'appointment' %>
+  <%= javascript_tag do %>
+    renderAppointmentCalendar();
+  <% end %>
+<% else %>
+  <% if @appointments.count > 0 %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>User</th>
+          <th>Clinic</th>
+          <th>Doctor</th>
+          <th>Start time</th>
+          <th>End time</th>
+          <th>Created time</th>
+          <th colspan="2"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @appointments.each do |appointment| %>
+          <tr>
+            <td><%= appointment.id %></td>
+            <td><%= appointment.user.try(:name) %></td>
+            <td><%= appointment.clinic.try(:name) %></td>
+            <td><%= appointment.doctor.try(:name) %></td>
+            <td><%= appointment.start_time.strftime("%B %-d, %Y %I:%M %P") %></td>
+            <td><%= appointment.end_time.strftime("%B %-d, %Y %I:%M %P") %></td>
+            <td><%= appointment.created_at.strftime("%B %-d, %Y %I:%M %P") %></td>
+            <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
+            <td><%= link_to 'Cancel', cancel_appointment_path(appointment), method: :post, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="text-center form-group">No appointments.</div>
+  <% end %>
+  <div class="form-group text-center">
+    <%= link_to 'New Appointment', new_appointment_path, class: 'btn btn-primary' %>
+  </div>
+<% end %>

@@ -57,13 +57,22 @@ class UsersController < ApplicationController
     else
       render 'edit'
     end    
-  end  
+  end
+
+  def favorites
+    if current_user.admin? or current_user.doctor?
+      redirect_to(root_url)
+    else
+      @favorite_clinics = current_user.favorite_clinics.order(:clinic_id)
+      @favorite_doctors = current_user.favorite_doctors.order(:doctor_id)
+    end
+  end
 
   private
 
     def user_params
       params.require(:user).permit(:name, :email, :mspnum, :password, :password_confirmation,
-          :address1, :address2, :city, :country, :provincestate, :zipcode, :phone, :gender, :birthdate, :user_type)
+          :address1, :address2, :city, :country, :provincestate, :zipcode, :phone, :gender, :birthdate, :user_type, :clinic_id)
     end
         # Confirms a logged-in user.
     def logged_in_user

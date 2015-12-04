@@ -11,6 +11,9 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   has_many :video_sessions, dependent: :destroy
   has_many :messages, dependent: :destroy
+  has_many :favorite_clinics, dependent: :destroy
+  has_many :favorite_doctors, dependent: :destroy
+  has_many :appointments, dependent: :destroy
 
   # Returns the hash digest of the given string.
   def User.digest(string)
@@ -26,6 +29,10 @@ class User < ActiveRecord::Base
 
   def doctor?
     user_type == 'doctor'
+  end
+
+  def patient?
+    user_type == 'patient'
   end
 
   def user_type_string

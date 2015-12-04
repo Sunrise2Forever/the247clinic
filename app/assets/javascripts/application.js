@@ -18,4 +18,6 @@
 //= require bootstrap-datetimepicker
 //= require jquery.ui.widget
 //= require jquery.fileupload
+//= require chosen-jquery
+//= require fullcalendar
 //= require_tree .

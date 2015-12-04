@@ -37,11 +37,21 @@
                 <span class="glyphicon glyphicon-envelope"></span>&nbsp;Messages
               <% end %>
             </li>
+            <li>
+              <%= link_to appointments_path do%>
+                <span class="glyphicon glyphicon-calendar"></span>&nbsp;Appointments
+              <% end %>
+            </li>
             <% if current_user.admin? %>
               <li>
-                  <%= link_to users_path do%>
-                  <span class="glyphicon glyphicon-th-list"></span>&nbsp;Users
-                  <% end %>
+                <%= link_to users_path do%>
+                <span class="glyphicon glyphicon-th-list"></span>&nbsp;Users
+                <% end %>
+              </li>
+              <li>
+                <%= link_to clinics_path do%>
+                  <span class="glyphicon glyphicon-plus"></span>&nbsp;Clinics
+                <% end %>
               </li>
             <% end %>
             <li class="dropdown">
@@ -58,6 +68,14 @@
                   <% end %>
                 </li>
                 <li class="divider"></li>
+                <% unless (current_user.doctor? or current_user.admin?) %>
+                  <li>
+                    <%= link_to favorites_users_path do %>
+                      <span class="glyphicon glyphicon-star-empty"></span>&nbsp;Favorites
+                    <% end %>
+                  </li>
+                  <li class="divider"></li>
+                <% end %>
                 <li>
                    <%= link_to logout_path, method: :delete do %>
                    <span class="glyphicon glyphicon-log-out"></span>&nbsp;Log out
@@ -65,11 +83,16 @@
                 </li>
               </ul>
             </li>
-            <% else %>
+          <% else %>
+            <li>
+              <%= link_to new_appointment_path do%>
+                <span class="glyphicon glyphicon-calendar"></span>&nbsp;Appointment
+              <% end %>
+            </li>
             <li>
               <%= link_to login_path do %>
-              <span class="glyphicon glyphicon-log-in"></span>&nbsp;<%= t('title.login') %>
-            <% end %>
+                <span class="glyphicon glyphicon-log-in"></span>&nbsp;<%= t('title.login') %>
+              <% end %>
             </li>
           <% end %>
         </ul>

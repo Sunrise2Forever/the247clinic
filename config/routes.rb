@@ -29,6 +29,14 @@ Rails.application.routes.draw do
       member do
         post 'reactivate'
       end
+      collection do
+        get 'favorites'
+      end
+    end
+    resources :doctors, only: :index do
+      collection do
+        get 'favorite'
+      end
     end
     resources :sessions
     resources :video_sessions do
@@ -51,6 +59,26 @@ Rails.application.routes.draw do
     end
     resources :photos, only: :create
     resources :history_video_sessions, only: [:index, :show]
+    resources :clinics do
+      collection do
+        get 'favorite'
+      end
+    end
+    resources :favorite_clinics, only: :create do
+      collection do
+        post 'remove'
+      end
+    end
+    resources :favorite_doctors, only: :create do
+      collection do
+        post 'remove'
+      end
+    end
+    resources :appointments do
+      member do
+        post 'cancel'
+      end
+    end
 
     resources :account_activations, only: [:edit]
     resources :password_resets,     only: [:new, :create, :edit, :update]

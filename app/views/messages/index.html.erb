@@ -16,7 +16,7 @@
         <td><%= message.id %></td>
         <td><%= message.user.name %></td>
         <td><%= message.message %></td>
-        <td><%= message.created_at %></td>
+        <td><%= message.created_at.strftime("%B %-d, %Y %I:%M %P") %></td>
         <td><%= link_to 'View', message_path(message) %></td>
         <td>
           <%= link_to 'End', message_path(message), method: :put if current_user.doctor? %>

@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  clinic_id: 1
+  doctor_id: 1
+  email: MyString
+  phone: MyString
+  start_time: 2015-12-05 16:34:02
+  end_time: 2015-12-05 16:34:02
+  status: MyString
+
+two:
+  user_id: 1
+  clinic_id: 1
+  doctor_id: 1
+  email: MyString
+  phone: MyString
+  start_time: 2015-12-05 16:34:02
+  end_time: 2015-12-05 16:34:02
+  status: MyString

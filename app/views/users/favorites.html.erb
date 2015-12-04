@@ -1,0 +1,52 @@
+<% provide(:title, "Favorites") %>
+<h1>Favorite Clinics</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+    <% if @favorite_clinics.count > 0 %>
+      <table class="table">
+        <tr>
+          <th>No</th>
+          <th>Name</th>
+        </tr>
+        <% @favorite_clinics.each do |favorite_clinic| %>
+          <tr>
+            <td><%= favorite_clinic.clinic.id %></td>
+            <td><%= favorite_clinic.clinic.name %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% else %>
+      <div class="text-center form-group">No favorite clinics.</div>
+    <% end %>
+    <div class="form-group text-center">
+      <%= link_to 'Edit favorite clinics', favorite_clinics_path, class: 'btn btn-primary' %>
+    </div>
+  </div>
+</div>
+
+<h1>Favorite Doctors</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+    <% if @favorite_doctors.count > 0 %>
+      <table class="table">
+        <tr>
+          <th>No</th>
+          <th>Name</th>
+        </tr>
+        <% @favorite_doctors.each do |favorite_doctor| %>
+          <tr>
+            <td><%= favorite_doctor.doctor.id %></td>
+            <td><%= favorite_doctor.doctor.name %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% else %>
+      <div class="text-center form-group">No favorite doctors.</div>
+    <% end %>
+    <div class="form-group text-center">
+      <%= link_to 'Edit favorite doctors', favorite_doctors_path, class: 'btn btn-primary' %>
+    </div>
+  </div>
+</div>
