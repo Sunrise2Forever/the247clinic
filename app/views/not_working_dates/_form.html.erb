@@ -1,0 +1,13 @@
+<%= form_for(@not_working_date) do |f| %>
+  <div class="form-group">
+    <%= f.label :date %>
+    <%= f.date_select :date, class: 'form-control' %>
+
+  </div>
+
+  <%= f.submit 'Submit', class: "btn btn-primary" %>
+<% end %>
+
+<script type="text/javascript">
+  $('.input-group').datetimepicker();
+</script>

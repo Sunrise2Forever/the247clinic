@@ -34,6 +34,9 @@ class UsersController < ApplicationController
   
   def edit
     @user = User.find(params[:id])
+    if current_user.doctor?
+      @not_working_dates = current_user.not_working_dates
+    end
   end
 
   def reactivate

@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :favorite_clinics, dependent: :destroy
   has_many :favorite_doctors, dependent: :destroy
   has_many :appointments, dependent: :destroy
+  has_many :not_working_dates, dependent: :destroy
 
   # Returns the hash digest of the given string.
   def User.digest(string)
