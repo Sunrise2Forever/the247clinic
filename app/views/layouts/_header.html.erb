@@ -37,11 +37,6 @@
                 <span class="glyphicon glyphicon-envelope"></span>&nbsp;Messages
               <% end %>
             </li>
-            <li>
-              <%= link_to appointments_path do%>
-                <span class="glyphicon glyphicon-calendar"></span>&nbsp;Appointments
-              <% end %>
-            </li>
             <% if current_user.admin? %>
               <li>
                 <%= link_to users_path do%>
@@ -51,6 +46,12 @@
               <li>
                 <%= link_to clinics_path do%>
                   <span class="glyphicon glyphicon-plus"></span>&nbsp;Clinics
+                <% end %>
+              </li>
+            <% else %>
+              <li>
+                <%= link_to appointments_path do%>
+                  <span class="glyphicon glyphicon-calendar"></span>&nbsp;Appointments
                 <% end %>
               </li>
             <% end %>
