@@ -1,0 +1,28 @@
+<div class="chat-template" id="chat_template">
+  <div class="chat-title-bar clearfix">
+    <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="chat-title">CSR</h4>
+  </div>
+  <div class="chat-messages-container">
+    <table class="table">
+      <tr>
+        <td>
+          <div class="chat-messages"></div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="chat-footer">
+    <textarea class="chat-message" placeholder="Type a message"></textarea>
+  </div>
+</div>
+<% if logged_in? %>
+  <div id="chat" data-api-key=<%= Pusher.key %> data-auth-endpoint=<%= pusher_auth_path %> ></div>
+  <%= javascript_tag do %>
+    <% if current_user.csr? %>
+      init_chat_session_csr("<%= current_user.name %>", <%= current_user.id %>)
+    <% else %>
+      init_chat_session("<%= current_user.name %>", <%= current_user.id %>)
+    <% end %>
+  <% end %>
+<% end %>

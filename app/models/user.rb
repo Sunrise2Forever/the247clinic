@@ -36,6 +36,10 @@ class User < ActiveRecord::Base
     user_type == 'patient'
   end
 
+  def csr?
+    user_type == 'csr'
+  end
+
   def user_type_string
     self.admin? ? 'Admin' : (self.doctor? ? 'Doctor' : 'Patient')
   end
