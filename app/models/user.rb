@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
   has_many :appointments, dependent: :destroy
   has_many :not_working_dates, dependent: :destroy
 
+  belongs_to :clinic
+
   # Returns the hash digest of the given string.
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -42,6 +44,23 @@ class User < ActiveRecord::Base
 
   def user_type_string
     self.admin? ? 'Admin' : (self.doctor? ? 'Doctor' : 'Patient')
+  end
+
+
+  def not_working_days
+    if read_attribute(:not_working_days).is_a?(String)
+      read_attribute(:not_working_days).split(',')
+    else
+      super
+    end
+  end
+
+  def not_working_days=(val)
+    if val.is_a?(Array)
+      self.not_working_days = val.join(',')
+    else
+      super
+    end
   end
 
   def remember

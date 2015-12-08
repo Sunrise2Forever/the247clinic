@@ -34,9 +34,7 @@ class UsersController < ApplicationController
   
   def edit
     @user = User.find(params[:id])
-    if current_user.doctor?
-      @not_working_dates = current_user.not_working_dates
-    end
+    @clinic = @user.clinic
   end
 
   def reactivate
@@ -75,7 +73,7 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :mspnum, :password, :password_confirmation,
-          :address1, :address2, :city, :country, :provincestate, :zipcode, :phone, :gender, :birthdate, :user_type, :clinic_id)
+          :address1, :address2, :city, :country, :provincestate, :zipcode, :phone, :gender, :birthdate, :user_type, :clinic_id, not_working_days:[])
     end
         # Confirms a logged-in user.
     def logged_in_user

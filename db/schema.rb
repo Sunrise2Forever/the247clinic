@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151205083403) do
+ActiveRecord::Schema.define(version: 20151208165312) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -44,8 +44,10 @@ ActiveRecord::Schema.define(version: 20151205083403) do
 
   create_table "clinics", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.string   "opening_days"
+    t.string   "not_opening_days"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -125,6 +127,8 @@ ActiveRecord::Schema.define(version: 20151205083403) do
     t.date     "birthdate"
     t.string   "user_type"
     t.integer  "clinic_id"
+    t.string   "working_days"
+    t.string   "not_working_days"
   end
 
   create_table "video_sessions", force: :cascade do |t|

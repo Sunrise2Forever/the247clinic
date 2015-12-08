@@ -13,6 +13,11 @@ class ClinicsController < AuthenticateController
     @clinic = Clinic.find_by(id: params[:id])
   end
 
+  def show
+    @clinic = Clinic.find_by(id: params[:id])
+    render json: @clinic
+  end
+
   def create
     @clinic = Clinic.new(clinic_params)
     if @clinic.save
@@ -54,7 +59,7 @@ class ClinicsController < AuthenticateController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def clinic_params
-      params.require(:clinic).permit(:name)
+      params.require(:clinic).permit(:name, not_opening_days:[])
     end
     # Confirms an admin user.
     def admin_user

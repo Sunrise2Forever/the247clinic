@@ -1,9 +1,18 @@
 <%= form_for(@clinic) do |f| %>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :name %><br>
     <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :not_opening_days %><br>
+    <%= f.select :not_opening_days, Date::DAYNAMES,
+                 { include_blank: true },
+                 { multiple: true, class: 'form-control chosen-select', data: {placeholder: 'Choose days of week'}} %>
   </div>
   <div class="actions">
     <%= f.submit class: 'btn btn-primary' %>
   </div>
+<% end %>
+<%= javascript_tag do %>
+  $('.chosen-select').chosen({no_results_text: 'No results matched'});
 <% end %>

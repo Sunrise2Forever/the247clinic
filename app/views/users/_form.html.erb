@@ -14,11 +14,21 @@
   <% end %>
 
   <div class="select_clinic_section">
-    <%= f.label :clinic %>
-    <%= f.select :clinic_id,
-                 Clinic.all.map { |clinic| [clinic.name, clinic.id] },
-                 { include_blank: true }
-    %>
+    <div class="form-group">
+      <%= f.label :clinic %>
+      <%= f.select :clinic_id,
+                   Clinic.all.map { |clinic| [clinic.name, clinic.id] },
+                   { include_blank: true },
+                   { class: 'form-control' }
+      %>
+    </div>
+    <div class="form-group">
+      <%= f.label :not_working_days %>
+      <%= f.select :not_working_days, @clinic.present? ? Date::DAYNAMES - @clinic.not_opening_days : Date::DAYNAMES,
+                   { include_blank: true },
+                   { multiple: true, class: 'form-control chosen-select', data: {placeholder: 'Choose days of week'}}
+      %>
+    </div>
   </div>
 
   <%= f.label :name %>
@@ -62,7 +72,9 @@
   <%= f.submit class: "btn btn-primary" %>
 <% end %>
 
-<script type="text/javascript">
+<%= javascript_tag do %>
   $('.input-group').datetimepicker();
+  $('.chosen-select').chosen({no_results_text: 'No results matched'});
   init_clinic_section('<%= @user.user_type %>');
-</script>
+<% end %>
+

@@ -162,7 +162,7 @@ select {
 }
 
 input {
-  height: auto !important;
+  //height: auto !important;
 }
 
 #error_explanation {
@@ -318,3 +318,6 @@ input {
   text-align: center;
 }
 
+.chosen-choices {
+  border-radius: 5px;
+}
