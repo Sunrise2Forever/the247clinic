@@ -24,7 +24,7 @@
     </div>
     <div class="form-group">
       <%= f.label :not_working_days %>
-      <%= f.select :not_working_days, @clinic.present? ? Date::DAYNAMES - @clinic.not_opening_days : Date::DAYNAMES,
+      <%= f.select :not_working_days, @not_working_days,
                    { include_blank: true },
                    { multiple: true, class: 'form-control chosen-select', data: {placeholder: 'Choose days of week'}}
       %>

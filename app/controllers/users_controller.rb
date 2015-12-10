@@ -13,6 +13,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    @not_working_days = Date::DAYNAMES
   end
   
   def destroy
@@ -35,6 +36,11 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
     @clinic = @user.clinic
+    if @clinic.present? and @clinic.not_opening_days
+      @not_working_days = Date::DAYNAMES - @clinic.not_opening_days
+    else
+      @not_working_days = Date::DAYNAMES
+    end
   end
 
   def reactivate
