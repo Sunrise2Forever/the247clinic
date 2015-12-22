@@ -1,25 +1,51 @@
-<header>
+<header class="header">
   <nav class="navbar navbar-fixed-top navbar-inverse">
     <div class="container">
-      <div class="navbar-header">
+      <a class="logo navbar-brand" href="/">24-7 Online Clinic</a>
+<!--       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">24-7 Online Clinic</a>
+        <a class="" href="/"></a> -->
+      <!-- </div> -->
+      <div class="topbar">
+        <ul class="loginbar pull-right">
+            <li class="hoverSelector">
+                <i class="fa fa-globe"></i>
+                <a>Languages</a>
+                <ul class="languages hoverSelectorBlock">
+                    <li>
+                      <%= link_to t('menu.languages.en'), change_locale_path(:en) %>
+                    </li>
+                    <li>
+                      <%= link_to t('menu.languages.zh-CN'), change_locale_path('zh-CN') %>
+                    </li>
+                    <li>
+                      <%= link_to t('menu.languages.zh-TW'), change_locale_path('zh-TW') %>
+                    </li>
+                </ul>
+            </li>
+            <li class="topbar-devider"></li>
+            <li><%= link_to 'Help', help_path %></li>
+            <li class="topbar-devider"></li>
+            <li><%= link_to 'Login', login_path %></li>
+        </ul>
       </div>
-        <div class="collapse navbar-collapse" id="navbar">  
-        <ul class="nav navbar-nav navbar-right">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="fa fa-bars"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse navbar-responsive-collapse">
+      <div class="container">
+        <ul class="nav navbar-nav">
           <li>
             <%= link_to root_path do %>
             <span class="glyphicon glyphicon-home"></span>&nbsp;<%= t('content.home') %>
            <% end %>
-          </li>
-          <li><%= link_to help_path do %>
-            <span class="glyphicon glyphicon-question-sign"></span>&nbsp;<%= t('content.help') %>
-            <% end %>
           </li>
           <% if logged_in? %>
             <li>
@@ -90,15 +116,9 @@
                 <span class="glyphicon glyphicon-calendar"></span>&nbsp;Appointment
               <% end %>
             </li>
-            <li>
-              <%= link_to login_path do %>
-                <span class="glyphicon glyphicon-log-in"></span>&nbsp;<%= t('title.login') %>
-              <% end %>
-            </li>
           <% end %>
         </ul>
-        <p class="navbar-text navbar-right navbar-link locale"><%= link_to t('menu.languages.en'), change_locale_path(:en) %> | <%= link_to t('menu.languages.zh-CN'), change_locale_path('zh-CN') %> | <%= link_to t('menu.languages.zh-TW'), change_locale_path('zh-TW') %></p> 
-      </div>
+      </div><!--/end container-->
     </div>
   </nav>
 </header>
