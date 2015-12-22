@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(version: 20151208165312) do
     t.string   "name"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
-    t.string   "opening_days"
     t.string   "not_opening_days"
   end
 
@@ -127,7 +126,6 @@ ActiveRecord::Schema.define(version: 20151208165312) do
     t.date     "birthdate"
     t.string   "user_type"
     t.integer  "clinic_id"
-    t.string   "working_days"
     t.string   "not_working_days"
   end
 
