@@ -12,11 +12,6 @@ $gray-medium-light: #eaeaea;
 }
 
 /* universal */
-
-body {
-  padding-top: 90px;
-}
-
 section {
   overflow: auto;
 }
@@ -71,6 +66,10 @@ p {
 
 header {
   margin-bottom: 20px;
+}
+
+.header .logo {
+  min-height: 80px;
 }
 
 #logo {

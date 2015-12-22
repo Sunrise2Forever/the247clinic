@@ -1,17 +1,19 @@
-<%= form_for(@appointment) do |f| %>
+<%= form_for(@appointment, class: 'reg-page') do |f| %>
   <% if current_user %>
     <div class="field">
       <%= f.label :clinic %>
       <%= f.select :clinic_id,
                    current_user.favorite_clinics.map { |favorite_clinic| [favorite_clinic.clinic.name, favorite_clinic.clinic.id] },
-                   { include_blank: true }
+                   { include_blank: true },
+                   { class: 'form-control' }
       %>
     </div>
     <div class="field">
       <%= f.label :doctor %>
       <%= f.select :doctor_id,
                    current_user.favorite_doctors.map { |favorite_doctor| [favorite_doctor.doctor.name, favorite_doctor.doctor.id] },
-                   { include_blank: true }
+                   { include_blank: true },
+                   { class: 'form-control' }
       %>
     </div>
   <% else %>

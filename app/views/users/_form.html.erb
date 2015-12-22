@@ -1,4 +1,4 @@
-<%= form_for(@user) do |f| %>
+<%= form_for(@user, html: { class: 'reg-page '}) do |f| %>
   <%= render 'shared/error_messages', object: @user %>
 
   <%= f.label :user_type %>
@@ -7,7 +7,7 @@
       <%= @user.user_type_string %>
     </div>
   <% else %>
-    <%= f.select :user_type, class: 'form-control' do %>
+    <%= f.select :user_type, [], {}, {class: 'form-control'} do %>
       <%= content_tag(:option, 'Patient', value: 'patient') %>
       <%= content_tag(:option, 'Doctor', value: 'doctor', selected: @user.doctor?) %>
     <% end %>
@@ -45,7 +45,7 @@
   <%= f.label :address2 %>
   <%= f.text_field :address2, class: 'form-control' %>
   <%= f.label :city %>
-  <%= f.select :city, class: 'form-control' do %>
+  <%= f.select :city, [], {}, class: 'form-control' do %>
     <% [['Vancouver', 1], ['Richmond', 2], ['Burnaby', 3], ['Surrey', 4], ['North Vancouver', 5]].each do |c| -%>
       <%= content_tag(:option, c.first, value: c.last) %>
     <% end %>
