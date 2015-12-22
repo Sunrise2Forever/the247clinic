@@ -47,4 +47,4 @@ gem 'compass-rails', '2.0.4'
 gem 'chosen-rails'
 gem 'fullcalendar-rails'
 gem 'active_model_serializers'
-
+gem 'font-awesome-sass', '~> 4.5.0'
