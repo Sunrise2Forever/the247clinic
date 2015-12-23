@@ -91,6 +91,6 @@ class AppointmentsController < AuthenticateController
     end
 
     def appointment_custom_params
-      params.require(:appointment).permit(:email, :phone, :start_time, :end_time)
+      params.require(:appointment).permit(:email, :phone, :clinic_id, :doctor_id, :start_time, :end_time)
     end
 end
