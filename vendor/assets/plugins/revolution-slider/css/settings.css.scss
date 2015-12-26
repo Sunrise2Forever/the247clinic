@@ -2341,11 +2341,11 @@ zoom: 1;
 
 @font-face {
   font-family: 'revicons';
-  src: asset-path('revolution-slider/font/revicons.eot?5510888');
-  src: asset-path('revolution-slider/font/revicons.eot?5510888#iefix') format('embedded-opentype'),
-       asset-path('revolution-slider/font/revicons.woff?5510888') format('woff'),
-       asset-path('revolution-slider/font/revicons.ttf?5510888') format('truetype'),
-       asset-path('revolution-slider/font/revicons.svg?5510888#revicons') format('svg');
+  src: asset-url('revolution-slider/font/revicons.eot?5510888');
+  src: asset-url('revolution-slider/font/revicons.eot?5510888#iefix') format('embedded-opentype'),
+       asset-url('revolution-slider/font/revicons.woff?5510888') format('woff'),
+       asset-url('revolution-slider/font/revicons.ttf?5510888') format('truetype'),
+       asset-url('revolution-slider/font/revicons.svg?5510888#revicons') format('svg');
   font-weight: normal;
   font-style: normal;
 }
