@@ -9,15 +9,54 @@
     <p>Please click <%= link_to 'here', video_sessions_url %> to go to Pending Call Backs page.</p>
   </div>
 <% end %>
-<div class="center jumbotron">
-  <h1>Welcome to 24-7 Online Clinic</h1>
-  <h2>
+<% if logged_in? %>
+  <div class="center jumbotron">
+    <h1>Welcome to 24-7 Online Clinic</h1>
+    <h2>
     Welcome to your online clinic where you will receive access to doctors within your city without waiting in line or making an appointment.
-  </h2>
+    </h2>
+    <% if logged_in? %>
+      <%= link_to 'New Video Session', new_video_session_path, class: "btn btn-primary" %>
+    <% else %>
+      <%= link_to t('content.signup_now'), signup_path, class: "btn btn-lg btn-primary" %>
+    <% end %>
+  </div>
+<% else %>
 
-  <% if logged_in? %>
-    <%= link_to 'New Video Session', new_video_session_path, class: "btn btn-primary" %>
-  <% else %>
-    <%= link_to t('content.signup_now'), signup_path, class: "btn btn-lg btn-primary" %>
-  <% end %>
-</div>
+  <!--=== Slider Block ===-->
+  <%= render 'banner' %>
+
+  <!--=== Service Block ===-->
+  <div class="container content-sm">
+      <div class="row">
+          <div class="col-md-4 content-boxes-v6 md-margin-bottom-50">
+              <i class="rounded-x icon-link"></i>
+              <h1 class="title-v3-md text-uppercase margin-bottom-10">Fully responsive</h1>
+              <p>At vero eos et accusato odio dignissimos ducimus qui blanditiis praesentium voluptatum.</p>
+          </div>
+          <div class="col-md-4 content-boxes-v6 md-margin-bottom-50">
+              <i class="rounded-x icon-paper-plane"></i>
+              <h2 class="title-v3-md text-uppercase margin-bottom-10">Modern design</h2>
+              <p>At vero eos et accusato odio dignissimos ducimus qui blanditiis praesentium voluptatum.</p>
+          </div>
+          <div class="col-md-4 content-boxes-v6">
+              <i class="rounded-x icon-refresh"></i>
+              <h2 class="title-v3-md text-uppercase margin-bottom-10">Powerful slides</h2>
+              <p>At vero eos et accusato odio dignissimos ducimus qui blanditiis praesentium voluptatum.</p>
+          </div>
+      </div>
+  </div>
+
+  <!--=== Parallax Backgound ===-->
+    <div class="bg-image-v2 bg-image-v2-dark parallaxBg1">
+        <div class="container">
+            <div class="headline-center-v2 margin-bottom-10">
+                <h2>Unify is a clean and fully responsive incredible template</h2>
+                <span class="bordered-icon"><i class="fa fa-th-large"></i></span>
+                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et qua s molestias excepturi vehicula sem ut volutpat. Ut non libero magna fusce co.</p><br><br>
+                <button type="button" class="btn-u btn-brd btn-brd-hover btn-u-light">Download Now</button>
+            </div><!--/Headline Center V2-->
+        </div><!--/container-->
+    </div>
+
+<% end %>

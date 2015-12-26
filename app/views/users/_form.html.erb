@@ -1,4 +1,11 @@
 <%= form_for(@user, html: { class: 'reg-page '}) do |f| %>
+
+  <% if current_page?(signup_path) %>
+    <div class='reg-header'>
+      <h2><%= t('form_header.signup') %></h2>
+      <p>Already Signed Up? Click <%= link_to t('content.login'), login_path %> to login your account.</p>
+    </div>
+  <% end %>
   <%= render 'shared/error_messages', object: @user %>
 
   <%= f.label :user_type %>
@@ -63,13 +70,23 @@
   <%= f.label :birthdate %>
   <%= f.date_select :birthdate, class: 'form-control' %>
 
-  <%= f.label :password %>
-  <%= f.password_field :password, class: 'form-control' %>
+  <div class="row margin-top-20">
+    <div class="col-sm-6">
+      <%= f.label :password %>
+      <%= f.password_field :password, class: 'form-control' %>
+    </div>
+    <div class="col-sm-6">
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation, class: 'form-control' %>
+    </div>
+  </div>
 
-  <%= f.label :password_confirmation, "Confirmation" %>
-  <%= f.password_field :password_confirmation, class: 'form-control' %>
-
-  <%= f.submit class: "btn btn-primary" %>
+  <hr>
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-6 text-right">
+      <%= f.button class: "btn-u" %>
+    </div>
+  </div>
 <% end %>
 
 <%= javascript_tag do %>
