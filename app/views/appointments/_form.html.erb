@@ -25,6 +25,22 @@
       <%= f.label :phone %><br>
       <%= f.text_field :phone, class: 'form-control' %>
     </div>
+    <div class="field">
+      <%= f.label :clinic %>
+      <%= f.select :clinic_id,
+                   Clinic.all.map { |clinic| [clinic.name, clinic.id] },
+                   { include_blank: true },
+                   { class: 'form-control' }
+      %>
+    </div>
+    <div class="field">
+      <%= f.label :doctor %>
+      <%= f.select :doctor_id,
+                   Doctor.all.map { |doctor| [doctor.name, doctor.id] },
+                   { include_blank: true },
+                   { class: 'form-control' }
+      %>
+    </div>
   <% end %>
   <div class="field form-group">
     <%= f.label :start_time %><br>
@@ -40,5 +56,5 @@
 <% end %>
 
 <script type="text/javascript">
-  $('.input-group').datetimepicker({sideBySide: true});
+  $('.input-group').datetimepicker({sideBySide: true, minDate: new Date()});
 </script>

@@ -8,16 +8,19 @@
   <% end %>
   <%= render 'shared/error_messages', object: @user %>
 
-  <%= f.label :user_type %>
   <% if @user.id %>
+    <%= f.label :user_type %>
     <div class='form-control form-group'>
       <%= @user.user_type_string %>
     </div>
   <% else %>
+    <!--
+    <%= f.label :user_type %>
     <%= f.select :user_type, [], {}, {class: 'form-control'} do %>
       <%= content_tag(:option, 'Patient', value: 'patient') %>
       <%= content_tag(:option, 'Doctor', value: 'doctor', selected: @user.doctor?) %>
     <% end %>
+    -->
   <% end %>
 
   <div class="select_clinic_section">
@@ -44,8 +47,22 @@
   <%= f.label :email %>
   <%= f.email_field :email, class: 'form-control' %>
 
+  <%= f.label :password %>
+  <%= f.password_field :password, class: 'form-control' %>
+
+  <%= f.label :password_confirmation, "Confirmation" %>
+  <%= f.password_field :password_confirmation, class: 'form-control' %>
+
+  <%= f.label :phone %>
+  <%= f.telephone_field :phone, class: 'form-control' %>
+
   <%= f.label :mspnum %>
   <%= f.text_field :mspnum, class: 'form-control' %>
+
+  <div class="form-group">
+    <%= f.label :birthdate %>
+    <%= f.date_select :birthdate, class: 'form-control' %>
+  </div>
 
   <%= f.label :address1 %>
   <%= f.text_field :address1, class: 'form-control' %>
@@ -63,8 +80,6 @@
   <%= f.text_field :provincestate, class: 'form-control' %>
   <%= f.label :zipcode %>
   <%= f.text_field :zipcode, class: 'form-control' %>
-  <%= f.label :phone %>
-  <%= f.telephone_field :phone, class: 'form-control' %>
   <%= f.label :gender %>
   <%= f.text_field :gender, class: 'form-control' %>
   <%= f.label :birthdate %>
