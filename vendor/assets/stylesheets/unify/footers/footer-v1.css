@@ -32,7 +32,7 @@
 
 /*Dotted Map*/
 .footer-v1 .footer .map-img {
-	background: url(map-img.png) 5px 60px no-repeat;
+	background: asset-url('map-img.png') 5px 60px no-repeat;
 }
 
 /*Blog Posts (with images)*/
