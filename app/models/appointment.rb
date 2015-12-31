@@ -8,6 +8,12 @@ class Appointment < ActiveRecord::Base
   validate :time_range
   validate :working_days
 
+  # Just set default end_time, not select end_time via UI
+  before_validation :set_default_values
+  def set_default_values
+    self.end_time = self.start_time + 15.minutes
+  end
+
   def time_range
     if start_time and end_time
       errors.add(:start_time, "must be smaller than End time") if (DateTime.parse(start_time.to_s) >= DateTime.parse(end_time.to_s))

@@ -46,15 +46,17 @@
     <%= f.label :start_time %><br>
     <%= f.datetime_select :start_time %>
   </div>
+  <!--
   <div class="field form-group">
     <%= f.label :end_time %><br>
     <%= f.datetime_select :end_time %>
   </div>
+  -->
   <div class="actions">
     <%= f.submit class: 'btn btn-primary' %>
   </div>
 <% end %>
 
 <script type="text/javascript">
-  $('.input-group').datetimepicker({sideBySide: true, minDate: new Date()});
+  $('.input-group').datetimepicker({sideBySide: true, minDate: new Date(), stepping: 15, defaultDate: new Date()});
 </script>
