@@ -23,7 +23,9 @@
           <th>Clinic</th>
           <th>Doctor</th>
           <th>Start time</th>
+          <!--
           <th>End time</th>
+          -->
           <th>Created time</th>
           <th colspan="2"></th>
         </tr>
@@ -37,7 +39,9 @@
             <td><%= appointment.clinic.try(:name) %></td>
             <td><%= appointment.doctor.try(:name) %></td>
             <td><%= appointment.start_time.strftime("%B %-d, %Y %I:%M %P") %></td>
+            <!--
             <td><%= appointment.end_time.strftime("%B %-d, %Y %I:%M %P") %></td>
+            -->
             <td><%= appointment.created_at.strftime("%B %-d, %Y %I:%M %P") %></td>
             <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
             <td><%= link_to 'Cancel', cancel_appointment_path(appointment), method: :post, data: { confirm: 'Are you sure?' } %></td>
