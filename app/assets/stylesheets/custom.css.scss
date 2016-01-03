@@ -12,8 +12,8 @@ $gray-medium-light: #eaeaea;
 }
 
 @font-face {
-  font-family: AVENGEANCE HEROIC AVENGER;
-  src: url("AVENGEANCE HEROIC AVENGER.ttf");
+  font-family: "AVENGEANCE HEROIC AVENGER";
+  src: font-url("avengeance.ttf");
 }
 
 /* universal */
@@ -314,4 +314,10 @@ input {
 .logo {
   font-size: 50px;
   font-family: "AVENGEANCE HEROIC AVENGER";
+  text-decoration: none !important;
+  span {
+    margin: 0;
+    position: relative;
+    z-index: 1;
+  }
 }
