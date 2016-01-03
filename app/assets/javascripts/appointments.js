@@ -39,7 +39,7 @@ function renderAppointmentCalendar() {
       defaultView: 'agendaWeek',
       editable: true,
       droppable: true, // this allows things to be dropped onto the calendar
-      slotDuration: { minutes: 15 },
+      slotDuration: { minutes: 10 },
       // This array is the events sources
       events: appointment_objects,
       eventClick: function (calEvent, jsEvent, view) {

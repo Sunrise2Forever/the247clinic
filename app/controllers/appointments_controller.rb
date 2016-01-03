@@ -35,6 +35,11 @@ class AppointmentsController < AuthenticateController
       @appointment = current_user.appointments.new(appointment_params)
     else
       @appointment = Appointment.new(appointment_custom_params)
+      if @appointment.user_name.blank?
+        flash[:danger] = "Name can't be blank"
+        render :new
+        return
+      end
       if @appointment.email.blank?
         flash[:danger] = "Email can't be blank"
         render :new
@@ -91,6 +96,6 @@ class AppointmentsController < AuthenticateController
     end
 
     def appointment_custom_params
-      params.require(:appointment).permit(:email, :phone, :clinic_id, :doctor_id, :start_time, :end_time)
+      params.require(:appointment).permit(:email, :phone, :user_name, :clinic_id, :doctor_id, :start_time, :end_time)
     end
 end

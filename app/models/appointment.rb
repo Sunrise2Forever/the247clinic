@@ -11,7 +11,7 @@ class Appointment < ActiveRecord::Base
   # Just set default end_time, not select end_time via UI
   before_validation :set_default_values
   def set_default_values
-    self.end_time = self.start_time + 15.minutes
+    self.end_time = self.start_time + 10.minutes
   end
 
   def time_range
