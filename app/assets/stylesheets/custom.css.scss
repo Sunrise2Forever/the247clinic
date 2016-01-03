@@ -11,6 +11,11 @@ $gray-medium-light: #eaeaea;
   box-sizing:         border-box;
 }
 
+@font-face {
+  font-family: AVENGEANCE HEROIC AVENGER;
+  src: url("AVENGEANCE HEROIC AVENGER.ttf");
+}
+
 /* universal */
 section {
   overflow: auto;
@@ -304,4 +309,9 @@ input {
 
 .chosen-choices {
   //border-radius: 5px;
+}
+
+.logo {
+  font-size: 50px;
+  font-family: "AVENGEANCE HEROIC AVENGER";
 }
