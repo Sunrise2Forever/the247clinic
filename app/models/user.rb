@@ -18,6 +18,13 @@ class User < ActiveRecord::Base
 
   belongs_to :clinic
 
+  after_create :generate_authentication_token!
+
+  def generate_authentication_token!
+    self.authentication_token = Digest::SHA1.hexdigest("#{Time.now}-#{self.id}-#{self.updated_at}")
+    self.save
+  end
+
   # Returns the hash digest of the given string.
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :

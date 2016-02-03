@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160103035938) do
+ActiveRecord::Schema.define(version: 20160203191224) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -106,14 +106,14 @@ ActiveRecord::Schema.define(version: 20160103035938) do
     t.string   "name"
     t.string   "email"
     t.integer  "mspnum"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.string   "password_digest"
     t.string   "remember_digest"
     t.string   "activation_digest"
-    t.boolean  "activated",         default: false
+    t.boolean  "activated",            default: false
     t.datetime "activated_at"
-    t.boolean  "admin",             default: false
+    t.boolean  "admin",                default: false
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
     t.string   "address1"
@@ -128,7 +128,10 @@ ActiveRecord::Schema.define(version: 20160103035938) do
     t.string   "user_type"
     t.integer  "clinic_id"
     t.string   "not_working_days"
+    t.string   "authentication_token"
   end
+
+  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token"
 
   create_table "video_sessions", force: :cascade do |t|
     t.integer  "user_id"

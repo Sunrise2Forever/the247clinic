@@ -84,7 +84,17 @@ Rails.application.routes.draw do
     resources :account_activations, only: [:edit]
     resources :password_resets,     only: [:new, :create, :edit, :update]
     
-  get '/change_locale/:locale', to: 'settings#change_locale', as: :change_locale
+    get '/change_locale/:locale', to: 'settings#change_locale', as: :change_locale
+
+    namespace :api do
+      namespace :v1 do
+        resources :users, only: [:create, :update] do
+          collection do
+            post 'sign_in' => 'sessions#create'
+          end
+        end
+      end
+    end
 
 
   # The priority is based upon order of creation: first created -> highest priority.
