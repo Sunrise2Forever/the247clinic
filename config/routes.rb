@@ -93,6 +93,12 @@ Rails.application.routes.draw do
             post 'sign_in' => 'sessions#create'
           end
         end
+        resources :video_sessions
+        resources :appointments
+        resources :clinics
+        resources :doctors
+        resources :messages
+        resources :call_backs
       end
     end
 

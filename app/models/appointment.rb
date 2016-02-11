@@ -11,7 +11,9 @@ class Appointment < ActiveRecord::Base
   # Just set default end_time, not select end_time via UI
   before_validation :set_default_values
   def set_default_values
-    self.end_time = self.start_time + 10.minutes
+    if self.start_time.present?
+      self.end_time = self.start_time + 10.minutes
+    end
   end
 
   def time_range
@@ -21,16 +23,18 @@ class Appointment < ActiveRecord::Base
   end
 
   def working_days
-    cur_time = start_time
-    while cur_time < end_time do
-      day_of_week = cur_time.strftime("%A")
-      if clinic.present? and clinic.not_opening_days.present? and clinic.not_opening_days.include?(day_of_week)
-        errors.add(:clinic, "will not open at that time")
+    if start_time and end_time
+      cur_time = start_time
+      while cur_time < end_time do
+        day_of_week = cur_time.strftime("%A")
+        if clinic.present? and clinic.not_opening_days.present? and clinic.not_opening_days.include?(day_of_week)
+          errors.add(:clinic, "will not open at that time")
+        end
+        if doctor.present? and doctor.not_working_days.present? and doctor.not_working_days.include?(day_of_week)
+          errors.add(:doctor, "will not work at that time")
+        end
+        cur_time = cur_time + 1.day
       end
-      if doctor.present? and doctor.not_working_days.present? and doctor.not_working_days.include?(day_of_week)
-        errors.add(:doctor, "will not work at that time")
-      end
-      cur_time = cur_time + 1.day
     end
   end
 

@@ -2,7 +2,7 @@ class Api::V1::AuthenticateController < ActionController::Base
   before_action :authenticate
 
   def authenticate
-    @current_user = User.find_by(authentication_token: params[:authentication_token])
+    @current_user = User.find_by(authentication_token: params[:user_token])
     render json: 'Unauthorized', status: :unauthorized if @current_user.blank?
   end
 
