@@ -33,7 +33,7 @@ class Api::V1::DoctorsController < Api::V1::AuthenticateController
 
   private
      def doctor_params
-      params.require(:doctor).permit(:name, :email, :phone, :mspnum, :birthdate, :password, :password_confirmation, :clinic_id, not_working_days:[])
+      params.require(:doctor).permit(:name, :email, :phone, :mspnum, :birthdate, :password, :password_confirmation, :user_type, :clinic_id, not_working_days:[])
     end
 
     def set_doctor

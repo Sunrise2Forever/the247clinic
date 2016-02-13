@@ -25,13 +25,11 @@ class Api::V1::UsersController < Api::V1::AuthenticateController
     end
 
     def user_update_params
-      params.require(:user).permit(:name, :email, :phone, :mspnum, :birthdate, :password, :password_confirmation, :clinic_id, not_working_days:[])
+      params.require(:user).permit(:name, :email, :phone, :mspnum, :birthdate, :password, :password_confirmation, :user_type, :clinic_id, not_working_days:[])
     end
 
     def set_user
       @user = User.find_by(id: params[:id])
-      if @user.blank? or @user.id != current_user['id']
-        render json: { error: 'Invalid user' }
-      end
+      render json: { result: 'fail' } if @user.nil?
     end
 end
