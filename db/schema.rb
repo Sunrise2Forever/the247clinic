@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160203191224) do
+ActiveRecord::Schema.define(version: 20160223084851) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -94,6 +94,17 @@ ActiveRecord::Schema.define(version: 20160203191224) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "opentok_sessions", force: :cascade do |t|
+    t.integer  "video_session_id"
+    t.string   "session_id"
+    t.string   "token"
+    t.string   "e"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "opentok_sessions", ["video_session_id"], name: "index_opentok_sessions_on_video_session_id"
 
   create_table "photos", force: :cascade do |t|
     t.integer  "video_session_id"

@@ -93,7 +93,11 @@ Rails.application.routes.draw do
             post 'sign_in' => 'sessions#create'
           end
         end
-        resources :video_sessions
+        resources :video_sessions do
+          member do
+            resource :opentok_session, only: :show
+          end
+        end
         resources :appointments
         resources :clinics
         resources :doctors

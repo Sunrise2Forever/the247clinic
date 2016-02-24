@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  video_session_id: 
+  session_id: MyString
+  token: MyString
+  e: MyString
+
+two:
+  video_session_id: 
+  session_id: MyString
+  token: MyString
+  e: MyString

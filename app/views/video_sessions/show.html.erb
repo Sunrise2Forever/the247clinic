@@ -62,5 +62,6 @@
 <% end %>
 
 <script>
-  init_video_session(<%= current_user.id %>, "<%= current_user.name %>", <%= @video_session.id %>, <%= @video_session.user_id %>);
+  init_video_session(<%= current_user.id %>, "<%= current_user.name %>", <%= @video_session.id %>, <%= @video_session.user_id %>,
+      "<%= ENV['OPENTOK_API_KEY'] %>", "<%= @video_session.opentok_session.session_id %>", "<%= @video_session.opentok_session.token %>");
 </script>

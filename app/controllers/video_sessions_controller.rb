@@ -1,3 +1,5 @@
+require 'opentok'
+
 class VideoSessionsController < AuthenticateController
 
   def new
@@ -47,6 +49,12 @@ class VideoSessionsController < AuthenticateController
         redirect_to video_sessions_path
       end
 
+      if @video_session.opentok_session.try(:token).blank?
+        opentok = OpenTok::OpenTok.new ENV['OPENTOK_API_KEY'], ENV['OPENTOK_SECRET']
+        session = opentok.create_session :media_mode => :routed
+        token = session.generate_token
+        @video_session.create_opentok_session(session_id: session.session_id, token: token)
+      end
       if current_user.doctor?
         set_s3_direct_post
         @photo = Photo.new

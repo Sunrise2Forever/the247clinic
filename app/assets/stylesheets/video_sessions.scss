@@ -11,6 +11,7 @@
 }
 
 #remoteVideos {
+  height: 300px;
   video {
     border: 1px solid #ccc;
     right: 0;
@@ -44,9 +45,20 @@
   min-height: 100px;
 }
 
+#remoteVideoContainer {
+  border: 1px solid #ccc;
+  width: 100%;
+  height: 300px;
+  margin-bottom: 15px;
+}
+
 #localVideoContainer {
   position: absolute;
+  left: 5px;
   bottom: 5px;
+  width: 160px;
+  height: 120px;
+  border: 1px solid #ccc;
 }
 
 #messages {

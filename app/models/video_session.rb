@@ -4,6 +4,7 @@ class VideoSession < ActiveRecord::Base
   belongs_to :doctor, class_name: 'User'
   belongs_to :call_back
   has_many :photos
+  has_one :opentok_session
 
   scope :pending, -> { where(status: :pending) }
   scope :started, -> { where(status: :started) }
