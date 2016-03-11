@@ -1,5 +1,7 @@
 class VideoSessionSerializer < ActiveModel::Serializer
-  attributes :id, :user_id, :symptom, :doctor_id, :start_time, :finish_time, :status, :user_name, :doctor_name
+  attributes :id, :user_id, :symptom, :doctor_id, :start_time, :finish_time, :status, :user_name, :doctor_name, :notes, :photos
+
+  has_many :photos
 
   def user_name
   	object.user.try(:name)

@@ -34,7 +34,7 @@ class Api::V1::VideoSessionsController < Api::V1::AuthenticateController
 
   private
   def video_session_params
-    params.require(:video_session).permit(:user_id, :symptom, :doctor_id, :start_time, :finish_time, :status)
+    params.require(:video_session).permit(:user_id, :symptom, :doctor_id, :start_time, :finish_time, :status, :notes)
   end
 
   def set_video_session
