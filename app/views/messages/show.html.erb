@@ -4,12 +4,12 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
     <div class="form-group">
-      <label><%= @message.user.name %></label>
+      <label><%= @message.user.try(:name) %></label>
       <div class="message"><%= @message.message.gsub(/\n/, '<br>').html_safe() %></div>
     </div>
     <% @message.answers.each do |answer| %>
       <div class="form-group">
-        <label><%= answer.user.name %></label>
+        <label><%= answer.user.try(:name) %></label>
         <div class="message"><%= answer.message.gsub(/\n/, '<br>').html_safe() %></div>
       </div>
   <% end %>

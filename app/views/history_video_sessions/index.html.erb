@@ -17,7 +17,7 @@
     <% @video_sessions.each do |video_session| %>
       <tr>
         <td><%= video_session.id %></td>
-        <td><%= video_session.user.name %></td>
+        <td><%= video_session.user.try(:name) %></td>
         <td><%= video_session.symptom %></td>
         <td><%= video_session.created_at.strftime("%B %-d, %Y %I:%M %P") %></td>
         <td><%= video_session.doctor.try(:name) %></td>

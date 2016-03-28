@@ -1,5 +1,5 @@
 class VideoSession < ActiveRecord::Base
-  validates_presence_of :symptom
+  validates_presence_of :symptom, :user_id
   belongs_to :user
   belongs_to :doctor, class_name: 'User'
   belongs_to :call_back
