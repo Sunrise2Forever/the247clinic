@@ -12,7 +12,7 @@ class Api::V1::VideoSessionsController < Api::V1::AuthenticateController
 
   def index
     @video_sessions = VideoSession.all
-    render json: @video_sessions
+    render json: @video_sessions.order(created_at: :desc)
   end
 
   def show
