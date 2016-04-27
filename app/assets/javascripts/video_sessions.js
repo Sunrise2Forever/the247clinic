@@ -2,7 +2,7 @@
 var channel;
 var webrtc;
 
-function init_video_session(current_user_id, current_user_name, video_session_id, video_session_user_id, opentok_api_key, opentok_session_id, opentok_token) {
+function init_video_session(current_user_id, current_user_name, video_session_id, video_session_user_id, opentok_api_key, opentok_session_id, opentok_token, is_csr) {
   var $messages = $('#messages');
   var $play_video_stream = true;
 
@@ -69,10 +69,10 @@ function init_video_session(current_user_id, current_user_name, video_session_id
       });
       session.signal({ type: 'peerConnected', data: JSON.stringify(currentUser)});
 
-      if (currentUser.id == video_session_user_id) {
-        $('#waiting-message h2').text('Waiting for Doctor');
-      } else {
+      if (is_csr || currentUser.id != video_session_user_id) {
         $('#waiting-message h2').text('Waiting for Patient');
+      } else {
+        $('#waiting-message h2').text('Waiting for Doctor');
       }
     } else {
       $('#waiting-message h2').text(error.message);

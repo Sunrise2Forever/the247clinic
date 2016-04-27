@@ -7,8 +7,17 @@ class VideoSessionsController < AuthenticateController
   end
   
   def create
-    video_session = current_user.video_sessions.new(params.require(:video_session).permit(:symptom))
-    video_session.status = :pending
+    if params[:online_visit].present?
+      if current_user.csr?
+        video_session = current_user.video_sessions.new(doctor_id: current_user.id, status: :online, symptom: 'Online Visit')
+      else
+        redirect_to root_path        
+      end
+    else
+      video_session = current_user.video_sessions.new(params.require(:video_session).permit(:symptom))
+      video_session.status = :pending
+    end
+    
     if video_session.save
       flash.clear
       redirect_to video_session_path(video_session.id)
@@ -35,18 +44,31 @@ class VideoSessionsController < AuthenticateController
   def show
     @video_session = VideoSession.find_by(id: params[:id])
     if @video_session
-      @is_doctor =  (@video_session.user_id != current_user.id and current_user.doctor?)
-      if @is_doctor and @video_session.status == 'pending'
-        @video_session.status = :started
-        @video_session.start_time = Time.zone.now
-        @video_session.doctor_id = current_user.id
-        @video_session.save
-      end
-      if @video_session.status != 'started' and @video_session.status != 'pending'
-        redirect_to video_sessions_path
-      end
-      if @video_session.status == 'started' and @video_session.user_id != current_user.id and @video_session.doctor_id != current_user.id
-        redirect_to video_sessions_path
+      if @video_session.status == 'online'
+        if current_user.csr?           
+          redirect_to video_sessions_path and return if @video_session.doctor_id != current_user.id
+          @is_csr = true
+        else
+          if @video_session.user_id == @video_session.doctor_id
+            @video_session.update(user_id: current_user.id)
+          else
+            redirect_to video_sessions_path and return if @video_session.user_id != current_user.id
+          end
+        end
+      else
+        @is_doctor =  (@video_session.user_id != current_user.id and current_user.doctor?)
+        if @is_doctor and @video_session.status == 'pending'
+          @video_session.status = :started
+          @video_session.start_time = Time.zone.now
+          @video_session.doctor_id = current_user.id
+          @video_session.save
+        end
+        if @video_session.status != 'started' and @video_session.status != 'pending' and @video_session.status != 'online'
+          redirect_to video_sessions_path and return
+        end
+        if @video_session.status == 'started' and @video_session.user_id != current_user.id and @video_session.doctor_id != current_user.id
+          redirect_to video_sessions_path and return
+        end
       end
 
       if @video_session.opentok_session.try(:token).blank?
@@ -54,8 +76,12 @@ class VideoSessionsController < AuthenticateController
         session = opentok.create_session :media_mode => :routed
         token = session.generate_token
         @video_session.create_opentok_session(session_id: session.session_id, token: token)
+      elsif @video_session.opentok_session.updated_at < 24.hours.ago
+        opentok = OpenTok::OpenTok.new ENV['OPENTOK_API_KEY'], ENV['OPENTOK_SECRET']
+        token = opentok.generate_token @video_session.opentok_session.session_id
+        @video_session.opentok_session.update(token: token)      
       end
-      if current_user.doctor?
+      if @is_doctor
         set_s3_direct_post
         @photo = Photo.new
       end

@@ -1,4 +1,20 @@
-<% if @is_doctor %>
+<% if @is_csr %>
+  <% provide(:title, "Online Visit") %>
+  <h1>Online Visit</h1>
+
+  <div id="waiting-message"><h2>Waiting for Patient</h2></div>
+
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+      <div>
+        <%= render 'video_stream' %>
+      </div>
+      <div class="form-group">
+        <%= button_to 'Schedule Call Back', new_call_back_path(@video_session), method: :get, class: "btn btn-primary form-control" %>
+      </div>
+    </div>
+  </div>
+<% elsif @is_doctor %>
   <% provide(:title, "Video Session with Patient") %>
   <h1>Video Session with Patient</h1>
 
@@ -38,8 +54,9 @@
     </div>
   </div>
 <% else %>
-  <% provide(:title, "Video Session") %>
-  <h1>Video Session</h1>
+  <% title = @video_session.status == 'online' ? 'Online Visit' : 'Video Session' %>
+  <% provide(:title, title) %>
+  <h1><%= title %></h1>
 
   <div id="waiting-message"><h2>Waiting for Doctor</h2></div>
 
@@ -63,5 +80,5 @@
 
 <script>
   init_video_session(<%= current_user.id %>, "<%= current_user.name %>", <%= @video_session.id %>, <%= @video_session.user_id %>,
-      "<%= ENV['OPENTOK_API_KEY'] %>", "<%= @video_session.opentok_session.session_id %>", "<%= @video_session.opentok_session.token %>");
+      "<%= ENV['OPENTOK_API_KEY'] %>", "<%= @video_session.opentok_session.session_id %>", "<%= @video_session.opentok_session.token %>", <%= @is_csr.present? %>);
 </script>

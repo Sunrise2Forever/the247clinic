@@ -9,9 +9,22 @@ class VideoSession < ActiveRecord::Base
   scope :pending, -> { where(status: :pending) }
   scope :started, -> { where(status: :started) }
 
-  after_create :set_pending_timeout
+  after_create :video_session_created
+  after_update :video_session_updated
 
   def set_pending_timeout
     Delayed::Job.enqueue(PendingVideoSession.new(self.id), run_at: 15.minutes.from_now)
+  end
+
+  def video_session_updated
+    if status_changed? and self.status == 'pending'
+      set_pending_timeout
+    end
+  end
+
+  def video_session_created
+    if self.status == 'pending'
+      set_pending_timeout
+    end
   end
 end

@@ -5,6 +5,7 @@
   <%= f.select :user_type, class: 'form-control' do %>
     <%= content_tag(:option, 'Patient', value: 'patient') %>
     <%= content_tag(:option, 'Doctor', value: 'doctor', selected: @user.doctor?) %>
+    <%= content_tag(:option, 'CSR', value: 'csr', selected: @user.csr?) %>
   <% end %>
 
   <div class="select_clinic_section">

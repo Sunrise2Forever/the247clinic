@@ -1,12 +1,9 @@
 //= require pusher.min
-
+/*
 var pusher;
 var chat_csr_channel, chat_message_channel;
 var chat_message_channels = [];
 var chat_messages = [];
-
-var opentok_presence_session_id = "<%= ENV['OPENTOK_PRESENCE_SESSION_ID'] %>";
-var opentok_presence_session_token = "<%= ENV['OPENTOK_PRESENCE_SESSION_TOKEN'] %>";
 
 function init_chat_session(current_user_name, current_user_id) {
   if (!current_user_id)
@@ -159,9 +156,8 @@ function set_chat_session_start_handler(){
     $('#chat_template').find('.chat-message').trigger(e);
     $('#chat_template').show();
   });
-
-
 }
 
 $(window).on('page:load', set_chat_session_start_handler);
 $(document).ready(set_chat_session_start_handler);
+*/

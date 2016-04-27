@@ -1,6 +1,6 @@
 <% provide(:title, "Dashboard") %>
 <% if current_user.doctor? %>
-  <h1>Pending Video Sessions</h1>
+  <h1>Scheduled Visits</h1>
 
   <div class="row">
     <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
@@ -22,7 +22,7 @@
           <% end %>
         </table>
       <% else %>
-        <div class="text-center">No pending video sessions.</div>
+        <div class="text-center">No Scheduled Visits.</div>
       <% end %>
     </div>
   </div>
