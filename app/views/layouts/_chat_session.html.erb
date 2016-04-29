@@ -19,10 +19,6 @@
 <% if logged_in? %>
   <div id="chat" data-api-key=<%= Pusher.key %> data-auth-endpoint=<%= pusher_auth_path %> ></div>
   <%= javascript_tag do %>
-    <% if current_user.csr? %>
-      init_chat_session_csr("<%= current_user.name %>", <%= current_user.id %>)
-    <% else %>
-      init_chat_session("<%= current_user.name %>", <%= current_user.id %>)
-    <% end %>
+    init_chat_session("<%= current_user.name %>", <%= current_user.id %>, "<%= current_user.user_type %>", "<%= ENV['OPENTOK_API_KEY'] %>", "<%= ENV['OPENTOK_PRESENCE_SESSION_ID'] %>", "<%= current_user.presence_token %>");
   <% end %>
 <% end %>

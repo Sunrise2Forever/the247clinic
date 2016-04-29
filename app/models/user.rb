@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
   end
 
   def user_type_string
-    self.admin? ? 'Admin' : (self.doctor? ? 'Doctor' : 'Patient')
+    self.admin? ? 'Admin' : (self.user_type.try(:capitalize) || 'Patient')
   end
 
 

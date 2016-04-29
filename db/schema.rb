@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160223084851) do
+ActiveRecord::Schema.define(version: 20160429182721) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(version: 20160223084851) do
     t.integer  "clinic_id"
     t.string   "not_working_days"
     t.string   "authentication_token"
+    t.string   "presence_token"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token"
