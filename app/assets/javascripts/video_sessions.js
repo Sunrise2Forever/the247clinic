@@ -45,7 +45,7 @@ function init_video_session(current_user_id, current_user_name, video_session_id
       peer_user_name = user.name;
       setMessage(peer_user_name, '<em>Connected</em>');
       if (current_user_status == 'online') {
-        notify_current_user_status('busy');  
+        notify_current_user_status('busy', video_session_id);  
       }      
     }
   });
@@ -79,7 +79,7 @@ function init_video_session(current_user_id, current_user_name, video_session_id
         $('#waiting-message h2').text('Waiting for Doctor');
       }
 
-      notify_current_user_status('online');
+      notify_current_user_status('online', video_session_id);
     } else {
       $('#waiting-message h2').text(error.message);
     }
@@ -111,7 +111,7 @@ function init_video_session(current_user_id, current_user_name, video_session_id
       peer_user_name = null;
 
       if (current_user_status == 'busy') {
-        notify_current_user_status('online');
+        notify_current_user_status('online', video_session_id);
       }
     }
   });
@@ -217,7 +217,7 @@ function init_video_session(current_user_id, current_user_name, video_session_id
     session.signal({ type: 'client-finish-video-session', data: currentUser.id });
   });
 
-  if (currentUser.id == video_session_user_id) {
+  if (!is_csr && currentUser.id == video_session_user_id) {
     window.addEventListener('beforeunload', function(e) {
       if (e.target.location.pathname == '/video_sessions/' + video_session_id) {
         $.ajax({ type: "POST", url: '/video_sessions/' + video_session_id + '/call_backs', success: function() {}, dataType: 'json' });

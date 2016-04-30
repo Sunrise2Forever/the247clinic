@@ -10,6 +10,7 @@ var present_users = [];
 var presence_session;
 var current_user;
 var current_user_status = 'present';
+var current_video_session_id;
 
 function init_chat_session(current_user_name, current_user_id, current_user_type, opentok_api_key, presence_session_id, current_user_presence_token) {
   if (!current_user_id)
@@ -67,7 +68,8 @@ function init_chat_session(current_user_name, current_user_id, current_user_type
   presence_session.on('signal:client-status', function (event) {
     data = JSON.parse(event.data);
     if (present_users[data.user_id]) {
-      present_users[data.user_id].status = data.status;  
+      present_users[data.user_id].status = data.status; 
+      present_users[data.user_id].video_session_id = data.video_session_id;  
     }
     console.log(present_users[data.user_id]);
   });
@@ -77,15 +79,20 @@ function init_chat_session(current_user_name, current_user_id, current_user_type
   });
 }
 
-function notify_current_user_status(status) {
+function notify_current_user_status(status, video_session_id = null) {
   current_user_status = status;
-  presence_session.signal({ type: 'client-status', data: JSON.stringify({user_id: current_user.id, status: current_user_status}) },
-    function(error) {
-      if (error) {
-        alert(error.message);
+  if (video_session_id) {
+    current_video_session_id = video_session_id;  
+  }  
+  if (presence_session && presence_session.connection) {
+    presence_session.signal({ type: 'client-status', data: JSON.stringify({user_id: current_user.id, status: current_user_status, video_session_id: current_video_session_id}) },
+      function(error) {
+        if (error) {
+          alert(error.message);
+        }
       }
-    }
-  );
+    );    
+  }
 }
 
 function chat_prepare(user_id, current_user_id) {
@@ -150,7 +157,7 @@ function set_chat_session_start_handler(){
     }
     present_csrs = $.grep(present_users, function(user) { return user && user.user_type == 'csr'; });
     if (present_csrs.length == 0) {
-      alert("CSR is not present");
+      alert("CSR will be available soon");
     } else {
       csr_user = present_csrs[Math.floor(Math.random() * present_csrs.length)];
       d = $('#chat_' + csr_user.id);
@@ -167,6 +174,16 @@ function set_chat_session_start_handler(){
     if (present_user) {
       chat_prepare(user_id, current_user.id);  
     }    
+  });
+
+  $('.start-online-visit').on('click', function() {
+    online_csrs = $.grep(present_users, function(user) { return user && user.user_type == 'csr' && user.status == 'online'; });
+    if (online_csrs.length == 0) {
+      alert("CSR will be available soon");
+    } else {
+      csr_user = online_csrs[Math.floor(Math.random() * online_csrs.length)];
+      window.location.href = "/video_sessions/" + csr_user.video_session_id;
+    }
   });
 }
 

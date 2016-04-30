@@ -17,9 +17,14 @@
     </h2>
     <% if logged_in? %>
       <% if current_user.csr? %>
-        <%= link_to 'Start Online Visit', video_sessions_path(params: { video_session: {}, online_visit: true }), method: :post, class: "btn btn-primary" %>
+        <%= link_to video_sessions_path(params: { video_session: {}, online_visit: true }), method: :post, class: "btn btn-primary" do %>
+          <span class="glyphicon glyphicon-camera"></span>&nbsp;Start Online Visit
+        <% end %>
       <% else %>
         <%= link_to 'New Video Session', new_video_session_path, class: "btn btn-primary" %>
+        <%= link_to '', class: "btn btn-primary start-online-visit" do %>
+          <span class="glyphicon glyphicon-camera"></span>&nbsp;Start New Visit
+        <% end %>
       <% end %>
     <% else %>
       <%= link_to t('content.signup_now'), signup_path, class: "btn btn-lg btn-primary" %>

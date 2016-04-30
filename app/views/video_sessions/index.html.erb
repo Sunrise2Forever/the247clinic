@@ -21,11 +21,67 @@
             </tr>
           <% end %>
         </table>
+        <div class="text-center"><%= will_paginate @video_sessions, param_name: :scheduled_visit_page %></div>
       <% else %>
         <div class="text-center">No Scheduled Visits.</div>
       <% end %>
     </div>
   </div>
+<% end %>
+
+<h1>Scheduled Online Visits</h1>
+
+<% if @online_visits.count > 0 %>
+  <table class="table">
+    <tr>
+      <th>No</th>
+      <th>Created Time</th>
+      <th>User</th>
+      <th>CSR</th>
+      <th>Scheduled Time</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    <% @online_visits.each do |online_visit| %>
+      <tr>
+        <td><%= online_visit.id %></td>
+        <td><%= online_visit.created_at.strftime("%B %-d, %Y %I:%M %P") %></td>
+        <td><%= online_visit.user.try(:name) %></td>
+        <td><%= online_visit.csr.try(:name) %></td>
+        <td><%= online_visit.scheduled_time.strftime("%B %-d, %Y %I:%M %P") if online_visit.scheduled_time %></td>
+
+        <% if (current_user.id == online_visit.user_id or current_user.id == online_visit.csr_id) and online_visit.scheduled_time.present? and online_visit.scheduled_time <= Time.zone.now %>
+          <td>
+            <%= link_to online_visit_path(online_visit), class: 'btn btn-default' do %>
+              <span class="glyphicon glyphicon-play-circle"></span> Start
+            <% end %>
+          </td>
+        <% else %>
+          <td></td>
+        <% end %>
+
+        <% if current_user.id == online_visit.csr_id or (current_user.csr? and online_visit.csr_id.nil?) %>
+          <td>
+            <%= link_to edit_online_visit_path(online_visit), class: 'btn btn-default' do %>
+              <span class="glyphicon glyphicon-pencil"></span> Edit
+            <% end %>
+          </td>
+          <td>
+            <%= link_to online_visit, method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-default' do %>
+              <span class="glyphicon glyphicon-trash"></span> Delete
+            <% end %>
+          </td>
+        <% else %>
+          <td></td>
+          <td></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+  <div class="text-center"><%= will_paginate @online_visits, param_name: :online_visit_page %></div>
+<% else %>
+  <div class="text-center">No Online Visits.</div>
 <% end %>
 
 <h1>Pending Call Backs</h1>

@@ -1,0 +1,13 @@
+<%= form_for(@online_visit) do |f| %>
+  <div class="form-group">
+    <%= f.label :scheduling_time %>
+    <%= f.datetime_select :scheduled_time, class: 'form-control' %>
+
+  </div>
+
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>
+
+<script type="text/javascript">
+  $('.input-group').datetimepicker({sideBySide: true, minDate: new Date()});
+</script>
