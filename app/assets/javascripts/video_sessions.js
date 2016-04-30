@@ -44,11 +44,15 @@ function init_video_session(current_user_id, current_user_name, video_session_id
       peer_user_id = user.id;
       peer_user_name = user.name;
       setMessage(peer_user_name, '<em>Connected</em>');
+      if (current_user_status == 'online') {
+        notify_current_user_status('busy');  
+      }      
     }
   });
 
   session.on('sessionDisconnected', function(event) {
     setMessage('You', '<em>Disconnected</em>');
+    notify_current_user_status('present');
     console.log('You were disconnected from the session.', event.reason);
   });
 
@@ -74,6 +78,8 @@ function init_video_session(current_user_id, current_user_name, video_session_id
       } else {
         $('#waiting-message h2').text('Waiting for Doctor');
       }
+
+      notify_current_user_status('online');
     } else {
       $('#waiting-message h2').text(error.message);
     }
@@ -93,15 +99,20 @@ function init_video_session(current_user_id, current_user_name, video_session_id
   session.on('signal:peerDisconnected', function (event) {
     if (event.data == peer_user_id) {
       setMessage(peer_user_name, '<em>Disconnected</em>');
-      if (currentUser.id == video_session_user_id) {
-        $('#waiting-message h2').text('Waiting for Doctor');
-      } else {
+      if (is_csr || currentUser.id != video_session_user_id) {
         $('#waiting-message h2').text('Waiting for Patient');
+      } else {
+        $('#waiting-message h2').text('Waiting for Doctor');
       }
+
       $('#waiting-message').show();
       subscriber = null;
       peer_user_id = null;
       peer_user_name = null;
+
+      if (current_user_status == 'busy') {
+        notify_current_user_status('online');
+      }
     }
   });
 
@@ -211,15 +222,18 @@ function init_video_session(current_user_id, current_user_name, video_session_id
       if (e.target.location.pathname == '/video_sessions/' + video_session_id) {
         $.ajax({ type: "POST", url: '/video_sessions/' + video_session_id + '/call_backs', success: function() {}, dataType: 'json' });
       }
+      notify_current_user_status('present');
     }, false);
 
     $('a').on('click', function() {
       close_video_session();
       $.ajax({ type: "POST", url: '/video_sessions/' + video_session_id + '/call_backs', success: function() {}, dataType: 'json' });
+      notify_current_user_status('present');
     });
   } else {
     $('a').on('click', function() {
       close_video_session();
+      notify_current_user_status('present');
     });
   }
 

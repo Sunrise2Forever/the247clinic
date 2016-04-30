@@ -9,6 +9,7 @@ var present_users = [];
 
 var presence_session;
 var current_user;
+var current_user_status = 'present';
 
 function init_chat_session(current_user_name, current_user_id, current_user_type, opentok_api_key, presence_session_id, current_user_presence_token) {
   if (!current_user_id)
@@ -23,20 +24,31 @@ function init_chat_session(current_user_name, current_user_id, current_user_type
   
   presence_session.on("connectionCreated", function(event) {
     user = JSON.parse(event.connection.data);
-    present_users[user.id] = user;
     console.log('connected ' + event.connection.data);
 
-    presence_session.on('signal:client-chat-message-from-' + user.id + '-to-' + current_user_id, function (event) {
-      message = JSON.parse(event.data);
-      d = $('#chat_' + message.user_id);
-      d.find('.chat-messages').append('<div class="col-sm-12"><div class="chat-time">' + moment().format('MMMM d, YYYY, hh:mm a') + '</div></div>');
-      d.find('.chat-messages').append('<div class="col-sm-12"><div class="chat-message-received">' + message.data + '</div></div>');
-      d.show();
-      d.find('.chat-messages-container').scrollTop(d.find('.chat-messages-container').prop('scrollHeight'));
-      chat_messages[message.user_id] = { messages: d.find('.chat-messages').html(), display: true };
-    });
-
-    chat_prepare(user.id, current_user_id);
+    if (!present_users[user.id]) {
+      present_users[user.id] = user;
+      presence_session.signal({ type: 'request-client-status-' + user.id },
+        function(error) {
+          if (error) {
+            alert(error.message);
+          }
+        }
+      );
+    }
+    if ($('#chat_' + user.id).length == 0) {
+      chat_prepare(user.id, current_user_id);      
+      presence_session.on('signal:client-chat-message-from-' + user.id + '-to-' + current_user_id, function (event) {
+        data = JSON.parse(event.data);
+        d = $('#chat_' + data.user_id);
+        d.find('.chat-messages').append('<div class="col-sm-12"><div class="chat-time">' + moment().format('MMMM d, YYYY, hh:mm a') + '</div></div>');
+        d.find('.chat-messages').append('<div class="col-sm-12"><div class="chat-message-received">' + data.message + '</div></div>');
+        d.show();
+        d.find('.chat-messages-container').scrollTop(d.find('.chat-messages-container').prop('scrollHeight'));
+        chat_messages[data.user_id] = { messages: d.find('.chat-messages').html(), display: true };
+      });
+    }
+    notify_current_user_status(current_user_status);
   });
   
   presence_session.on("connectionDestroyed", function(event) {
@@ -47,11 +59,33 @@ function init_chat_session(current_user_name, current_user_id, current_user_type
 
   presence_session.connect(current_user_presence_token, function(error) {
   // If the connection is successful, initialize a publisher and publish to the session
-    if (!error) {
-    } else {
+    if (error) {
       alert(error.message);
     }
   });
+
+  presence_session.on('signal:client-status', function (event) {
+    data = JSON.parse(event.data);
+    if (present_users[data.user_id]) {
+      present_users[data.user_id].status = data.status;  
+    }
+    console.log(present_users[data.user_id]);
+  });
+
+  presence_session.on('signal:request-client-status-' + current_user_id, function (event) {
+    notify_current_user_status(current_user_status);
+  });
+}
+
+function notify_current_user_status(status) {
+  current_user_status = status;
+  presence_session.signal({ type: 'client-status', data: JSON.stringify({user_id: current_user.id, status: current_user_status}) },
+    function(error) {
+      if (error) {
+        alert(error.message);
+      }
+    }
+  );
 }
 
 function chat_prepare(user_id, current_user_id) {
@@ -60,7 +94,6 @@ function chat_prepare(user_id, current_user_id) {
     d.attr('id', 'chat_' + user_id);
     d.appendTo($('#chat_template').parent());
     d.find('.chat-title').text(present_users[user_id].name);
-
 
     if (chat_messages[user_id]) {
       d.find('.chat-messages').append(chat_messages[user_id].messages);
@@ -74,7 +107,7 @@ function chat_prepare(user_id, current_user_id) {
       d = $('#chat_' + user_id);
       if(e.keyCode == 13 && !e.shiftKey) {
         if ($(this).val()) {
-          presence_session.signal({ type: 'client-chat-message-from-' + current_user_id + '-to-' + user_id, data: JSON.stringify({user_id: current_user_id, data: $(this).val()})},
+          presence_session.signal({ type: 'client-chat-message-from-' + current_user_id + '-to-' + user_id, data: JSON.stringify({user_id: current_user_id, message: $(this).val()})},
             function(error) {
               if (error) {
                 alert(error.message);
