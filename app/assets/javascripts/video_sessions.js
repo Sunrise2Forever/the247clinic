@@ -89,7 +89,7 @@ function init_video_session(current_user_id, current_user_name, video_session_id
   session.on('signal:client-finish-video-session', function (event) {
     if (event.data != currentUser.id) {
       if (is_csr) {
-        window.location.href = '/video_sessions'
+        window.location.href = '/video_sessions';
       } else {
         if (currentUser.id == video_session_user_id) {
           window.location.href = "/video_sessions/" + video_session_id + "/edit/feedback";
@@ -287,7 +287,9 @@ function init_video_session(current_user_id, current_user_name, video_session_id
     if (!$('.present-doctors').val()) {
       alert('Please select a doctor');
     } else {
-      transfer_video_session($('.present-doctors').val());
+      if (confirm('Are you sure?')) {
+        transfer_video_session($('.present-doctors').val());  
+      }      
     }    
   });
 }
