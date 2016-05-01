@@ -77,6 +77,12 @@ function init_chat_session(current_user_name, current_user_id, current_user_type
   presence_session.on('signal:request-client-status-' + current_user_id, function (event) {
     notify_current_user_status(current_user_status);
   });
+
+  presence_session.on('signal:transfer-video-session-' + current_user_id, function (event) {
+    data = JSON.parse(event.data);
+    window.location.href = '/video_sessions/' + data.video_session_id;
+  });
+
 }
 
 function notify_current_user_status(status, video_session_id = null) {
@@ -93,6 +99,20 @@ function notify_current_user_status(status, video_session_id = null) {
       }
     );    
   }
+}
+
+function transfer_video_session(doctor_id) {
+  $.ajax({url: '/video_sessions/' + current_video_session_id + '/transfer?doctor_id=' + doctor_id, method: 'post', success: function(){
+    presence_session.signal({ type: 'transfer-video-session-' + doctor_id, data: JSON.stringify({video_session_id: current_video_session_id}) },
+      function(error) {
+        if (error) {
+          alert(error.message);
+        } else {
+          window.location.href = '/video_sessions';
+        }
+      }
+    );    
+  }});
 }
 
 function chat_prepare(user_id, current_user_id) {

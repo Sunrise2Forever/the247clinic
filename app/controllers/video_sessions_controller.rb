@@ -114,19 +114,26 @@ class VideoSessionsController < AuthenticateController
   def finish
     @video_session = VideoSession.find_by(id: params[:id])
 
-    if @video_session and (@video_session.status == 'started' or @video_session.status == 'pending')
-      @is_doctor =  (@video_session.user_id != current_user.id)
-      if @is_doctor
-        @video_session.notes = params[:video_session][:notes]
+    if @video_session and (@video_session.status == 'started' or @video_session.status == 'pending' or @video_session.status == 'online')
+      if current_user.csr? and @video_session.doctor_id == current_user.id
         @video_session.finish_time = Time.zone.now
         @video_session.status = :finished
         @video_session.save
         redirect_to video_sessions_path
       else
-        @video_session.finish_time = Time.zone.now
-        @video_session.status = :finished
-        @video_session.save
-        render :feedback
+        @is_doctor =  (@video_session.user_id != current_user.id)
+        if @is_doctor
+          @video_session.notes = params[:video_session][:notes]
+          @video_session.finish_time = Time.zone.now
+          @video_session.status = :finished
+          @video_session.save
+          redirect_to video_sessions_path
+        else
+          @video_session.finish_time = Time.zone.now
+          @video_session.status = :finished
+          @video_session.save
+          render :feedback
+        end
       end
     else
       redirect_to video_sessions_path
@@ -163,6 +170,16 @@ class VideoSessionsController < AuthenticateController
     else
       flash[:danger] = @video_session.errors.full_messages.first
       render :notes
+    end
+  end
+
+  def transfer
+    @video_session = VideoSession.find_by(id: params[:id])
+    if current_user.csr? and current_user.id = @video_session.doctor_id and @video_session.status == 'online'
+      @video_session.update(doctor_id: params[:doctor_id], status: :pending)
+      render json: @video_session
+    else
+      render json: {}, status: :unprocessable_entity
     end
   end
 

@@ -58,7 +58,7 @@ class OnlineVisitsController < AuthenticateController
     if online_visit and (online_visit.user_id == current_user.id or online_visit.csr_id == current_user.id) and online_visit.scheduled_time <= Time.zone.now
       video_session = online_visit.video_session
       if video_session.nil?
-        video_session = online_visit.create_video_session(user_id: online_visit.user_id, symptom: 'Scheduled Online Visit', status: :online)
+        video_session = online_visit.create_video_session(user_id: online_visit.user_id, doctor_id: online_visit.csr_id, symptom: 'Scheduled Online Visit', status: :online)
       end
       redirect_to video_session_path(video_session)
     else

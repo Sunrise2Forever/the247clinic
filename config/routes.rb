@@ -46,6 +46,7 @@ Rails.application.routes.draw do
         patch 'finish', to: 'video_sessions#finish'
         patch 'update/feedback', to: 'video_sessions#update_feedback'
         patch 'update/notes', to: 'video_sessions#update_notes'
+        post 'transfer'
 
         resources :call_backs, only: [:new, :create]
         resources :online_visits, only: [:new, :create]

@@ -88,10 +88,14 @@ function init_video_session(current_user_id, current_user_name, video_session_id
 
   session.on('signal:client-finish-video-session', function (event) {
     if (event.data != currentUser.id) {
-      if (currentUser.id == video_session_user_id) {
-        window.location.href = "/video_sessions/" + video_session_id + "/edit/feedback";
+      if (is_csr) {
+        window.location.href = '/video_sessions'
       } else {
-        window.location.href = "/video_sessions/" + video_session_id + "/edit/notes";
+        if (currentUser.id == video_session_user_id) {
+          window.location.href = "/video_sessions/" + video_session_id + "/edit/feedback";
+        } else {
+          window.location.href = "/video_sessions/" + video_session_id + "/edit/notes";
+        }        
       }
     }
   });
@@ -214,7 +218,11 @@ function init_video_session(current_user_id, current_user_name, video_session_id
   });
 
   $('#finish_video_session').click(function (e) {
-    session.signal({ type: 'client-finish-video-session', data: currentUser.id });
+    if (confirm('Are you sure?')) {
+      session.signal({ type: 'client-finish-video-session', data: currentUser.id });  
+    } else {
+      return false;
+    }    
   });
 
   if (!is_csr && currentUser.id == video_session_user_id) {
@@ -256,5 +264,31 @@ function init_video_session(current_user_id, current_user_name, video_session_id
 
     return new Blob([ia], {type:mimeString});
   }
+
+  $('.btn-transfer-video-session-to-doctor').click(function (e) {
+    $('.present-doctors').html('');
+    $.each(present_users, function(index, user) {
+      if (user && user.user_type == 'doctor' && user.status == 'present') {
+        $('.present-doctors').append('<option value="' + user.id + '">' + user.name + '</option');
+      }
+    })
+  });
+
+  $('.btn-chat').click(function (e) {
+    if (!$('.present-doctors').val()) {
+      alert('Please select a doctor');
+    } else {
+      d = $('#chat_' + $('.present-doctors').val());
+      d.show();
+    }    
+  });
+
+  $('.btn-transfer').click(function (e) {
+    if (!$('.present-doctors').val()) {
+      alert('Please select a doctor');
+    } else {
+      transfer_video_session($('.present-doctors').val());
+    }    
+  });
 }
 
