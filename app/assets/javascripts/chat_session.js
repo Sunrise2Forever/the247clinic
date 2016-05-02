@@ -49,7 +49,7 @@ function init_chat_session(current_user_name, current_user_id, current_user_type
         chat_messages[data.user_id] = { messages: d.find('.chat-messages').html(), display: true };
       });
     }
-    notify_current_user_status(current_user_status);
+    notify_current_user_status(current_user_status, current_video_session_id);
   });
   
   presence_session.on("connectionDestroyed", function(event) {
@@ -75,7 +75,7 @@ function init_chat_session(current_user_name, current_user_id, current_user_type
   });
 
   presence_session.on('signal:request-client-status-' + current_user_id, function (event) {
-    notify_current_user_status(current_user_status);
+    notify_current_user_status(current_user_status, current_video_session_id);
   });
 
   presence_session.on('signal:transfer-video-session-' + current_user_id, function (event) {
@@ -85,11 +85,9 @@ function init_chat_session(current_user_name, current_user_id, current_user_type
 
 }
 
-function notify_current_user_status(status, video_session_id = null) {
+function notify_current_user_status(status, video_session_id) {
   current_user_status = status;
-  if (video_session_id) {
-    current_video_session_id = video_session_id;  
-  }  
+  current_video_session_id = video_session_id;  
   if (presence_session && presence_session.connection) {
     presence_session.signal({ type: 'client-status', data: JSON.stringify({user_id: current_user.id, status: current_user_status, video_session_id: current_video_session_id}) },
       function(error) {

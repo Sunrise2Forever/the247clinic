@@ -52,7 +52,7 @@ function init_video_session(current_user_id, current_user_name, video_session_id
 
   session.on('sessionDisconnected', function(event) {
     setMessage('You', '<em>Disconnected</em>');
-    notify_current_user_status('present');
+    notify_current_user_status('present', null);
     console.log('You were disconnected from the session.', event.reason);
   });
 
@@ -230,18 +230,18 @@ function init_video_session(current_user_id, current_user_name, video_session_id
       if (e.target.location.pathname == '/video_sessions/' + video_session_id) {
         $.ajax({ type: "POST", url: '/video_sessions/' + video_session_id + '/call_backs', success: function() {}, dataType: 'json' });
       }
-      notify_current_user_status('present');
+      notify_current_user_status('present', null);
     }, false);
 
     $('a').on('click', function() {
       close_video_session();
       $.ajax({ type: "POST", url: '/video_sessions/' + video_session_id + '/call_backs', success: function() {}, dataType: 'json' });
-      notify_current_user_status('present');
+      notify_current_user_status('present', null);
     });
   } else {
     $('a').on('click', function() {
       close_video_session();
-      notify_current_user_status('present');
+      notify_current_user_status('present', null);
     });
   }
 
