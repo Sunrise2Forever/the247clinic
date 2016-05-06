@@ -1,5 +1,5 @@
 <% provide(:title, "Dashboard") %>
-<% if current_user.doctor? %>
+<% if current_user.doctor? or current_user.csr? %>
   <h1>Scheduled Visits</h1>
 
   <div class="row">

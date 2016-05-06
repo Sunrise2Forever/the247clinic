@@ -197,10 +197,11 @@ function set_chat_session_start_handler(){
   $('.start-online-visit').on('click', function() {
     online_csrs = $.grep(present_users, function(user) { return user && user.user_type == 'csr' && user.status == 'online'; });
     if (online_csrs.length == 0) {
-      alert("CSR will be available soon");
+      return true;
     } else {
       csr_user = online_csrs[Math.floor(Math.random() * online_csrs.length)];
       window.location.href = "/video_sessions/" + csr_user.video_session_id;
+      return false;
     }
   });
 }

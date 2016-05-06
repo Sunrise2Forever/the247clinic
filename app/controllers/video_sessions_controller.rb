@@ -11,7 +11,7 @@ class VideoSessionsController < AuthenticateController
       if current_user.csr?
         video_session = current_user.video_sessions.new(doctor_id: current_user.id, status: :online, symptom: 'Online Visit')
       else
-        redirect_to root_path        
+        video_session = current_user.video_sessions.new(status: :pending, symptom: 'Online Visit')
       end
     else
       video_session = current_user.video_sessions.new(params.require(:video_session).permit(:symptom))
@@ -28,7 +28,7 @@ class VideoSessionsController < AuthenticateController
   end
 
   def index
-    if current_user.doctor?
+    if current_user.doctor? or current_user.csr?
       @video_sessions = VideoSession.pending.where.not(user_id: current_user.id)
                             .joins('LEFT JOIN call_backs ON call_backs.id = call_back_id')
                             .where('call_back_id IS NULL OR call_backs.doctor_id = ?', current_user.id)
@@ -64,18 +64,25 @@ class VideoSessionsController < AuthenticateController
           end
         end
       else
-        @is_doctor =  (@video_session.user_id != current_user.id and current_user.doctor?)
-        if @is_doctor and @video_session.status == 'pending'
-          @video_session.status = :started
-          @video_session.start_time = Time.zone.now
-          @video_session.doctor_id = current_user.id
-          @video_session.save
-        end
-        if @video_session.status != 'started' and @video_session.status != 'pending' and @video_session.status != 'online'
-          redirect_to video_sessions_path and return
-        end
-        if @video_session.status == 'started' and @video_session.user_id != current_user.id and @video_session.doctor_id != current_user.id
-          redirect_to video_sessions_path and return
+        if current_user.csr? 
+          if @video_session.status == 'pending'
+            @video_session.update(status: :online, start_time: Time.zone.now, doctor_id: current_user.id)
+            @is_csr = true
+          end
+        else
+          @is_doctor =  (@video_session.user_id != current_user.id and current_user.doctor?)
+          if @is_doctor and @video_session.status == 'pending'
+            @video_session.status = :started
+            @video_session.start_time = Time.zone.now
+            @video_session.doctor_id = current_user.id
+            @video_session.save
+          end
+          if @video_session.status != 'started' and @video_session.status != 'pending' and @video_session.status != 'online'
+            redirect_to video_sessions_path and return
+          end
+          if @video_session.status == 'started' and @video_session.user_id != current_user.id and @video_session.doctor_id != current_user.id
+            redirect_to video_sessions_path and return
+          end
         end
       end
 
@@ -181,6 +188,14 @@ class VideoSessionsController < AuthenticateController
     else
       render json: {}, status: :unprocessable_entity
     end
+  end
+
+  def wait
+    @video_session = VideoSession.find_by(id: params[:id])
+    if current_user.csr? and current_user.id = @video_session.doctor_id and @video_session.status == 'online'
+      @video_session.update(doctor_id: nil, status: :pending)
+    end
+    redirect_to video_sessions_path
   end
 
   private

@@ -15,6 +15,9 @@
       <div class="form-group">
         <button class='btn btn-primary form-control btn-transfer-video-session-to-doctor' data-toggle="modal" data-target="#doctors_modal">Transfer Video Session to Doctor</button>
       </div>
+      <div class="form-group">
+        <%= link_to 'Put to Waiting Queue', wait_video_session_path(@video_session), method: :post, class: "btn btn-primary form-control" %>
+      </div>
       <%= form_for(@video_session, url: finish_video_session_path(@video_session)) do |f| %>
         <%= f.submit 'End Online Visit', id: "finish_video_session", class: "btn btn-primary" %>
       <% end %>
