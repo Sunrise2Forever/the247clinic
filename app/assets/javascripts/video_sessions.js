@@ -292,5 +292,13 @@ function init_video_session(current_user_id, current_user_name, video_session_id
       }      
     }    
   });
+
+  $('.btn-put-wating').click(function (e) {
+    if (peer_user_id) {
+      close_video_session();
+      notify_current_user_status('present', null);
+      put_waiting_queue(peer_user_id, video_session_id);
+    }
+  });
 }
 

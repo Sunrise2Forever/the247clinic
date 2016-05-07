@@ -8,6 +8,7 @@ class VideoSession < ActiveRecord::Base
 
   scope :pending, -> { where(status: :pending) }
   scope :started, -> { where(status: :started) }
+  scope :waiting, -> { where(status: :waiting) }
 
   after_create :video_session_created
   after_update :video_session_updated

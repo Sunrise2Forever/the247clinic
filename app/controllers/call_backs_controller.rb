@@ -7,6 +7,7 @@ class CallBacksController < AuthenticateController
   def create
     video_session = VideoSession.find_by(id: params[:id])
     if video_session
+      redirect_to video_sessions_path and return if video_session.status == 'waiting'
       if video_session.user_id == current_user.id
         @call_back = video_session.call_back
         if @call_back.nil?

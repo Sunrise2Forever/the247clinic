@@ -28,16 +28,27 @@ class VideoSessionsController < AuthenticateController
   end
 
   def index
-    if current_user.doctor? or current_user.csr?
-      @video_sessions = VideoSession.pending.where.not(user_id: current_user.id)
+    if current_user.doctor?
+      @video_sessions = VideoSession.where('status = "pending" OR status = "waiting"').where.not(user_id: current_user.id)
                             .joins('LEFT JOIN call_backs ON call_backs.id = call_back_id')
                             .where('call_back_id IS NULL OR call_backs.doctor_id = ?', current_user.id)
                             .paginate(page: params[:scheduled_visit_page], per_page: 10)
 
       @call_backs = CallBack.all
+    elsif current_user.csr?
+      @video_sessions = VideoSession.pending.where.not(user_id: current_user.id)
+                            .joins('LEFT JOIN call_backs ON call_backs.id = call_back_id')
+                            .where('call_back_id IS NULL OR call_backs.doctor_id = ?', current_user.id)
+                            .paginate(page: params[:scheduled_visit_page], per_page: 10)
+
+      @call_backs = CallBack.all                            
     else
+      @video_sessions = VideoSession.waiting.where(user_id: current_user.id)
+                            .paginate(page: params[:scheduled_visit_page], per_page: 10)
+
       @call_backs = CallBack.where('call_backs.user_id = ?', current_user.id)
     end
+
     @call_backs = @call_backs.joins('LEFT JOIN video_sessions ON call_backs.id = video_sessions.call_back_id')
                        .where("video_sessions.status IS NULL OR (video_sessions.status <> 'finished' AND video_sessions.status <> 'callback')")
                        .paginate(page: params[:page], per_page: 10)
@@ -68,16 +79,18 @@ class VideoSessionsController < AuthenticateController
           if @video_session.status == 'pending'
             @video_session.update(status: :online, start_time: Time.zone.now, doctor_id: current_user.id)
             @is_csr = true
+          else
+            redirect_to video_sessions_path and return
           end
         else
           @is_doctor =  (@video_session.user_id != current_user.id and current_user.doctor?)
-          if @is_doctor and @video_session.status == 'pending'
+          if @is_doctor and (@video_session.status == 'pending' or @video_session.status == 'waiting')
             @video_session.status = :started
             @video_session.start_time = Time.zone.now
             @video_session.doctor_id = current_user.id
             @video_session.save
           end
-          if @video_session.status != 'started' and @video_session.status != 'pending' and @video_session.status != 'online'
+          if @video_session.status != 'started' and @video_session.status != 'pending' and @video_session.status != 'online' and @video_session.status != 'waiting'
             redirect_to video_sessions_path and return
           end
           if @video_session.status == 'started' and @video_session.user_id != current_user.id and @video_session.doctor_id != current_user.id
@@ -193,7 +206,7 @@ class VideoSessionsController < AuthenticateController
   def wait
     @video_session = VideoSession.find_by(id: params[:id])
     if current_user.csr? and current_user.id = @video_session.doctor_id and @video_session.status == 'online'
-      @video_session.update(doctor_id: nil, status: :pending)
+      @video_session.update(doctor_id: nil, status: :waiting)
     end
     redirect_to video_sessions_path
   end

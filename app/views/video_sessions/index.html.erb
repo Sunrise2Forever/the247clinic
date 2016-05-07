@@ -27,6 +27,32 @@
       <% end %>
     </div>
   </div>
+<% else %>
+  <% if @video_sessions.count > 0 %>
+    <h1>Waiting Visit</h1>
+
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+        <table class="table">
+          <tr>
+            <th>No</th>
+            <th>Created Time</th>
+            <th>User</th>
+            <th></th>
+          </tr>
+          <% @video_sessions.each do |video_session| %>
+            <tr>
+              <td><%= video_session.id %></td>
+              <td><%= video_session.created_at.strftime("%B %-d, %Y %I:%M %P") %></td>
+              <td><%= video_session.user.try(:name) %></td>
+              <td><%= link_to 'View', video_session_path(video_session) %></td>
+            </tr>
+          <% end %>
+        </table>
+        <div class="text-center"><%= will_paginate @video_sessions, param_name: :scheduled_visit_page %></div>
+      </div>
+    </div>
+  <% end %>
 <% end %>
 
 <h1>Scheduled Online Visits</h1>

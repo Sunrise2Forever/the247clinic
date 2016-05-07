@@ -83,6 +83,9 @@ function init_chat_session(current_user_name, current_user_id, current_user_type
     window.location.href = '/video_sessions/' + data.video_session_id;
   });
 
+  presence_session.on('signal:wait-video-session-' + current_user_id, function (event) {
+    $('#waiting-message h2').text("You've been placed on hold");    
+  });
 }
 
 function notify_current_user_status(status, video_session_id) {
@@ -102,6 +105,20 @@ function notify_current_user_status(status, video_session_id) {
 function transfer_video_session(doctor_id) {
   $.ajax({url: '/video_sessions/' + current_video_session_id + '/transfer?doctor_id=' + doctor_id, method: 'post', success: function(){
     presence_session.signal({ type: 'transfer-video-session-' + doctor_id, data: JSON.stringify({video_session_id: current_video_session_id}) },
+      function(error) {
+        if (error) {
+          alert(error.message);
+        } else {
+          window.location.href = '/video_sessions';
+        }
+      }
+    );    
+  }});
+}
+
+function put_waiting_queue(user_id, video_session_id) {
+  $.ajax({url: '/video_sessions/' + video_session_id + '/wait', method: 'post', success: function(){
+    presence_session.signal({ type: 'wait-video-session-' + user_id, data: JSON.stringify({video_session_id: video_session_id}) },
       function(error) {
         if (error) {
           alert(error.message);
