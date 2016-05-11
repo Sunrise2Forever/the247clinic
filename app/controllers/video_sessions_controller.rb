@@ -99,16 +99,25 @@ class VideoSessionsController < AuthenticateController
         end
       end
 
-      if @video_session.opentok_session.try(:token).blank?
-        opentok = OpenTok::OpenTok.new ENV['OPENTOK_API_KEY'], ENV['OPENTOK_SECRET']
-        session = opentok.create_session :media_mode => :routed
-        token = session.generate_token
-        @video_session.create_opentok_session(session_id: session.session_id, token: token)
-      elsif @video_session.opentok_session.updated_at < 24.hours.ago
-        opentok = OpenTok::OpenTok.new ENV['OPENTOK_API_KEY'], ENV['OPENTOK_SECRET']
-        token = opentok.generate_token @video_session.opentok_session.session_id
-        @video_session.opentok_session.update(token: token)      
+      try_count = 0
+      while @token.blank? and try_count < 10
+        begin
+          if @video_session.opentok_session.try(:token).blank?
+            opentok = OpenTok::OpenTok.new ENV['OPENTOK_API_KEY'], ENV['OPENTOK_SECRET']
+            session = opentok.create_session :media_mode => :routed
+            @token = session.generate_token
+            @video_session.create_opentok_session(session_id: session.session_id, token: @token)
+          elsif @video_session.opentok_session.updated_at < 24.hours.ago
+            opentok = OpenTok::OpenTok.new ENV['OPENTOK_API_KEY'], ENV['OPENTOK_SECRET']
+            @token = opentok.generate_token @video_session.opentok_session.session_id
+            @video_session.opentok_session.update(token: @token)      
+          end
+          @token = @video_session.opentok_session.try(:token)
+        rescue => e
+          try_count += 1
+        end
       end
+
       if @is_doctor
         set_s3_direct_post
         @photo = Photo.new
