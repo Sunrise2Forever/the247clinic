@@ -29,7 +29,7 @@ class VideoSessionsController < AuthenticateController
 
   def index
     if current_user.doctor?
-      @video_sessions = VideoSession.where('status = "pending" OR status = "waiting"').where.not(user_id: current_user.id)
+      @video_sessions = VideoSession.where("video_sessions.status = 'pending' OR video_sessions.status = 'waiting'").where.not(user_id: current_user.id)
                             .joins('LEFT JOIN call_backs ON call_backs.id = call_back_id')
                             .where('call_back_id IS NULL OR call_backs.doctor_id = ?', current_user.id)
                             .paginate(page: params[:scheduled_visit_page], per_page: 10)
