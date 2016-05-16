@@ -42,7 +42,7 @@ function init_chat_session(current_user_name, current_user_id, current_user_type
       presence_session.on('signal:client-chat-message-from-' + user.id + '-to-' + current_user_id, function (event) {
         data = JSON.parse(event.data);
         d = $('#chat_' + data.user_id);
-        d.find('.chat-messages').append('<div class="col-sm-12"><div class="chat-time">' + moment().format('MMMM d, YYYY, hh:mm a') + '</div></div>');
+        d.find('.chat-messages').append('<div class="col-sm-12"><div class="chat-time">' + moment().format('MMMM D, YYYY, hh:mm a') + '</div></div>');
         d.find('.chat-messages').append('<div class="col-sm-12"><div class="chat-message-received">' + data.message + '</div></div>');
         d.show();
         d.find('.chat-messages-container').scrollTop(d.find('.chat-messages-container').prop('scrollHeight'));
