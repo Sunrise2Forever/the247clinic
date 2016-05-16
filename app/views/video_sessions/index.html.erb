@@ -27,6 +27,9 @@
       <% end %>
     </div>
   </div>
+  <%= javascript_tag do %>
+    init_dashboard();
+  <% end %>
 <% else %>
   <% if @video_sessions.count > 0 %>
     <h1>Waiting Visit</h1>
