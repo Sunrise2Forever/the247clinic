@@ -14,7 +14,7 @@ Clone the main repo git clone https://bitbucket.org/username/repo-fork.git
 
 Create a new local branch git checkout -b my-branch
 
-Work in that branch git commit -m "some work done"
+Work in that branch git commit -m "some work done" //if you get an error try git add -A and then do the commit  -Francis
 
 Push up the branch git push -u origin my-branch
 
