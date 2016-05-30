@@ -21,3 +21,15 @@ Push up the branch git push -u origin my-branch
 Create a Pull request
 //---------------------------------------------------------------------------------//
 
+
+
+//how to deploy to Heroku
+
+//---------------------------------------//
+change to master branch
+
+merge with branch you were working on (may encounter problems here)
+
+git heroku push master 
+
+//--------------------------------------//
