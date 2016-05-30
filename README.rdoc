@@ -3,3 +3,20 @@
 This is the sample application for the development of 247Clinic.com 
 
 always mind your surroundings
+
+
+
+//how to make changes in bitbucket
+//these changes may take some time to show on the actual Bitbucket site
+
+//---------------------------------------------------------------------------------//
+Clone the main repo git clone https://bitbucket.org/username/repo-fork.git
+
+Create a new local branch git checkout -b my-branch
+
+Work in that branch git commit -m "some work done"
+
+Push up the branch git push -u origin my-branch
+
+Create a Pull request
+//---------------------------------------------------------------------------------//
