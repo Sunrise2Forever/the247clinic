@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+
+      root 'home#index'
+      
     get 'password_resets/new'
   
     get 'password_resets/edit'
@@ -10,7 +13,7 @@ Rails.application.routes.draw do
   
     get 'users/new'
   
-    root 'home#index'
+  
   
     get 'about' =>  'static_pages#about'
   
