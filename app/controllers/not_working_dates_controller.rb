@@ -6,7 +6,7 @@ class NotWorkingDatesController < AuthenticateController
   end
 
   def create
-    @not_working_date = current_user.not_working_dates.new(not_working_date_params)
+    @not_working_date = current_user.not_working_dates.new(params[:not_working_dates])
     if @not_working_date.save
       flash[:success] = 'Date was successfully saved.'
       redirect_to edit_user_path(current_user)
@@ -21,6 +21,7 @@ class NotWorkingDatesController < AuthenticateController
     flash[:success] = 'Date was successfully removed.'
     redirect_to edit_user_path(current_user)
   end
+  
 
   private
     # Never trust parameters from the scary internet, only allow the white list through.
