@@ -3,7 +3,7 @@
   <h1>Scheduled Visits</h1>
 
   <div class="row">
-    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+    <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
       <% if @video_sessions.count > 0 %>
         <table class="table">
           <tr>
@@ -35,7 +35,7 @@
     <h1>Waiting Visit</h1>
 
     <div class="row">
-      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+      <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
         <table class="table">
           <tr>
             <th>No</th>
@@ -59,111 +59,16 @@
 <% end %>
 
 <h1>Scheduled Online Visits</h1>
+<div class="row">
+  <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
+    <div class="form-group">
+      <div class="online-visit-calendar">&nbsp;</div>
+    </div>
+  </div>
+</div>
 
-<% if @online_visits.count > 0 %>
-  <table class="table">
-    <tr>
-      <th>No</th>
-      <th>Created Time</th>
-      <th>User</th>
-      <th>CSR</th>
-      <!--used to be "Pending Call Backs here-->
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-    <% @online_visits.each do |online_visit| %>
-      <tr>
-        <td><%= online_visit.id %></td>
-        <td><%= online_visit.created_at.strftime("%B %-d, %Y %I:%M %P") %></td>
-        <td><%= online_visit.user.try(:name) %></td>
-        <td><%= online_visit.csr.try(:name) %></td>
-        <td><%= online_visit.scheduled_time.strftime("%B %-d, %Y %I:%M %P") if online_visit.scheduled_time %></td>
-
-        <% if (current_user.id == online_visit.user_id or current_user.id == online_visit.csr_id) and online_visit.scheduled_time.present? and online_visit.scheduled_time <= Time.zone.now %>
-          <td>
-            <%= link_to online_visit_path(online_visit), class: 'btn btn-default' do %>
-              <span class="glyphicon glyphicon-play-circle"></span> Start
-            <% end %>
-          </td>
-        <% else %>
-          <td></td>
-        <% end %>
-
-        <% if current_user.id == online_visit.csr_id or (current_user.csr? and online_visit.csr_id.nil?) %>
-          <td>
-            <%= link_to edit_online_visit_path(online_visit), class: 'btn btn-default' do %>
-              <span class="glyphicon glyphicon-pencil"></span> Edit
-            <% end %>
-          </td>
-          <td>
-            <%= link_to online_visit, method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-default' do %>
-              <span class="glyphicon glyphicon-trash"></span> Delete
-            <% end %>
-          </td>
-        <% else %>
-          <td></td>
-          <td></td>
-        <% end %>
-      </tr>
-    <% end %>
-  </table>
-  <div class="text-center"><%= will_paginate @online_visits, param_name: :online_visit_page %></div>
-<% else %>
-  <div class="text-center">No Online Visits.</div>
+<%= render 'online_visit' %>
+<%= javascript_tag do %>
+  renderOnlineVisitCalendar(<%= current_user.id %>, "<%= current_user.user_type %>", <%= raw @online_visits.to_json %>, <%= raw @call_backs.to_json %>);
 <% end %>
 
-
-
-<% if @call_backs.count > 0 %>
-  <table class="table">
-    <tr>
-      <th>Number</th>
-      <th>Created Time</th>
-      <th>User</th>
-      <th>Doctor</th>
-      <th>Scheduled Time</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-    <% @call_backs.each do |call_back| %>
-      <tr>
-        <td><%= call_back.id %></td>
-        <td><%= call_back.created_at.strftime("%B %-d, %Y %I:%M %P") %></td>
-        <td><%= call_back.user.try(:name) %></td>
-        <td><%= call_back.doctor.try(:name) %></td>
-        <td><%= call_back.scheduled_time.strftime("%B %-d, %Y %I:%M %P") if call_back.scheduled_time %></td>
-
-        <% if (current_user.id == call_back.user_id or current_user.id == call_back.doctor_id) and call_back.scheduled_time.present? and call_back.scheduled_time <= Time.zone.now %>
-          <td>
-            <%= link_to call_back_path(call_back), class: 'btn btn-default' do %>
-              <span class="glyphicon glyphicon-play-circle"></span> Start
-            <% end %>
-          </td>
-        <% else %>
-          <td></td>
-        <% end %>
-
-        <% if current_user.id == call_back.doctor_id or (current_user.doctor? and call_back.doctor_id.nil?) %>
-          <td>
-            <%= link_to edit_call_back_path(call_back), class: 'btn btn-default' do %>
-              <span class="glyphicon glyphicon-pencil"></span> Edit
-            <% end %>
-          </td>
-          <td>
-            <%= link_to call_back, method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-default' do %>
-              <span class="glyphicon glyphicon-trash"></span> Delete
-            <% end %>
-          </td>
-        <% else %>
-          <td></td>
-          <td></td>
-        <% end %>
-      </tr>
-    <% end %>
-  </table>
-  <div class="text-center"><%= will_paginate @call_backs %></div>
-<% else %>
-  <div class="text-center">No Call Backs.</div>
-<% end %>

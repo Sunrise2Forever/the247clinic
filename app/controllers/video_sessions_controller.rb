@@ -51,12 +51,10 @@ class VideoSessionsController < AuthenticateController
 
     @call_backs = @call_backs.joins('LEFT JOIN video_sessions ON call_backs.id = video_sessions.call_back_id')
                        .where("video_sessions.status IS NULL OR (video_sessions.status <> 'finished' AND video_sessions.status <> 'callback')")
-                       .paginate(page: params[:page], per_page: 10)
 
     @online_visits = OnlineVisit.where('online_visits.user_id = ? OR online_visits.csr_id = ?', current_user.id, current_user.id)
                        .joins('LEFT JOIN video_sessions ON online_visits.id = video_sessions.call_back_id')
-                       .where("video_sessions.status IS NULL OR (video_sessions.status <> 'finished' AND video_sessions.status <> 'callback')")
-                       .paginate(page: params[:online_visit_page], per_page: 10)
+                       .where("video_sessions.status IS NULL OR (video_sessions.status <> 'finished' AND video_sessions.status <> 'callback')")                       
 
   end
 
@@ -109,8 +107,9 @@ class VideoSessionsController < AuthenticateController
             @video_session.create_opentok_session(session_id: session.session_id, token: @token)
           elsif @video_session.opentok_session.updated_at < 24.hours.ago
             opentok = OpenTok::OpenTok.new ENV['OPENTOK_API_KEY'], ENV['OPENTOK_SECRET']
-            @token = opentok.generate_token @video_session.opentok_session.session_id
-            @video_session.opentok_session.update(token: @token)      
+            session = opentok.create_session :media_mode => :routed
+            @token = session.generate_token
+            @video_session.opentok_session.update(session_id: session.session_id, token: @token)      
           end
           @token = @video_session.opentok_session.try(:token)
         rescue => e

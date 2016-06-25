@@ -26,6 +26,14 @@ module SessionsHelper
         @current_user = user
       end
     end
+
+    if @current_user.present? and @current_user.updated_at < 24.hours.ago
+      opentok = OpenTok::OpenTok.new ENV['OPENTOK_API_KEY'], ENV['OPENTOK_SECRET']
+      token = opentok.generate_token ENV['OPENTOK_PRESENCE_SESSION_ID'], 
+        { role: :subscriber, data: { id: @current_user.id, user_type: @current_user.user_type, name: @current_user.name }.to_json}
+      @current_user.update(presence_token: token)
+    end
+    @current_user
   end
   
   # Returns true if the user is logged in, false otherwise.

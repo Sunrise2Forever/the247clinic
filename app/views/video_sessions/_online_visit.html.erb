@@ -1,0 +1,35 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="online_visit_modal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="reg-header">Scheduled Online Visit</h4>
+      </div>
+      <div class="modal-body">
+        <div class="field">
+          <label>User</label><br>
+          <div class="form-group" id='online_visit_user'></div>
+        </div>
+        <div class="field">
+          <label id='online_visit_type'>Doctor</label><br>
+          <div class="form-group" id='online_visit_doctor'></div>
+        </div>
+        <div class="field">
+          <label>Scheduled Time</label><br>
+          <div class="form-group" id='online_visit_scheduled_time'></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#" id='online_visit_start' class='btn btn-default'>
+          <span class="glyphicon glyphicon-camera"></span> Start
+        </a>
+        <a href="#" id='online_visit_edit' class='btn btn-default'>
+          <span class="glyphicon glyphicon-pencil"></span> Edit
+        </a>
+        <a href="#" id='online_visit_delete' class='btn btn-default' data-confirm='Are you sure?' data-method='delete'>
+          <span class="glyphicon glyphicon-trash"></span> Delete
+        </a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -19,4 +19,19 @@ class OnlineVisit < ActiveRecord::Base
     end
   end
 
+  def attributes
+    a = super
+    a[:user_name] = nil
+    a[:csr_name] = nil
+    a
+  end
+
+  def user_name
+    user.try(:name)
+  end
+
+  def csr_name
+    csr.try(:name)
+  end 
+
 end

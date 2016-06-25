@@ -8,6 +8,7 @@ function renderAppointmentCalendar() {
   }).done(function(appointments) {
     var appointment_objects = [];
     $.each(appointments, function (index, data) {
+      var colors = ['purple', 'blue', 'green', 'orange', 'deepskyblue', 'yellowgreen', 'orangered'];
       appointment_objects.push({
         id: data.id,
         title: data.user_name || data.email,
@@ -15,7 +16,7 @@ function renderAppointmentCalendar() {
         end: data.end_time,
         allDay: false,
         editable: false,
-        backgroundColor: '#004400',
+        backgroundColor: colors[index % colors.length],
         borderColor: '#888888'
       })
     });
@@ -60,8 +61,8 @@ function renderAppointmentCalendar() {
             $('.user-appointment-section').hide();
             $('.non-user-appointment-section').show();
           }
-          $('#appointment_start_time').text(moment(data.start_time).utc().format(date_format));
-          $('#appointment_end_time').text(moment(data.end_time).utc().format(date_format));
+          $('#appointment_start_time').text(moment(data.start_time).utcOffset(data.start_time).format(date_format));
+          $('#appointment_end_time').text(moment(data.end_time).utcOffset(data.start_time).format(date_format));
           $('#appointment_modal').modal('show');
         });
       }

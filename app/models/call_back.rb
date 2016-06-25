@@ -20,4 +20,19 @@ class CallBack < ActiveRecord::Base
       CallBackMailer.meeting_request_user(self).deliver
     end
   end
+
+  def attributes
+    a = super
+    a[:user_name] = nil
+    a[:doctor_name] = nil
+    a
+  end
+
+  def user_name
+    user.try(:name)
+  end
+
+  def doctor_name
+    doctor.try(:name)
+  end 
 end

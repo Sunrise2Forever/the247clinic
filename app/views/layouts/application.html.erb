@@ -13,12 +13,55 @@
   </head>
   <body>
     <%= render 'layouts/header' %>
-    <div class="<%= current_page?('/') && !logged_in? ? '' : 'container content' %>">
-      <% flash.each do |message_type, message| %>
-        <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
-      <% end %>
-      <%= yield %>
-    </div>
+
+    <% if logged_in? %>
+      <div class="container content profile">
+        <div class="row">
+          <!--Left Sidebar-->
+          <div class="col-md-3 md-margin-bottom-40">
+            <%= image_tag "user.jpg", class:"img-responsive profile-img margin-bottom-20 hidden" %>
+
+            <ul class="list-group sidebar-nav-v1 margin-bottom-40" id="sidebar-nav-1">
+              <li class="list-group-item">
+                <%= link_to edit_user_path(current_user) do %>
+                  <i class="fa fa-user"></i> Profile
+                <% end %>
+              </li>
+              <li class="list-group-item">
+                <%= link_to edit_user_path(current_user) do %>
+                  <i class="fa fa-cog"></i> Settings
+                <% end %>
+              </li>
+              <% unless (current_user.doctor? or current_user.admin?) %>
+                <li class="list-group-item">
+                  <%= link_to favorites_users_path do %>
+                    <span class="glyphicon glyphicon-star-empty"></span> Favorites
+                  <% end %>
+                </li>
+              <% end %>
+              <li class="list-group-item">
+                 <%= link_to logout_path, method: :delete do %>
+                 <span class="glyphicon glyphicon-log-out"></span> Log out
+                 <% end %>
+              </li>            
+            </ul>
+          </div>
+          <div class="col-md-9">
+            <div class="main-body">
+    <% end %>  
+    
+              <% flash.each do |message_type, message| %>
+                <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+              <% end %>
+              <%= yield %>
+    
+    <% if logged_in? %>              
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
     <%= render 'layouts/footer' %>
     <%= render 'layouts/chat_session' %>
   </body>
