@@ -35,6 +35,7 @@ class VideoSessionsController < AuthenticateController
                             .paginate(page: params[:scheduled_visit_page], per_page: 10)
 
       @call_backs = CallBack.all
+      @tasks = Task.where(doctor_id: current_user.id)
     elsif current_user.csr?
       @video_sessions = VideoSession.pending.where.not(user_id: current_user.id)
                             .joins('LEFT JOIN call_backs ON call_backs.id = call_back_id')
@@ -120,6 +121,7 @@ class VideoSessionsController < AuthenticateController
       if @is_doctor
         set_s3_direct_post
         @photo = Photo.new
+        @tasks = Task.where(doctor_id: current_user.id)
       end
     end
   end

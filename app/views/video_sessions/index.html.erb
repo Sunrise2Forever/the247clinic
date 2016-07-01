@@ -1,71 +1,140 @@
 <% provide(:title, "Dashboard") %>
-<% if current_user.doctor? or current_user.csr? %>
-  <h1>Scheduled Visits</h1>
-
+<% if current_user.doctor? %>
   <div class="row">
-    <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
-      <% if @video_sessions.count > 0 %>
-        <table class="table">
-          <tr>
-            <th>No</th>
-            <th>Created Time</th>
-            <th>User</th>
-            <th></th>
-          </tr>
-          <% @video_sessions.each do |video_session| %>
-            <tr>
-              <td><%= video_session.id %></td>
-              <td><%= video_session.created_at.strftime("%B %-d, %Y %I:%M %P") %></td>
-              <td><%= video_session.user.try(:name) %></td>
-              <td><%= link_to 'View', video_session_path(video_session) %></td>
-            </tr>
-          <% end %>
-        </table>
-        <div class="text-center"><%= will_paginate @video_sessions, param_name: :scheduled_visit_page %></div>
-      <% else %>
-        <div class="text-center">No Scheduled Visits.</div>
+    <div class="col-md-8 col-sm-8 col-xs-12">
+      <div class="panel panel-profile no-bg">
+        <div class="panel-heading overflow-h">
+          <h2 class="panel-title heading-sm pull-left">Scheduled Online Visits</h2>
+        </div>
+
+        <div class="panel-body">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="form-group">
+              <div class="online-visit-calendar">&nbsp;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="panel panel-profile no-bg">
+        <div class="panel-heading overflow-h">
+          <h2 class="panel-title heading-sm pull-left">Scheduled Visits</h2>
+        </div>
+        <div class="row panel-body">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <% if @video_sessions.count > 0 %>
+              <table class="table">
+                <tr>
+                  <th>No</th>
+                  <th>Created Time</th>
+                  <th>User</th>
+                </tr>
+                <% @video_sessions.each do |video_session| %>
+                  <tr>
+                    <td><%= video_session.id %></td>
+                    <td><%= video_session.created_at.strftime("%B %-d, %Y %I:%M %P") %></td>
+                    <td><%= link_to video_session.user.try(:name), video_session_path(video_session) %></td>
+                  </tr>
+                <% end %>
+              </table>
+              <div class="text-center"><%= will_paginate @video_sessions, param_name: :scheduled_visit_page %></div>
+            <% else %>
+              <div class="text-center">No Scheduled Visits.</div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <%= render 'tasks/tasks' %>
+
+      <%= javascript_tag do %>
+        init_dashboard();
       <% end %>
     </div>
   </div>
-  <%= javascript_tag do %>
-    init_dashboard();
-  <% end %>
 <% else %>
-  <% if @video_sessions.count > 0 %>
-    <h1>Waiting Visit</h1>
-
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
-        <table class="table">
-          <tr>
-            <th>No</th>
-            <th>Created Time</th>
-            <th>User</th>
-            <th></th>
-          </tr>
-          <% @video_sessions.each do |video_session| %>
-            <tr>
-              <td><%= video_session.id %></td>
-              <td><%= video_session.created_at.strftime("%B %-d, %Y %I:%M %P") %></td>
-              <td><%= video_session.user.try(:name) %></td>
-              <td><%= link_to 'View', video_session_path(video_session) %></td>
-            </tr>
+  <% if current_user.csr? %>
+    <div class="panel panel-profile no-bg">
+      <div class="panel-heading overflow-h">
+        <h2 class="panel-title heading-sm pull-left">Scheduled Visits</h2>
+      </div>
+      <div class="row panel-body">
+        <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
+          <% if @video_sessions.count > 0 %>
+            <table class="table">
+              <tr>
+                <th>No</th>
+                <th>Created Time</th>
+                <th>User</th>
+                <th></th>
+              </tr>
+              <% @video_sessions.each do |video_session| %>
+                <tr>
+                  <td><%= video_session.id %></td>
+                  <td><%= video_session.created_at.strftime("%B %-d, %Y %I:%M %P") %></td>
+                  <td><%= video_session.user.try(:name) %></td>
+                  <td><%= link_to 'View', video_session_path(video_session) %></td>
+                </tr>
+              <% end %>
+            </table>
+            <div class="text-center"><%= will_paginate @video_sessions, param_name: :scheduled_visit_page %></div>
+          <% else %>
+            <div class="text-center">No Scheduled Visits.</div>
           <% end %>
-        </table>
-        <div class="text-center"><%= will_paginate @video_sessions, param_name: :scheduled_visit_page %></div>
+        </div>
       </div>
     </div>
-  <% end %>
-<% end %>
+    <%= javascript_tag do %>
+      init_dashboard();
+    <% end %>
+  <% else %>
+    <% if @video_sessions.count > 0 %>
+      <div class="panel panel-profile no-bg">
+        <div class="panel-heading overflow-h">
+          <h2 class="panel-title heading-sm pull-left">Waiting Visit</h2>
+        </div>
 
-<h1>Scheduled Online Visits</h1>
-<div class="row">
-  <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
-    <div class="form-group">
-      <div class="online-visit-calendar">&nbsp;</div>
+        <div class="row panel-body">
+          <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
+            <table class="table">
+              <tr>
+                <th>No</th>
+                <th>Created Time</th>
+                <th>User</th>
+                <th></th>
+              </tr>
+              <% @video_sessions.each do |video_session| %>
+                <tr>
+                  <td><%= video_session.id %></td>
+                  <td><%= video_session.created_at.strftime("%B %-d, %Y %I:%M %P") %></td>
+                  <td><%= video_session.user.try(:name) %></td>
+                  <td><%= link_to 'View', video_session_path(video_session) %></td>
+                </tr>
+              <% end %>
+            </table>
+            <div class="text-center"><%= will_paginate @video_sessions, param_name: :scheduled_visit_page %></div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div class="panel panel-profile no-bg">
+    <div class="panel-heading overflow-h">
+      <h2 class="panel-title heading-sm pull-left">Scheduled Online Visits</h2>
+    </div>
+
+    <div class="row panel-body">
+      <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
+        <div class="form-group">
+          <div class="online-visit-calendar">&nbsp;</div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+<% end %>
 
 <%= render 'online_visit' %>
 <%= javascript_tag do %>

@@ -58,7 +58,8 @@ function renderOnlineVisitCalendar(current_user_id, current_user_type, online_vi
     defaultView: 'agendaWeek',
     editable: true,
     droppable: true, // this allows things to be dropped onto the calendar
-    slotDuration: { minutes: 10 },
+    slotDuration: { minutes: 15 },
+    
     // This array is the events sources
     events: objects,
     eventClick: function (calEvent, jsEvent, view) {

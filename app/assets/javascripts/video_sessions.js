@@ -225,6 +225,10 @@ function init_video_session(current_user_id, current_user_name, video_session_id
     }    
   });
 
+  $('#end_session').click(function (e) {
+    $('#finish_video_session').trigger('click');
+  });
+
   if (!is_csr && currentUser.id == video_session_user_id) {
     window.addEventListener('beforeunload', function(e) {
       if (e.target.location.pathname == '/video_sessions/' + video_session_id) {

@@ -342,3 +342,23 @@ input {
 .profile-img {
   width: 100%;
 }
+
+.main-body {
+  padding: 20px;
+  background-color: #f7f7f7;
+}
+
+.panel .panel-heading {
+    color: #585f69;
+    background: #fff;
+    padding: 7px 15px;
+    border-bottom: solid 3px #f7f7f7;
+}
+
+#task_done {
+  width: 30px;
+}
+
+.task-title {
+  cursor: pointer;
+}
