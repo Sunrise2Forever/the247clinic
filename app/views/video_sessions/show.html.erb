@@ -118,7 +118,7 @@
         <div class="panel-body">
           <%= form_for(@video_session, url: finish_video_session_path(@video_session)) do |f| %>
             <%#= f.label :notes %>
-            <%= f.text_area :notes, rows: 10, class: 'form-control' %>
+            <%= f.text_area :notes, rows: 13, class: 'form-control' %>
 
             <%= f.submit 'End Session', id: "finish_video_session", class: "btn btn-primary hidden" %>
           <% end %>

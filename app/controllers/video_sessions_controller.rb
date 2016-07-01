@@ -122,6 +122,7 @@ class VideoSessionsController < AuthenticateController
         set_s3_direct_post
         @photo = Photo.new
         @tasks = Task.where(doctor_id: current_user.id)
+        @video_session.notes ||= "Subjective\n\n\nObjective\n\n\nAssessment\n\n\nPlan\n\n\n"
       end
     end
   end
