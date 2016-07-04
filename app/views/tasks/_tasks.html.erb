@@ -1,19 +1,24 @@
 <div class="panel panel-profile no-bg">
   <div class="panel-heading overflow-h">
     <h2 class="panel-title heading-sm pull-left"><i class="fa fa-bar-chart-o"></i> Task Progress</h2>
-    <a href="#" class="btn-new-task"><i class="fa fa-plus pull-right"></i></a>
+    <span class="btn-new-task"><i class="fa fa-plus pull-right"></i></span>
   </div>
 
   <div class="panel-body">
-    <% @tasks.each do |task| %>
-      <div>
-        <h3 class="heading-xs task-title" data-task-id=<%= task.id %>><%= task.title %></h3>
-        <div class="progress progress-u progress-xxs">
-          <div style="width: 100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" role="progressbar" class="progress-bar <%= task.done ? 'progress-bar-u' : 'progress-bar-red' %>">
+    <div>
+      <input class="form-control new-task-title" placeholder="Add new task"></input>
+    </div>
+    <div class="tasks">
+      <% @tasks.each do |task| %>
+        <div>
+          <h3 class="heading-xs task-title" data-task-id=<%= task.id %>><%= task.title %></h3>
+          <div class="progress progress-u progress-xxs">
+            <div style="width: 100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" role="progressbar" class="progress-bar <%= task.done ? 'progress-bar-u' : 'progress-bar-red' %>">
+            </div>
           </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </div>
 

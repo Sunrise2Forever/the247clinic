@@ -31,7 +31,16 @@ function init_tasks() {
           }
         }
       }).done(function (data) {
-        location.reload();
+        updated_task = $('.task-title[data-task-id=' + data.id + ']').parent();
+        updated_task.find('.task-title').text(data.title);
+        if (data.done) {
+          updated_task.find('.progress-bar').addClass('progress-bar-u');
+          updated_task.find('.progress-bar').removeClass('progress-bar-red');  
+        } else {
+          updated_task.find('.progress-bar').addClass('progress-bar-red');
+          updated_task.find('.progress-bar').removeClass('progress-bar-u');            
+        }
+        $('#task_modal').modal('hide');        
       }).fail(function(error) {
         $('#task_error').text(error.responseJSON.error);
       });
@@ -55,12 +64,33 @@ function init_tasks() {
   });
 
   $('.btn-new-task').on('click', function() {
-    $('#task_id').val('');
-    $('#task_title').val('');
-    $('#task_details').val('');
-    $('#task_done').prop('checked', false);
-    $('#task_error').text('');
-    $('#task_modal').modal('show');
+    createTask();
     return false;
+  });
+
+  function createTask() {
+    if ($('.new-task-title').val()) {
+      $.ajax({
+        type: "POST",
+        url: '/tasks',
+        data: {
+          task: {
+            title: $('.new-task-title').val()
+          }
+        }
+      }).done(function (data) {
+        new_task = $('<div/>');
+        new_task.append('<h3 class="heading-xs task-title" data-task-id=' + data.id + '>' + data.title + '</h3>');
+        new_task.append('<div class="progress progress-u progress-xxs"><div style="width: 100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" role="progressbar" class="progress-bar progress-bar-red"></div></div>');
+        $('.tasks').prepend(new_task);
+        $('.new-task-title').val('');
+      });
+    }
+  }
+
+  $('.new-task-title').on('keypress', function (e) {
+    if(e.keyCode == 13) {
+      createTask();
+    }
   });
 }

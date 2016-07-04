@@ -36,6 +36,7 @@ textarea {
 
 h1, h2, h3, h4, h5, h6 {
   line-height: 1;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
 }
 
 h1 {
@@ -359,6 +360,7 @@ input {
   width: 30px;
 }
 
-.task-title {
+.task-title, .btn-new-task {
   cursor: pointer;
 }
+

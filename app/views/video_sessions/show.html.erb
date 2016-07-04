@@ -69,22 +69,14 @@
                 <%= render 'video_stream' %>
               </div>
               <div class="row form-group">
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                  <%= button_tag 'Take Photo', id: "take_photo", class: "btn btn-primary form-control" %> 
-                </div>
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                  <%= button_tag 'Meds', class: "btn btn-primary form-control" %> 
-                </div>
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                  <%= button_tag 'LifeLabs', class: "btn btn-primary form-control" %> 
-                </div>
-              </div>
-              <div class="row form-group">
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <%= button_tag 'Pharmanent', class: "btn btn-primary form-control" %> 
-                </div>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <%= button_tag 'Mute / Pause Session', id: "mute_video_stream", class: "btn btn-primary form-control" %>
+                <div class="col-md-12 col-sm-12 col-xs-12 center">
+                  <div class="btn-group" role="group" aria-label="...">
+                    <%= button_tag 'Take Photo', id: "take_photo", class: "btn btn-default" %> 
+                    <%= button_tag 'Meds', class: "btn btn-default" %>
+                    <%= button_tag 'LifeLabs', class: "btn btn-default" %> 
+                    <%= button_tag 'Pharmanent', class: "btn btn-default" %> 
+                    <%= button_tag 'Mute / Pause Session', id: "play_video_stream", class: "btn btn-default" %>
+                  </div>
                 </div>
               </div>
               <div class="form-group" id="taken_photos">
