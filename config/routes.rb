@@ -49,6 +49,9 @@ Rails.application.routes.draw do
         patch 'finish', to: 'video_sessions#finish'
         patch 'update/feedback', to: 'video_sessions#update_feedback'
         patch 'update/notes', to: 'video_sessions#update_notes'
+        patch 'update/sign_off', to: 'video_sessions#sign_off'
+        patch 'update/save', to: 'video_sessions#save'
+        get 'export'
         post 'transfer'
         post 'wait'
 

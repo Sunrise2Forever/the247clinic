@@ -122,7 +122,7 @@ class VideoSessionsController < AuthenticateController
         set_s3_direct_post
         @photo = Photo.new
         @tasks = Task.where(doctor_id: current_user.id).order(created_at: :desc)
-        @video_session.notes ||= "Subjective\n\n\nObjective\n\n\nAssessment\n\n\nPlan\n\n\n"
+        @video_session.notes ||= "<strong>Subjective</strong>:<br><br><strong>Objective</strong>:<br><br><strong>Assessment</strong>:<br><br><strong>Plan</strong>:<br><br>"
       end
     end
   end
@@ -201,6 +201,45 @@ class VideoSessionsController < AuthenticateController
     else
       flash[:danger] = @video_session.errors.full_messages.first
       render :notes
+    end
+  end
+
+  def sign_off
+    @video_session = VideoSession.find_by(id: params[:id])
+    if @video_session.doctor_id != current_user.id
+      redirect_to video_sessions_path
+    end
+    @video_session.sign_off = true
+    if @video_session.save
+      render json: @video_session
+    else
+      render json: @video_session.errors.full_messages.first, status: :unprocessable_entity
+    end
+  end
+
+  def save
+    @video_session = VideoSession.find_by(id: params[:id])
+    if @video_session.doctor_id != current_user.id
+      redirect_to video_sessions_path
+    end
+    @video_session.notes = params[:video_session][:notes]
+    @video_session.diagnosis = params[:video_session][:diagnosis]
+    if @video_session.save
+      render json: @video_session
+    else
+      render json: @video_session.errors.full_messages.first, status: :unprocessable_entity
+    end
+  end
+
+  def export
+    @video_session = VideoSession.find_by(id: params[:id])
+    if @video_session.doctor_id != current_user.id
+      redirect_to video_sessions_path
+    end
+    export_string = '<strong>Notes</strong><br>' + @video_session.notes.to_s + '<br><strong>Diagnosis</strong><br>' + @video_session.diagnosis.to_s
+    respond_to do |format|
+      format.pdf { send_data WickedPdf.new.pdf_from_string(export_string) }
+      format.rtf { send_data export_string }
     end
   end
 

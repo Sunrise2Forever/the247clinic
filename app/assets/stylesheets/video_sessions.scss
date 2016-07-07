@@ -85,3 +85,17 @@ canvas, .directUpload {
     width: 100%;
   }
 }
+
+.fr-toolbar {
+  display: none;
+}
+
+.fr-box.fr-basic.fr-top .fr-wrapper {
+  border-top: 1px solid #ddd !important;
+}
+
+.dropdown-menu.export li {
+  padding: 3px 20px;
+  cursor: pointer;
+  text-align: center;
+}
