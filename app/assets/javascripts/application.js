@@ -21,6 +21,7 @@
 //= require chosen-jquery
 //= require fullcalendar
 //= require froala_editor.min.js
+//= require cocoon
 //= require revolution-slider/js/jquery.themepunch.tools
 //= require revolution-slider/js/jquery.themepunch.revolution
 //= require unify/app

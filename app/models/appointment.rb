@@ -30,9 +30,9 @@ class Appointment < ActiveRecord::Base
         if clinic.present? and clinic.not_opening_days.present? and clinic.not_opening_days.include?(day_of_week)
           errors.add(:clinic, "will not open at that time")
         end
-        if doctor.present? and doctor.not_working_days.present? and doctor.not_working_days.include?(day_of_week)
-          errors.add(:doctor, "will not work at that time")
-        end
+        #if doctor.present? and doctor.not_working_days.present? and doctor.not_working_days.include?(day_of_week)
+        #  errors.add(:doctor, "will not work at that time")
+        #end
         cur_time = cur_time + 1.day
       end
     end

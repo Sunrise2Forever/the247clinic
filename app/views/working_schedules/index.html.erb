@@ -1,0 +1,21 @@
+<h1>Working Schedule</h1>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for current_user do |f| %>
+      <div class="working-schedules">
+        <%= f.fields_for :working_schedules do |working_schedule| %>
+          <%= render 'working_schedule_fields', f: working_schedule %>
+        <% end %>
+        <div class="links center">
+          <%= link_to_add_association 'Add', f, :working_schedules, class: 'btn btn-default' %>
+        </div>
+      </div>
+      <div class="actions">
+        <%= f.submit 'Update' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<%= javascript_tag do %>
+  init_working_schedule_fields();
+<% end %>

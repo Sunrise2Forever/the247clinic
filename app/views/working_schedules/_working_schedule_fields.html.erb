@@ -1,0 +1,26 @@
+<div class="nested-fields panel panel-profile panel-body">
+  <div class="field form-group">
+    <div class="row">
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <%= f.check_box :weekly, class: 'working-schedule-weekly' %> <%= f.label :weekly %> 
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <%= f.select :scheduled_day_of_week, Date::DAYNAMES, {}, { hidden: !f.object.weekly, class: 'working-schedule-day-of-week' } %>
+        <div class="working-schedule-date" <%= 'hidden' if f.object.weekly %>>
+          <%= f.date_select :scheduled_date %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="field form-group">
+    <div class="row">
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <%= f.time_select :start_time %>
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <%= f.time_select :end_time %>
+      </div>
+    </div>
+  </div>
+  <%= link_to_remove_association "Remove", f, class: 'btn btn-default' %>
+</div>

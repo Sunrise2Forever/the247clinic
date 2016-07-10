@@ -30,6 +30,16 @@ module ActionView
           @template.content_tag(:span, @template.content_tag(:span, "", :class => "glyphicon glyphicon-calendar") ,:class => "input-group-addon")
         end
       end
+
+      def time_select(method, options = {}, html_options = {})
+        existing_time = @object.send(method) 
+        formatted_time = existing_time.strftime("%I:%M %P") if existing_time.present?
+        @template.content_tag(:div, :class => "input-group") do    
+          text_field(method, :value => formatted_time, :class => "form-control timepicker", :"data-date-format" => "hh:mm a") +
+          @template.content_tag(:span, @template.content_tag(:span, "", :class => "glyphicon glyphicon-time") ,:class => "input-group-addon")
+        end
+      end
+
     end
   end
 end

@@ -79,7 +79,7 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :mspnum, :password, :password_confirmation,
-          :address1, :address2, :city, :country, :provincestate, :zipcode, :phone, :gender, :birthdate, :user_type, :clinic_id, not_working_days:[])
+          :address1, :address2, :city, :country, :provincestate, :zipcode, :phone, :gender, :birthdate, :user_type, :clinic_id, working_schedules_attributes:[:id, :_destroy, :weekly, :scheduled_day_of_week, :scheduled_date, :start_time, :end_time])
     end
         # Confirms a logged-in user.
     def logged_in_user
