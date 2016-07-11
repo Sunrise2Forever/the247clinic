@@ -245,6 +245,10 @@ en:
     new_user: "New user?"
     signup_now: "Sign up now!"
     login: "Log In"
+    about: "About Us"
+    community: "Meet Our Folks"
+    thuan: "Thuan Pham"
+    contact: "Contact Us"
   form_header:
     login: 'Login to your account'
     signup: 'Register a new account'
