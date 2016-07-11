@@ -54,6 +54,8 @@ GEM
       sass (~> 3.2)
     bootstrap-will_paginate (0.0.10)
       will_paginate
+    bootstrap-wysihtml5-rails (0.3.3.8)
+      railties (>= 3.0)
     bootstrap3-datetimepicker-rails (4.17.37)
       momentjs-rails (>= 2.8.1)
     builder (3.2.2)
@@ -108,8 +110,6 @@ GEM
     ffi (1.9.10)
     figaro (1.1.1)
       thor (~> 0.14)
-    font-awesome-rails (4.6.3.1)
-      railties (>= 3.2, < 5.1)
     font-awesome-sass (4.5.0)
       sass (>= 3.2)
     formatador (0.2.5)
@@ -276,9 +276,6 @@ GEM
     wicked_pdf (1.0.3)
     will_paginate (3.0.7)
     wkhtmltopdf-binary (0.9.9.3)
-    wysiwyg-rails (2.3.3)
-      font-awesome-rails (~> 4.4, >= 4.4.0.0)
-      railties (>= 3.2, < 5.0)
 
 PLATFORMS
   ruby
@@ -289,6 +286,7 @@ DEPENDENCIES
   bcrypt (= 3.1.7)
   bootstrap-sass (= 3.2.0.0)
   bootstrap-will_paginate (= 0.0.10)
+  bootstrap-wysihtml5-rails
   bootstrap3-datetimepicker-rails (= 4.17.37)
   byebug (= 3.4.0)
   chosen-rails
@@ -326,7 +324,6 @@ DEPENDENCIES
   wicked_pdf
   will_paginate (= 3.0.7)
   wkhtmltopdf-binary
-  wysiwyg-rails
 
 BUNDLED WITH
    1.12.4

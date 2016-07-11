@@ -259,7 +259,7 @@ function init_video_session(current_user_id, current_user_name, video_session_id
     }
   });
 
-  $('#video_session_notes').froalaEditor({toolbarButtons: []});
+  $('#video_session_notes').wysihtml5({toolbar: false});
 
   $('#export_print').click(function (e) {
     $.ajax({
