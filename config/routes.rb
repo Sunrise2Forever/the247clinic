@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   
   
     get 'about' =>  'static_pages#about'
+    get 'jobs' =>  'static_pages#jobs'
+    get 'community' =>  'static_pages#community'
   
     get 'contact' => 'static_pages#contact'
   

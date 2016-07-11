@@ -1,11 +1,49 @@
 <% provide(:title, t('content.about')) %>
-<h1><%= t('content.about')%></h1>
-<p>
 
-247clinic.ca aims to streamline health care with technology in the most efficient way possible.
-Using web enabled cameras and video streaming technology, we want to bring together patients and doctors online to reduce wait 
-times and unnecessary visits to doctors office. Our goal is to connect physicians and patients by providing an easily accessible online 
-platform that is available through their smart devices (Android and iOS) and/or Web browser; resulting in a safe and reliable yet time saving 
-approach to connect you with the help you need.
-  
-</p>
+
+        <div class="breadcrumbs-v3 img-v3 text-center ">
+            <div class="container">
+                <h1><%= t('content.about')%></h1>
+                <p><strong>247Clinic.ca is simple and easy to use</strong></p>
+            </div>
+        </div>
+        <br>
+        <div class="container content-sm">
+            
+                <p class="no-margin-bottom">247clinic.ca aims to streamline health care with technology in the most efficient way possible.
+                Using web enabled cameras and video streaming technology, we want to bring together patients and doctors online to reduce wait 
+                times and unnecessary visits to doctors office. Our goal is to connect physicians and patients by providing an easily accessible online 
+                platform that is available through their smart devices (Android and iOS) and/or Web browser; resulting in a safe and reliable yet time saving 
+                approach to connect you with the help you need.</p>
+                
+                <p  class="no-margin-bottom">Our company started with just a simple idea of bringing health care to everyone with ease. We then take this idea and further expanded our passion to not only bringing patients 
+                and doctors together, but also to connect any health provider to any client. We are working to expand further to all sorts of people who need our services.</p>
+               <br>
+               <br>
+               <div class="title-v1 no-margin-bottom">
+               <%= link_to 'Contact Us',   contact_path, :class=>"btn-u btn-brd-hover btn-u-dark" %>
+                <%= link_to 'Book Appointment Now',   new_appointment_path, :class=>"btn-u btn-brd-hover btn-u-dark" %>
+                
+            </div>
+        </div>
+        <div class="service-block-v4">
+            <div class="container content-sm">
+                <div class="row">
+                    <div class="col-md-4 service-desc md-margin-bottom-20">
+                        <i class="icon-diamond"></i>
+                        <h3>Goal</h3>
+                        <p class="no-margin-bottom"> Our goal is to connect doctors and patients without the hassle of waiting in line. Fast, easy, and simple. </p>
+                    </div>
+                    <div class="col-md-4 service-desc md-margin-bottom-20">
+                        <i class="icon-rocket"></i>
+                        <h3>Development</h3>
+                        <p class="no-margin-bottom">247Clinic is always looking to expand its scope to encompass any and all needs of our clients. If you have any suggestions please let us know! </p>
+                    </div>
+                    <div class="col-md-4 service-desc">
+                        <i class="icon-support"></i>
+                        <h3>Support</h3>
+                        <p class="no-margin-bottom">If you have any questions please feel free to e-mail us at info@clinic.ca. Alternatively you can call us at 1-888-808-8168 </p>
+                    </div>
+                </div><!--/end row-->
+            </div><!--/end container-->
+        </div>         
