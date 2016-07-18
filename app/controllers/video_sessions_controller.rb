@@ -217,14 +217,27 @@ class VideoSessionsController < AuthenticateController
     end
   end
 
+  def add_diagnosis
+    @video_session = VideoSession.find_by(id: params[:id])
+    if @video_session.doctor_id != current_user.id
+      redirect_to video_sessions_path
+    end
+    @video_session.diagnosis = @video_session.diagnosis.to_s + params[:video_session][:diagnosis].to_s + '<br>'
+    if @video_session.save
+      render json: @video_session
+    else
+      render json: @video_session.errors.full_messages.first, status: :unprocessable_entity
+    end
+  end
+
   def save
     @video_session = VideoSession.find_by(id: params[:id])
     if @video_session.doctor_id != current_user.id
       redirect_to video_sessions_path
     end
     @video_session.notes = params[:video_session][:notes]
-    @video_session.diagnosis = params[:video_session][:diagnosis]
     if @video_session.save
+      Task.create(doctor_id: current_user.id, title: "Sign off on  #{@video_session.user.try(:name)}'s #{@video_session.created_at.strftime("%B %-d %I:%M %P")} Visit")
       render json: @video_session
     else
       render json: @video_session.errors.full_messages.first, status: :unprocessable_entity

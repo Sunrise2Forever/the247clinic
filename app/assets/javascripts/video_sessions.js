@@ -293,6 +293,24 @@ function init_video_session(current_user_id, current_user_name, video_session_id
     });
   });
 
+  $('#video_session_diagnosis').on('keypress', function (e) {
+    if(e.keyCode == 13 && $(this).val()) {
+      $.ajax({
+        type: "PATCH",
+        url: '/video_sessions/' + video_session_id + '/update/add_diagnosis',
+        data: {
+          video_session: { 
+            diagnosis: $(this).val()
+          }
+        }
+      }).done(function (data) {
+        $('#video_session_diagnosis').val('');
+        $('.video-session-diagnosis').html(data.video_session.diagnosis);
+      }).fail(function(error) {
+      });
+    }
+  });
+
   if (!is_csr && currentUser.id == video_session_user_id) {
     window.addEventListener('beforeunload', function(e) {
       if (e.target.location.pathname == '/video_sessions/' + video_session_id) {
