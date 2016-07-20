@@ -149,7 +149,7 @@
         
         <div class="panel-body">
           <input class="form-control" id="video_session_diagnosis" placeholder="Add Diagnosis">
-          <span class="video-session-diagnosis"><%= @video_session.diagnosis.html_safe || 'Diagnosis here' %></span>
+          <span class="video-session-diagnosis"><%= @video_session.diagnosis.to_s.html_safe.presence || 'Diagnosis here' %></span>
           <span class="pull-right">Billing Code here</span>
         </div>
       </div>
