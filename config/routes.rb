@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
 
-      root 'home#index'
+    root 'home#index'
       
     get 'password_resets/new'
   
@@ -10,14 +10,30 @@ Rails.application.routes.draw do
     get 'sessions/new'
   
     get 'users/new'
+
   
-    get 'users/new'
   
+    get 'frequently_asked_questions' => 'static_pages#frequently_asked_questions'
   
   
     get 'about' =>  'static_pages#about'
     get 'jobs' =>  'static_pages#jobs'
     get 'community' =>  'static_pages#community'
+    
+    
+    #//----------------------------------------JOBS------------//
+    get 'doctor_job' => 'job_postings#doctor_job'
+    get 'software_intern' => 'job_postings#software_intern'
+    get 'web_dev' => 'job_postings#web_dev'
+    #//----------------------------------------JOBS------------//
+    
+    #//PEOPLE---------------------------//
+    get 'michael' => 'static_pages#michael'
+    get 'francis' => 'static_pages#francis'
+    get 'vance' => 'static_pages#vance'
+    get 'thuan' => 'static_pages#thuan'
+    #//PEOPLE---------------------------//
+    
   
     get 'contact' => 'static_pages#contact'
   
@@ -51,15 +67,21 @@ Rails.application.routes.draw do
         patch 'finish', to: 'video_sessions#finish'
         patch 'update/feedback', to: 'video_sessions#update_feedback'
         patch 'update/notes', to: 'video_sessions#update_notes'
+        patch 'update/add_diagnosis', to: 'video_sessions#add_diagnosis'
+        patch 'update/sign_off', to: 'video_sessions#sign_off'
+        patch 'update/save', to: 'video_sessions#save'
+        get 'export'
         post 'transfer'
         post 'wait'
 
         resources :call_backs, only: [:new, :create]
         resources :online_visits, only: [:new, :create]
         resources :messages, only: [:new, :create]
+        
       end
     end
-    resources :call_backs, only: [:edit, :update, :destroy, :show]
+    resources :call_backs, only: [:edit, :update, :destroy, :show, :create]
+    
     resources :online_visits, only: [:edit, :update, :destroy, :show]
     resources :messages, only: [:show, :index, :update] do
       member do
@@ -93,6 +115,7 @@ Rails.application.routes.draw do
     resources :account_activations, only: [:edit]
     resources :password_resets,     only: [:new, :create, :edit, :update]
     resources :tasks
+    resources :working_schedules, only: [:index]
     
     get '/change_locale/:locale', to: 'settings#change_locale', as: :change_locale
 
@@ -106,6 +129,7 @@ Rails.application.routes.draw do
         resources :video_sessions do
           member do
             resource :opentok_session, only: :show
+            post 'cancel'
           end
         end
         resources :appointments
