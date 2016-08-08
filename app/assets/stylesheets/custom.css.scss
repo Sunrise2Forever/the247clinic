@@ -356,11 +356,20 @@ input {
     border-bottom: solid 3px #f7f7f7;
 }
 
-#task_done {
+#task_done, .check-task-done {
   width: 30px;
 }
 
 .task-title, .btn-new-task {
   cursor: pointer;
+  color: #555;
 }
 
+.working-schedule-weekly {
+  width: 30px;
+}
+
+.working-schedules {
+  border: 1px solid #ddd;
+  padding: 15px;
+}

@@ -10,8 +10,9 @@
     </div>
     <div class="tasks">
       <% @tasks.each do |task| %>
-        <div>
-          <h3 class="heading-xs task-title" data-task-id=<%= task.id %>><%= task.title %></h3>
+        <div>          
+          <input type="checkbox" class="check-task-done" data-task-id=<%= task.id %> <%= task.done ? 'hidden' : ''  %>>
+          <span class="heading-xs task-title" data-task-id=<%= task.id %>><%= task.title %></span>          
           <div class="progress progress-u progress-xxs">
             <div style="width: 100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" role="progressbar" class="progress-bar <%= task.done ? 'progress-bar-u' : 'progress-bar-red' %>">
             </div>

@@ -58,6 +58,10 @@
       <div class="panel panel-profile no-bg">
         <div class="panel-heading overflow-h">
           <h2 class="panel-title heading-sm pull-left">Video Session with Patient</h2>
+            <div class="btn-group pull-right" role="group" aria-label="...">
+              <%= button_tag 'Sign-Off', class: "btn btn-default", id: "sign_off", disabled: @video_session.sign_off %>
+              <%= button_tag 'Save & Exit', class: "btn btn-default", id: "save_exit" %> 
+            </div>          
         </div>
         
         <div class="panel-body">
@@ -72,9 +76,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12 center">
                   <div class="btn-group" role="group" aria-label="...">
                     <%= button_tag 'Take Photo', id: "take_photo", class: "btn btn-default" %> 
-                    <%= button_tag 'Meds', class: "btn btn-default" %>
-                    <%= button_tag 'LifeLabs', class: "btn btn-default" %> 
-                    <%= button_tag 'Pharmanent', class: "btn btn-default" %> 
+                    <%= button_tag 'End Session', id: "end_session", class: "btn btn-primary" %>
                     <%= button_tag 'Mute / Pause Session', id: "play_video_stream", class: "btn btn-default" %>
                   </div>
                 </div>
@@ -90,11 +92,19 @@
                   <%= f.submit %>
                 </div>
               <% end %>
+              <div class="row form-group">
+                <div class="col-md-12 col-sm-12 col-xs-12 center">
+                  <div class="btn-group" role="group" aria-label="...">
+                    <%= button_tag 'Meds', class: "btn btn-default" %>
+                    <%= button_tag 'LifeLabs', class: "btn btn-default" %> 
+                    <%= link_to 'Pharmanent', 'https://jay.medinet.ca/cgi-bin/launch.cgi', class: "btn btn-default" %> 
+                    <%= button_tag 'e-Fax', class: "btn btn-default" %> 
+                    <%= button_tag 'Referrals', class: "btn btn-default" %> 
+                  </div>
+                </div>
+              </div>
               <div class="form-group">
                 <%#= button_to 'Schedule Call Back', new_call_back_path(@video_session), method: :get, class: "btn btn-primary form-control" %>
-              </div>
-              <div class="form-group text-center">
-                <%= button_tag 'End Session', id: "end_session", class: "btn btn-primary" %>
               </div>
             </div>
           </div>
@@ -103,8 +113,24 @@
     </div>
     <div class="col-md-4 col-sm-4 col-xs-12">
       <div class="panel panel-profile no-bg">
-        <div class="panel-heading overflow-h">
-          <h2 class="panel-title heading-sm pull-left">Notes</h2>
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+              <h2 class="panel-title heading-sm pull-left">Notes</h2>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+              <div class="dropdown pull-right">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  Export
+                </button>
+                <ul class="dropdown-menu export" aria-labelledby="dropdownMenu1">
+                  <li id="export_print">Print</li>
+                  <li>Fax</li>
+                  <li id="export_file">File</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
         
         <div class="panel-body">
@@ -114,6 +140,17 @@
 
             <%= f.submit 'End Session', id: "finish_video_session", class: "btn btn-primary hidden" %>
           <% end %>
+        </div>
+      </div>
+      <div class="panel panel-profile no-bg">
+        <div class="panel-heading overflow-h">
+          <h2 class="panel-title heading-sm pull-left">Billing</h2>
+        </div>
+        
+        <div class="panel-body">
+          <input class="form-control" id="video_session_diagnosis" placeholder="Add Diagnosis">
+          <span class="video-session-diagnosis"><%= @video_session.diagnosis.to_s.html_safe.presence || 'Diagnosis here' %></span>
+          <span class="pull-right">Billing Code here</span>
         </div>
       </div>
       <%= render 'tasks/tasks' %>

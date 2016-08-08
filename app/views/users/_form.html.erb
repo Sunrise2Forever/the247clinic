@@ -33,11 +33,15 @@
       %>
     </div>
     <div class="form-group">
-      <%= f.label :not_working_days %>
-      <%= f.select :not_working_days, @not_working_days || [],
-                   { include_blank: true },
-                   { multiple: true, class: 'form-control chosen-select', data: {placeholder: 'Choose days of week'}}
-      %>
+      <%= f.label :working_schedule %>
+      <div class="working-schedules">
+        <%= f.fields_for :working_schedules do |working_schedule| %>
+          <%= render 'working_schedule_fields', f: working_schedule %>
+        <% end %>
+        <div class="links center">
+          <%= link_to_add_association 'Add', f, :working_schedules, class: 'btn btn-default' %>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -102,5 +106,6 @@
   $('.input-group').datetimepicker();
   $('.chosen-select').chosen({no_results_text: 'No results matched'});
   init_clinic_section('<%= @user.user_type %>');
+  init_working_schedule_fields();
 <% end %>
 

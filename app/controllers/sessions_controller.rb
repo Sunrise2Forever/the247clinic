@@ -14,7 +14,11 @@ class SessionsController < ApplicationController
           { role: :subscriber, data: { id: current_user.id, user_type: current_user.user_type, name: current_user.name }.to_json}
         current_user.update(presence_token: token)
 
-        redirect_back_or user
+        if user.doctor?
+          redirect_to video_sessions_path
+        else
+          redirect_to root_path
+        end
       else
         message  = "Account not activated. "
         message += "Check your email for the activation link."

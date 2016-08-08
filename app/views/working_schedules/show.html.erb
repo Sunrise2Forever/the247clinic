@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @working_schedule.user %>
+</p>
+
+<p>
+  <strong>Scheduled day of week:</strong>
+  <%= @working_schedule.scheduled_day_of_week %>
+</p>
+
+<p>
+  <strong>Scheduled date:</strong>
+  <%= @working_schedule.scheduled_date %>
+</p>
+
+<p>
+  <strong>Start time:</strong>
+  <%= @working_schedule.start_time %>
+</p>
+
+<p>
+  <strong>End time:</strong>
+  <%= @working_schedule.end_time %>
+</p>
+
+<p>
+  <strong>Weekly:</strong>
+  <%= @working_schedule.weekly %>
+</p>
+
+<%= link_to 'Edit', edit_working_schedule_path(@working_schedule) %> |
+<%= link_to 'Back', working_schedules_path %>

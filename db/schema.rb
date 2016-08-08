@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160701033948) do
+ActiveRecord::Schema.define(version: 20160709033703) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -174,6 +174,21 @@ ActiveRecord::Schema.define(version: 20160701033948) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "call_back_id"
+    t.boolean  "sign_off"
+    t.string   "diagnosis"
   end
+
+  create_table "working_schedules", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "scheduled_day_of_week"
+    t.date     "scheduled_date"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.boolean  "weekly"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "working_schedules", ["user_id"], name: "index_working_schedules_on_user_id"
 
 end

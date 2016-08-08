@@ -94,7 +94,7 @@ function init_video_session(current_user_id, current_user_name, video_session_id
         if (currentUser.id == video_session_user_id) {
           window.location.href = "/video_sessions/" + video_session_id + "/edit/feedback";
         } else {
-          window.location.href = "/video_sessions/" + video_session_id + "/edit/notes";
+          //window.location.href = "/video_sessions/" + video_session_id + "/edit/notes";
         }        
       }
     }
@@ -227,6 +227,88 @@ function init_video_session(current_user_id, current_user_name, video_session_id
 
   $('#end_session').click(function (e) {
     $('#finish_video_session').trigger('click');
+  });
+
+  $('#sign_off').click(function (e) {
+    $.ajax({
+      type: "PATCH",
+      url: '/video_sessions/' + video_session_id + '/update/sign_off'
+    }).done(function (data) {
+      $('#sign_off').attr('disabled', true);
+    }).fail(function(error) {
+    });
+  });
+
+  $('#save_exit').click(function (e) {
+    if (confirm('Are you sure?')) {
+      $.ajax({
+        type: "PATCH",
+        url: '/video_sessions/' + video_session_id + '/update/save',
+        data: {
+          video_session: { 
+            notes: $('#video_session_notes').val(), 
+            diagnosis: $('#video_session_diagnosis').val()
+          }
+        }
+      }).done(function (data) {
+        close_video_session();
+        notify_current_user_status('present', null);
+        window.location.href = '/video_sessions';
+      }).fail(function(error) {
+      });
+    }
+  });
+
+  $('#video_session_notes').wysihtml5({toolbar: false});
+
+  $('#export_print').click(function (e) {
+    $.ajax({
+      type: "PATCH",
+      url: '/video_sessions/' + video_session_id + '/update/save',
+      data: {
+        video_session: { 
+          notes: $('#video_session_notes').val(), 
+          diagnosis: $('#video_session_diagnosis').val()
+        }
+      }
+    }).done(function (data) {
+      window.location.href = '/video_sessions/' + video_session_id + '/export.pdf';
+    }).fail(function(error) {
+    });
+  });
+
+  $('#export_file').click(function (e) {
+    $.ajax({
+      type: "PATCH",
+      url: '/video_sessions/' + video_session_id + '/update/save',
+      data: {
+        video_session: { 
+          notes: $('#video_session_notes').val(), 
+          diagnosis: $('#video_session_diagnosis').val()
+        }
+      }
+    }).done(function (data) {
+      window.location.href = '/video_sessions/' + video_session_id + '/export.rtf';
+    }).fail(function(error) {
+    });
+  });
+
+  $('#video_session_diagnosis').on('keypress', function (e) {
+    if(e.keyCode == 13 && $(this).val()) {
+      $.ajax({
+        type: "PATCH",
+        url: '/video_sessions/' + video_session_id + '/update/add_diagnosis',
+        data: {
+          video_session: { 
+            diagnosis: $(this).val()
+          }
+        }
+      }).done(function (data) {
+        $('#video_session_diagnosis').val('');
+        $('.video-session-diagnosis').html(data.video_session.diagnosis);
+      }).fail(function(error) {
+      });
+    }
   });
 
   if (!is_csr && currentUser.id == video_session_user_id) {

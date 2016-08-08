@@ -20,6 +20,8 @@
 //= require jquery.fileupload
 //= require chosen-jquery
 //= require fullcalendar
+//= require bootstrap-wysihtml5
+//= require cocoon
 //= require revolution-slider/js/jquery.themepunch.tools
 //= require revolution-slider/js/jquery.themepunch.revolution
 //= require unify/app

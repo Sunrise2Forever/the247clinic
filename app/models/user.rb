@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   has_many :favorite_doctors, dependent: :destroy
   has_many :appointments, dependent: :destroy
   has_many :not_working_dates, dependent: :destroy
+  has_many :working_schedules
+  accepts_nested_attributes_for :working_schedules, reject_if: :all_blank, allow_destroy: true
 
   belongs_to :clinic
 
