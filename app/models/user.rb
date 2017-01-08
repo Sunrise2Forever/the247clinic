@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+  validates :mspnum, presence: true, length: { minimum: 9, maximum: 9}, numericality: true
   has_many :video_sessions, dependent: :destroy
   has_many :messages, dependent: :destroy
   has_many :favorite_clinics, dependent: :destroy
