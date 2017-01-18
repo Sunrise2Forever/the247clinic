@@ -5,8 +5,118 @@
       <div class="panel panel-profile no-bg">
         <div class="panel-heading overflow-h">
           <h2 class="panel-title heading-sm pull-left">Scheduled Online Visits</h2>
+          
+          <%#= button_to "Add", action: "add" %>
           <%= link_to 'Working Schedule', working_schedules_path, class: 'btn btn-default pull-right' %>
+          <button class="glyphicon glyphicon-plus" id="addBtn"></button>
         </div>
+
+        <!--    Add form     -->
+        <div id="contactdiv">
+          <form class="addform" action="#" id="contact">
+            <div class="addform_title">
+              <h3>Add Information</h3>
+            </div>
+            <hr/>
+            <div class="first">
+              <div class="first_left">
+                <div class="first_l1">
+                  <label>First Name(*): </label>
+                  <input type="text" id="fname" placeholder="First Name" required />
+                </div>
+                
+                <div class="first_l2">
+                  <label>Email(*): </label>
+                  <input type="email" id="addemail" placeholder="Email" required />
+                </div>
+
+                <div class="first_l3">
+                  <label>Phone(*): </label>
+                  <input type="text" id="addphone" placeholder="Phone Number" required />
+                  
+                </div>
+              </div>
+
+              <div class="first_right">
+                <div class="first_r1">
+                  <label>Last Name(*): </label>
+                  <input type="text" id="lname" placeholder="Last Name" required /> 
+                  
+                </div>
+              
+
+                <div class="first_r2">
+                  <label>PHN(*): </label>
+                  <input type="text" id="addphn" placeholder="PHN" required />
+                    
+                </div>
+              </div>
+            </div>
+
+            <div class="clear"></div> 
+
+            
+              
+            <div class="second">
+              <div class="second_left">
+                <div class="second_l1">
+                  <label>Type: </label>
+                  <input type="text" id="addtype" placeholder="Type"/>
+                </div>
+
+                <div class="second_l2">
+                  <label>Date(*): </label>
+                  <input type="text" id="adddate" placeholder="Date" required />
+                </div>
+
+                <div class="second_l3">
+                  <label>Duration(*): </label>
+                 <!--  <input type="text" id="addduration" placeholder="Duration" required /> -->
+                  <select id="addduration" class="addduration">
+                    <option>1mins</option>
+                    <option>5mins</option>
+                    <option>10mins</option>
+                  </select>
+
+
+                </div>
+              </div>
+
+              <div class="second_right">
+                <div class="second_r1">
+                  <label>Concern: </label>
+                  <input type="text" id="addconcern" placeholder="Concern" />
+                  
+                </div> 
+
+                <div class="second_r2">
+                  <label>Time(*): </label>
+                  <input type="text" id="addtime" placeholder="Time" required />
+                  
+                </div>
+
+                <div class="second_r3">
+                  <label>Status(*): </label>
+                  <!-- <input type="text" id="addstatus" placeholder="Status" required /> -->
+                  <select id="addstatus" class="addstatus">
+                    <option>Status1</option>
+                    <option>Status2</option>
+                    <option>Status3</option>
+                  </select>
+                  
+                </div>
+              </div>  
+            </div>
+            <div class="clear "></div>    
+
+            <input type="submit" id="send" value="Add"/>
+            <input type="button" id="cancel" value="Cancel"/>
+            <br/>
+          </form>
+      </div>
+
+        <!--      end form           -->
+
 
         <div class="panel-body">
           <div class="col-md-12 col-sm-12 col-xs-12">

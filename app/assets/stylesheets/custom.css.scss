@@ -1,9 +1,18 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "timepicki";
+@import url(https://fonts.googleapis.com/css?family=Fauna+One|Muli);
+//@import url(https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css);
 
 /* mixins, variables, etc. */
 
 $gray-medium-light: #eaeaea;
+
+.clear {
+  clear: both;
+}
+
+
 
 @mixin box_sizing {
   -moz-box-sizing:    border-box;
@@ -372,4 +381,112 @@ input {
 .working-schedules {
   border: 1px solid #ddd;
   padding: 15px;
+}
+
+.addform_title h3 {
+  font-size: 38px;
+  text-align: center;
+  text-shadow: 1px 0px 3px gray;
+}
+
+#contactdiv{
+  display: none;
+  background: rgba(0, 0, 0, 0.498039);
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+.addform{
+  border-radius:2px;
+  padding:20px 30px;
+  box-shadow:0 0 15px;
+  font-size:14px;
+  font-weight:bold;
+  float:left;
+  position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 200;
+    height: 56%;
+    overflow: scroll;
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+
+}
+#contact{
+  width:60%;
+  background-color:white;
+  font-family: 'Fauna One', serif;
+  position: relative;
+  border: 5px solid rgb(90, 158, 181);
+  left: 20%;
+  top: 20%
+
+
+}
+
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:20%; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:20%; opacity:1}
+}
+
+#contactdiv label {
+  width: 36%;
+}
+#fname,
+#addemail,
+#addphone,
+#lname,
+#addphn,
+#addtype,
+#adddate,
+#addconcern,
+#addtime,
+.addduration,
+.addstatus {
+  width:60%;
+  height:35px;
+  margin-top:5px;
+  border:1px solid #999;
+  border-radius:3px;
+  padding:5px;
+}
+#cancel, 
+#send {
+  background-color:#123456;
+  border:1px solid white;
+  font-family: 'Fauna One', serif;
+  font-weight:bold;
+  font-size:18px;
+  color:white;
+  width:49%;
+}
+
+.first_left,
+.first_right,
+.second_left,
+.second_right {
+  width: 48%;
+    float: left;
+
+}
+
+.first_right,
+.second_right  {
+    margin-left: 3.5%;
+}
+
+#addBtn {
+  float: right;
+  right: 1%;
+  height: 33px;
+  width: 27px;
 }

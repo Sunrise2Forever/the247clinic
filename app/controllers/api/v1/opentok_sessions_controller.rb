@@ -28,3 +28,4 @@ class Api::V1::OpentokSessionsController< Api::V1::AuthenticateController
   end
 
 end
+

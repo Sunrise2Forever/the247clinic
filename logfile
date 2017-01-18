@@ -1,0 +1,437 @@
+LOG:  database system was shut down at 2017-01-14 04:56:49 CST
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  autovacuum launcher started
+LOG:  database system is ready to accept connections
+FATAL:  database "clinic_dev" does not exist
+ERROR:  database "clinic_dev" already exists
+STATEMENT:  CREATE DATABASE "clinic_dev" ENCODING = 'unicode'
+ERROR:  database "clinic_dev" already exists
+STATEMENT:  CREATE DATABASE "clinic_dev" ENCODING = 'unicode'
+ERROR:  database "clinic_dev" already exists
+STATEMENT:  CREATE DATABASE "clinic_dev" ENCODING = 'unicode'
+ERROR:  cannot drop schema public because other objects depend on it
+DETAIL:  table schema_migrations depends on schema public
+	table answers depends on schema public
+	table appointments depends on schema public
+	table call_backs depends on schema public
+	table clinics depends on schema public
+	table delayed_jobs depends on schema public
+	table favorite_clinics depends on schema public
+	table favorite_doctors depends on schema public
+	table messages depends on schema public
+	table not_working_dates depends on schema public
+	table online_visits depends on schema public
+	table opentok_sessions depends on schema public
+	table photos depends on schema public
+	table tasks depends on schema public
+	table users depends on schema public
+	table video_sessions depends on schema public
+	table working_schedules depends on schema public
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+STATEMENT:  DROP SCHEMA "public";
+	
+ERROR:  schema "public" already exists
+STATEMENT:  CREATE SCHEMA public;
+	
+	
+	
+ERROR:  database "clinic_dev" already exists
+STATEMENT:  CREATE DATABASE "clinic_dev" ENCODING = 'unicode'
+ERROR:  cannot drop schema public because other objects depend on it
+DETAIL:  table schema_migrations depends on schema public
+	table answers depends on schema public
+	table appointments depends on schema public
+	table call_backs depends on schema public
+	table clinics depends on schema public
+	table delayed_jobs depends on schema public
+	table favorite_clinics depends on schema public
+	table favorite_doctors depends on schema public
+	table messages depends on schema public
+	table not_working_dates depends on schema public
+	table online_visits depends on schema public
+	table opentok_sessions depends on schema public
+	table photos depends on schema public
+	table tasks depends on schema public
+	table users depends on schema public
+	table video_sessions depends on schema public
+	table working_schedules depends on schema public
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+STATEMENT:  DROP SCHEMA "public";
+	
+ERROR:  schema "public" already exists
+STATEMENT:  CREATE SCHEMA public;
+	
+	
+	
+LOG:  database system was interrupted; last known up at 2017-01-14 15:28:41 CST
+LOG:  database system was not properly shut down; automatic recovery in progress
+LOG:  invalid record length at 0/1A70F20: wanted 24, got 0
+LOG:  redo is not required
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  autovacuum launcher started
+LOG:  database system is ready to accept connections
+LOG:  received fast shutdown request
+LOG:  aborting any active transactions
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2017-01-15 03:07:06 CST
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  autovacuum launcher started
+LOG:  database system is ready to accept connections
+FATAL:  role "root" does not exist
+LOG:  received fast shutdown request
+LOG:  aborting any active transactions
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2017-01-15 03:08:29 CST
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+FATAL:  role "root" does not exist
+FATAL:  role "root" does not exist
+FATAL:  role "root" does not exist
+FATAL:  role "postgres" does not exist
+ERROR:  role "root" does not exist
+STATEMENT:  grant all privileges on database clinic_dev to root;
+ERROR:  column "rolcatupdate" does not exist at character 45
+STATEMENT:  SELECT rolname, oid, rolcreatedb, rolsuper, rolcatupdate, rolvaliduntil, rolinherit, rolcreaterole, rolcanlogin, rolconnlimit FROM pg_roles ORDER BY rolname ASC
+ERROR:  column "rolcatupdate" does not exist at character 45
+STATEMENT:  SELECT rolname, oid, rolcreatedb, rolsuper, rolcatupdate, rolvaliduntil, rolinherit, rolcreaterole, rolcanlogin, rolconnlimit FROM pg_roles ORDER BY rolname ASC
+FATAL:  role "postgres" does not exist
+ERROR:  relation "public.working_schedules" does not exist
+STATEMENT:  ALTER TABLE ONLY "public"."working_schedules" DROP CONSTRAINT "fk_rails_1c457cef2a";
+	
+ERROR:  relation "public.opentok_sessions" does not exist
+STATEMENT:  ALTER TABLE ONLY "public"."opentok_sessions" DROP CONSTRAINT "fk_rails_143d831844";
+	
+ERROR:  index "unique_schema_migrations" does not exist
+STATEMENT:  DROP INDEX "public"."unique_schema_migrations";
+	
+ERROR:  index "index_working_schedules_on_user_id" does not exist
+STATEMENT:  DROP INDEX "public"."index_working_schedules_on_user_id";
+	
+ERROR:  index "index_users_on_authentication_token" does not exist
+STATEMENT:  DROP INDEX "public"."index_users_on_authentication_token";
+	
+ERROR:  index "index_opentok_sessions_on_video_session_id" does not exist
+STATEMENT:  DROP INDEX "public"."index_opentok_sessions_on_video_session_id";
+	
+ERROR:  index "delayed_jobs_priority" does not exist
+STATEMENT:  DROP INDEX "public"."delayed_jobs_priority";
+	
+ERROR:  relation "public.working_schedules" does not exist
+STATEMENT:  ALTER TABLE ONLY "public"."working_schedules" DROP CONSTRAINT "working_schedules_pkey";
+	
+ERROR:  relation "public.video_sessions" does not exist
+STATEMENT:  ALTER TABLE ONLY "public"."video_sessions" DROP CONSTRAINT "video_sessions_pkey";
+	
+ERROR:  relation "public.users" does not exist
+STATEMENT:  ALTER TABLE ONLY "public"."users" DROP CONSTRAINT "users_pkey";
+	
+ERROR:  relation "public.tasks" does not exist
+STATEMENT:  ALTER TABLE ONLY "public"."tasks" DROP CONSTRAINT "tasks_pkey";
+	
+ERROR:  relation "public.photos" does not exist
+STATEMENT:  ALTER TABLE ONLY "public"."photos" DROP CONSTRAINT "photos_pkey";
+	
+ERROR:  relation "public.opentok_sessions" does not exist
+STATEMENT:  ALTER TABLE ONLY "public"."opentok_sessions" DROP CONSTRAINT "opentok_sessions_pkey";
+	
+ERROR:  relation "public.online_visits" does not exist
+STATEMENT:  ALTER TABLE ONLY "public"."online_visits" DROP CONSTRAINT "online_visits_pkey";
+	
+ERROR:  relation "public.not_working_dates" does not exist
+STATEMENT:  ALTER TABLE ONLY "public"."not_working_dates" DROP CONSTRAINT "not_working_dates_pkey";
+	
+ERROR:  relation "public.messages" does not exist
+STATEMENT:  ALTER TABLE ONLY "public"."messages" DROP CONSTRAINT "messages_pkey";
+	
+ERROR:  relation "public.favorite_doctors" does not exist
+STATEMENT:  ALTER TABLE ONLY "public"."favorite_doctors" DROP CONSTRAINT "favorite_doctors_pkey";
+	
+ERROR:  relation "public.favorite_clinics" does not exist
+STATEMENT:  ALTER TABLE ONLY "public"."favorite_clinics" DROP CONSTRAINT "favorite_clinics_pkey";
+	
+ERROR:  relation "public.delayed_jobs" does not exist
+STATEMENT:  ALTER TABLE ONLY "public"."delayed_jobs" DROP CONSTRAINT "delayed_jobs_pkey";
+	
+ERROR:  relation "public.clinics" does not exist
+STATEMENT:  ALTER TABLE ONLY "public"."clinics" DROP CONSTRAINT "clinics_pkey";
+	
+ERROR:  relation "public.call_backs" does not exist
+STATEMENT:  ALTER TABLE ONLY "public"."call_backs" DROP CONSTRAINT "call_backs_pkey";
+	
+ERROR:  relation "public.appointments" does not exist
+STATEMENT:  ALTER TABLE ONLY "public"."appointments" DROP CONSTRAINT "appointments_pkey";
+	
+ERROR:  relation "public.answers" does not exist
+STATEMENT:  ALTER TABLE ONLY "public"."answers" DROP CONSTRAINT "answers_pkey";
+	
+ERROR:  relation "public.working_schedules" does not exist
+STATEMENT:  ALTER TABLE "public"."working_schedules" ALTER COLUMN "id" DROP DEFAULT;
+	
+ERROR:  relation "public.video_sessions" does not exist
+STATEMENT:  ALTER TABLE "public"."video_sessions" ALTER COLUMN "id" DROP DEFAULT;
+	
+ERROR:  relation "public.users" does not exist
+STATEMENT:  ALTER TABLE "public"."users" ALTER COLUMN "id" DROP DEFAULT;
+	
+ERROR:  relation "public.tasks" does not exist
+STATEMENT:  ALTER TABLE "public"."tasks" ALTER COLUMN "id" DROP DEFAULT;
+	
+ERROR:  relation "public.photos" does not exist
+STATEMENT:  ALTER TABLE "public"."photos" ALTER COLUMN "id" DROP DEFAULT;
+	
+ERROR:  relation "public.opentok_sessions" does not exist
+STATEMENT:  ALTER TABLE "public"."opentok_sessions" ALTER COLUMN "id" DROP DEFAULT;
+	
+ERROR:  relation "public.online_visits" does not exist
+STATEMENT:  ALTER TABLE "public"."online_visits" ALTER COLUMN "id" DROP DEFAULT;
+	
+ERROR:  relation "public.not_working_dates" does not exist
+STATEMENT:  ALTER TABLE "public"."not_working_dates" ALTER COLUMN "id" DROP DEFAULT;
+	
+ERROR:  relation "public.messages" does not exist
+STATEMENT:  ALTER TABLE "public"."messages" ALTER COLUMN "id" DROP DEFAULT;
+	
+ERROR:  relation "public.favorite_doctors" does not exist
+STATEMENT:  ALTER TABLE "public"."favorite_doctors" ALTER COLUMN "id" DROP DEFAULT;
+	
+ERROR:  relation "public.favorite_clinics" does not exist
+STATEMENT:  ALTER TABLE "public"."favorite_clinics" ALTER COLUMN "id" DROP DEFAULT;
+	
+ERROR:  relation "public.delayed_jobs" does not exist
+STATEMENT:  ALTER TABLE "public"."delayed_jobs" ALTER COLUMN "id" DROP DEFAULT;
+	
+ERROR:  relation "public.clinics" does not exist
+STATEMENT:  ALTER TABLE "public"."clinics" ALTER COLUMN "id" DROP DEFAULT;
+	
+ERROR:  relation "public.call_backs" does not exist
+STATEMENT:  ALTER TABLE "public"."call_backs" ALTER COLUMN "id" DROP DEFAULT;
+	
+ERROR:  relation "public.appointments" does not exist
+STATEMENT:  ALTER TABLE "public"."appointments" ALTER COLUMN "id" DROP DEFAULT;
+	
+ERROR:  relation "public.answers" does not exist
+STATEMENT:  ALTER TABLE "public"."answers" ALTER COLUMN "id" DROP DEFAULT;
+	
+ERROR:  sequence "working_schedules_id_seq" does not exist
+STATEMENT:  DROP SEQUENCE "public"."working_schedules_id_seq";
+	
+ERROR:  table "working_schedules" does not exist
+STATEMENT:  DROP TABLE "public"."working_schedules";
+	
+ERROR:  sequence "video_sessions_id_seq" does not exist
+STATEMENT:  DROP SEQUENCE "public"."video_sessions_id_seq";
+	
+ERROR:  table "video_sessions" does not exist
+STATEMENT:  DROP TABLE "public"."video_sessions";
+	
+ERROR:  sequence "users_id_seq" does not exist
+STATEMENT:  DROP SEQUENCE "public"."users_id_seq";
+	
+ERROR:  table "users" does not exist
+STATEMENT:  DROP TABLE "public"."users";
+	
+ERROR:  sequence "tasks_id_seq" does not exist
+STATEMENT:  DROP SEQUENCE "public"."tasks_id_seq";
+	
+ERROR:  table "tasks" does not exist
+STATEMENT:  DROP TABLE "public"."tasks";
+	
+ERROR:  table "schema_migrations" does not exist
+STATEMENT:  DROP TABLE "public"."schema_migrations";
+	
+ERROR:  sequence "photos_id_seq" does not exist
+STATEMENT:  DROP SEQUENCE "public"."photos_id_seq";
+	
+ERROR:  table "photos" does not exist
+STATEMENT:  DROP TABLE "public"."photos";
+	
+ERROR:  sequence "opentok_sessions_id_seq" does not exist
+STATEMENT:  DROP SEQUENCE "public"."opentok_sessions_id_seq";
+	
+ERROR:  table "opentok_sessions" does not exist
+STATEMENT:  DROP TABLE "public"."opentok_sessions";
+	
+ERROR:  sequence "online_visits_id_seq" does not exist
+STATEMENT:  DROP SEQUENCE "public"."online_visits_id_seq";
+	
+ERROR:  table "online_visits" does not exist
+STATEMENT:  DROP TABLE "public"."online_visits";
+	
+ERROR:  sequence "not_working_dates_id_seq" does not exist
+STATEMENT:  DROP SEQUENCE "public"."not_working_dates_id_seq";
+	
+ERROR:  table "not_working_dates" does not exist
+STATEMENT:  DROP TABLE "public"."not_working_dates";
+	
+ERROR:  sequence "messages_id_seq" does not exist
+STATEMENT:  DROP SEQUENCE "public"."messages_id_seq";
+	
+ERROR:  table "messages" does not exist
+STATEMENT:  DROP TABLE "public"."messages";
+	
+ERROR:  sequence "favorite_doctors_id_seq" does not exist
+STATEMENT:  DROP SEQUENCE "public"."favorite_doctors_id_seq";
+	
+ERROR:  table "favorite_doctors" does not exist
+STATEMENT:  DROP TABLE "public"."favorite_doctors";
+	
+ERROR:  sequence "favorite_clinics_id_seq" does not exist
+STATEMENT:  DROP SEQUENCE "public"."favorite_clinics_id_seq";
+	
+ERROR:  table "favorite_clinics" does not exist
+STATEMENT:  DROP TABLE "public"."favorite_clinics";
+	
+ERROR:  sequence "delayed_jobs_id_seq" does not exist
+STATEMENT:  DROP SEQUENCE "public"."delayed_jobs_id_seq";
+	
+ERROR:  table "delayed_jobs" does not exist
+STATEMENT:  DROP TABLE "public"."delayed_jobs";
+	
+ERROR:  sequence "clinics_id_seq" does not exist
+STATEMENT:  DROP SEQUENCE "public"."clinics_id_seq";
+	
+ERROR:  table "clinics" does not exist
+STATEMENT:  DROP TABLE "public"."clinics";
+	
+ERROR:  sequence "call_backs_id_seq" does not exist
+STATEMENT:  DROP SEQUENCE "public"."call_backs_id_seq";
+	
+ERROR:  table "call_backs" does not exist
+STATEMENT:  DROP TABLE "public"."call_backs";
+	
+ERROR:  sequence "appointments_id_seq" does not exist
+STATEMENT:  DROP SEQUENCE "public"."appointments_id_seq";
+	
+ERROR:  table "appointments" does not exist
+STATEMENT:  DROP TABLE "public"."appointments";
+	
+ERROR:  sequence "answers_id_seq" does not exist
+STATEMENT:  DROP SEQUENCE "public"."answers_id_seq";
+	
+ERROR:  table "answers" does not exist
+STATEMENT:  DROP TABLE "public"."answers";
+	
+ERROR:  column "rolcatupdate" does not exist at character 45
+STATEMENT:  SELECT rolname, oid, rolcreatedb, rolsuper, rolcatupdate, rolvaliduntil, rolinherit, rolcreaterole, rolcanlogin, rolconnlimit FROM pg_roles ORDER BY rolname ASC
+ERROR:  column "rolcatupdate" does not exist at character 45
+STATEMENT:  SELECT rolname, oid, rolcreatedb, rolsuper, rolcatupdate, rolvaliduntil, rolinherit, rolcreaterole, rolcanlogin, rolconnlimit FROM pg_roles ORDER BY rolname ASC
+ERROR:  column "rolcatupdate" does not exist at character 45
+STATEMENT:  SELECT rolname, oid, rolcreatedb, rolsuper, rolcatupdate, rolvaliduntil, rolinherit, rolcreaterole, rolcanlogin, rolconnlimit FROM pg_roles ORDER BY rolname ASC
+FATAL:  role "postgres" does not exist
+FATAL:  role "postgres" does not exist
+LOG:  received fast shutdown request
+LOG:  aborting any active transactions
+FATAL:  terminating connection due to administrator command
+FATAL:  terminating connection due to administrator command
+FATAL:  terminating connection due to administrator command
+FATAL:  terminating connection due to administrator command
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2017-01-15 04:32:17 CST
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  autovacuum launcher started
+LOG:  database system is ready to accept connections
+ERROR:  column "rolcatupdate" does not exist at character 45
+STATEMENT:  SELECT rolname, oid, rolcreatedb, rolsuper, rolcatupdate, rolvaliduntil, rolinherit, rolcreaterole, rolcanlogin, rolconnlimit FROM pg_roles ORDER BY rolname ASC
+ERROR:  column "rolcatupdate" does not exist at character 45
+STATEMENT:  SELECT rolname, oid, rolcreatedb, rolsuper, rolcatupdate, rolvaliduntil, rolinherit, rolcreaterole, rolcanlogin, rolconnlimit FROM pg_roles ORDER BY rolname ASC
+LOG:  received fast shutdown request
+LOG:  aborting any active transactions
+FATAL:  terminating connection due to administrator command
+FATAL:  terminating connection due to administrator command
+FATAL:  terminating connection due to administrator command
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2017-01-16 14:20:06 CST
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  autovacuum launcher started
+LOG:  database system is ready to accept connections
+ERROR:  column "rolcatupdate" does not exist at character 45
+STATEMENT:  SELECT rolname, oid, rolcreatedb, rolsuper, rolcatupdate, rolvaliduntil, rolinherit, rolcreaterole, rolcanlogin, rolconnlimit FROM pg_roles ORDER BY rolname ASC
+LOG:  received fast shutdown request
+LOG:  aborting any active transactions
+FATAL:  terminating connection due to administrator command
+FATAL:  terminating connection due to administrator command
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2017-01-16 14:50:23 CST
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  autovacuum launcher started
+LOG:  database system is ready to accept connections
+FATAL:  role "root" does not exist
+FATAL:  role "root" does not exist
+ERROR:  column "rolcatupdate" does not exist at character 45
+STATEMENT:  SELECT rolname, oid, rolcreatedb, rolsuper, rolcatupdate, rolvaliduntil, rolinherit, rolcreaterole, rolcanlogin, rolconnlimit FROM pg_roles ORDER BY rolname ASC
+FATAL:  role "postgres" does not exist
+FATAL:  role "postgres" does not exist
+FATAL:  database "ddufm6hu7m8hmo" does not exist
+ERROR:  syntax error at or near ")" at character 165
+STATEMENT:  SELECT "appointments".* FROM "appointments" WHERE "appointments"."status" = 'active' AND ((doctor_id IS NULL AND clinic_id IS NULL) OR doctor_id = 1 OR clinic_id = )
+ERROR:  syntax error at or near ")" at character 165
+STATEMENT:  SELECT "appointments".* FROM "appointments" WHERE "appointments"."status" = 'active' AND ((doctor_id IS NULL AND clinic_id IS NULL) OR doctor_id = 1 OR clinic_id = )
+ERROR:  syntax error at or near ")" at character 165
+STATEMENT:  SELECT "appointments".* FROM "appointments" WHERE "appointments"."status" = 'active' AND ((doctor_id IS NULL AND clinic_id IS NULL) OR doctor_id = 1 OR clinic_id = )
+FATAL:  database "ddufm6hu7m8hmo" does not exist
+FATAL:  database "ddufm6hu7m8hmo" does not exist
+FATAL:  database "ddufm6hu7m8hmo" does not exist
+FATAL:  database "ddufm6hu7m8hmo" does not exist
+FATAL:  database "ddufm6hu7m8hmo" does not exist
+ERROR:  syntax error at or near ")" at character 165
+STATEMENT:  SELECT "appointments".* FROM "appointments" WHERE "appointments"."status" = 'active' AND ((doctor_id IS NULL AND clinic_id IS NULL) OR doctor_id = 1 OR clinic_id = )
+LOG:  received fast shutdown request
+LOG:  aborting any active transactions
+FATAL:  terminating connection due to administrator command
+FATAL:  terminating connection due to administrator command
+FATAL:  terminating connection due to administrator command
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2017-01-17 19:07:25 CST
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  autovacuum launcher started
+LOG:  database system is ready to accept connections
+LOG:  received fast shutdown request
+LOG:  aborting any active transactions
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2017-01-17 19:16:34 CST
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  autovacuum launcher started
+LOG:  database system is ready to accept connections
+LOG:  received fast shutdown request
+LOG:  aborting any active transactions
+FATAL:  terminating connection due to administrator command
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2017-01-17 21:54:17 CST
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  autovacuum launcher started
+LOG:  database system is ready to accept connections
+LOG:  received fast shutdown request
+LOG:  aborting any active transactions
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2017-01-17 21:56:57 CST
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  autovacuum launcher started
+LOG:  database system is ready to accept connections
+LOG:  received fast shutdown request
+LOG:  aborting any active transactions
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2017-01-17 22:00:58 CST
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  autovacuum launcher started
+LOG:  database system is ready to accept connections

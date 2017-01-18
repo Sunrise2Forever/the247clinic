@@ -41,15 +41,18 @@ function renderOnlineVisitCalendar(current_user_id, current_user_type, online_vi
 
   $('.online-visit-calendar').fullCalendar({
     header: {
-      left: 'prev,next today',
+      left: 'prev,next, add, today',
       center: 'title',
       right: 'month,agendaWeek,agendaDay'
     },
     buttonIcons: { // note the space at the beginning
       prev: ' glyphicon glyphicon-chevron-left',
-      next: ' glyphicon glyphicon-chevron-right'
+
+      next: ' glyphicon glyphicon-chevron-right',
+      add: ' glyphicon glyphicon-plus-sign'
     },
     buttonText: {
+      //prev: 'prev',
       today: 'today',
       month: 'month',
       week: 'week',

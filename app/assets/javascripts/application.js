@@ -17,6 +17,9 @@
 //= require moment
 //= require bootstrap-datetimepicker
 //= require jquery.ui.widget
+//= require jquery-ui
+//= require jquery.timepicker.js
+//= require timepicki.js
 //= require jquery.fileupload
 //= require chosen-jquery
 //= require fullcalendar

@@ -38,4 +38,8 @@ class Appointment < ActiveRecord::Base
     end
   end
 
+  def send_appointment_email_to_doctor
+    AppointmentMailer.appointment_email_to_doctor(self).deliver_now
+  end
+
 end

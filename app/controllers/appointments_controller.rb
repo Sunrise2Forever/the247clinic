@@ -45,10 +45,26 @@ class AppointmentsController < AuthenticateController
         render :new
         return
       end
+      user = User.create_user(params)
+      unless user
+        flash[:danger] = "Something error when creating a user"
+        render :new
+        return
+      end
+      user.send_auto_generated_email
+      user.activate
+      log_in user
+      opentok = OpenTok::OpenTok.new ENV['OPENTOK_API_KEY'], ENV['OPENTOK_SECRET']
+      token = opentok.generate_token ENV['OPENTOK_PRESENCE_SESSION_ID'], 
+        { role: :subscriber, data: { id: current_user.id, user_type: current_user.user_type, name: current_user.name }.to_json}
+      current_user.update(presence_token: token)
+      @appointment.user = user
     end
     @appointment.status = :active
     if @appointment.save
       flash[:success] = 'Appointment was successfully created.'
+      @appointment.send_appointment_email_to_doctor
+      # @appointment.send_appointment_email_to_user
       if current_user
         redirect_to appointments_path
       else

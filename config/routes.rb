@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   
     get 'users/new'
 
-  
+    #get "project/new_release" => 'project#new_release', :as => new_release
   
     get 'frequently_asked_questions' => 'static_pages#frequently_asked_questions'
   

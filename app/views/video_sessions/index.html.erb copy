@@ -1,0 +1,247 @@
+<% provide(:title, "Dashboard") %>
+<% if current_user.doctor? %>
+  <div class="row">
+    <div class="col-md-8 col-sm-8 col-xs-12">
+      <div class="panel panel-profile no-bg">
+        <div class="panel-heading overflow-h">
+          <h2 class="panel-title heading-sm pull-left">Scheduled Online Visits</h2>
+          
+          <%#= button_to "Add", action: "add" %>
+          <%= link_to 'Working Schedule', working_schedules_path, class: 'btn btn-default pull-right' %>
+          <button class="glyphicon glyphicon-plus" id="addBtn"></button>
+        </div>
+
+        <!--    Add form     -->
+        <div id="contactdiv">
+          <form class="addform" action="#" id="contact">
+            <div class="addform_title">
+              <h3>Add Information</h3>
+            </div>
+            <hr/>
+            <div class="first">
+              <div class="first_left">
+                <div class="first_l1">
+                  <label>First Name(*): </label>
+                  <input type="text" id="fname" placeholder="First Name" required />
+                </div>
+                
+                <div class="first_l2">
+                  <label>Email(*): </label>
+                  <input type="email" id="addemail" placeholder="Email" required />
+                </div>
+
+                <div class="first_l3">
+                  <label>Phone(*): </label>
+                  <input type="text" id="addphone" placeholder="Phone Number" required />
+                  
+                </div>
+              </div>
+
+              <div class="first_right">
+                <div class="first_r1">
+                  <label>Last Name(*): </label>
+                  <input type="text" id="lname" placeholder="Last Name" required /> 
+                  
+                </div>
+              
+
+                <div class="first_r2">
+                  <label>PHN(*): </label>
+                  <input type="text" id="addphn" placeholder="PHN" required />
+                    
+                </div>
+              </div>
+            </div>
+
+            <div class="clear"></div> 
+
+            
+              
+            <div class="second">
+              <div class="second_left">
+                <div class="second_l1">
+                  <label>Type: </label>
+                  <input type="text" id="addtype" placeholder="Type"/>
+                </div>
+
+                <div class="second_l2 field form-group">
+                  <label>Date(*): </label>
+                  <%= f.datetime_select :start_time %>
+                  <input type="text" id="adddate" placeholder="Date" required />
+                </div>
+
+<!--   <div class="field form-group">
+    <%= f.label :start_time %><br>
+    <%= f.datetime_select :start_time %>
+  </div> -->
+                <div class="second_l3">
+                  <label>Duration(*): </label>
+                  <input type="text" id="addduration" placeholder="Duration" required />
+                </div>
+              </div>
+
+              <div class="second_right">
+                <div class="second_r1">
+                  <label>Concern: </label>
+                  <input type="text" id="addconcern" placeholder="Concern" />
+                  
+                </div> 
+
+                <div class="second_r2">
+                  <label>Time(*): </label>
+                  <input type="text" id="addtime" placeholder="Time" required />
+                  
+                </div>
+
+                <div class="second_r3">
+                  <label>Status(*): </label>
+                  <input type="text" id="addstatus" placeholder="Status" required />
+                  
+                </div>
+              </div>  
+            </div>
+            <div class="clear "></div>    
+
+            <input type="submit" id="send" value="Add"/>
+            <input type="button" id="cancel" value="Cancel"/>
+            <br/>
+          </form>
+      </div>
+
+        <!--      end form           -->
+
+
+        <div class="panel-body">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="form-group">
+              <div class="online-visit-calendar">&nbsp;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="panel panel-profile no-bg">
+        <div class="panel-heading overflow-h">
+          <h2 class="panel-title heading-sm pull-left">Scheduled Visits</h2>
+        </div>
+        <div class="row panel-body">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <% if @video_sessions.count > 0 %>
+              <table class="table">
+                <tr>
+                  <th>No</th>
+                  <th>Created Time</th>
+                  <th>User</th>
+                </tr>
+                <% @video_sessions.each do |video_session| %>
+                  <tr>
+                    <td><%= video_session.id %></td>
+                    <td><%= video_session.created_at.strftime("%B %-d, %Y %I:%M %P") %></td>
+                    <td><%= link_to video_session.user.try(:name), video_session_path(video_session) %></td>
+                  </tr>
+                <% end %>
+              </table>
+              <div class="text-center"><%= will_paginate @video_sessions, param_name: :scheduled_visit_page %></div>
+            <% else %>
+              <div class="text-center">No Scheduled Visits.</div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <%= render 'tasks/tasks' %>
+
+      <%= javascript_tag do %>
+        init_dashboard();
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <% if current_user.csr? %>
+    <div class="panel panel-profile no-bg">
+      <div class="panel-heading overflow-h">
+        <h2 class="panel-title heading-sm pull-left">Scheduled Visits</h2>
+      </div>
+      <div class="row panel-body">
+        <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
+          <% if @video_sessions.count > 0 %>
+            <table class="table">
+              <tr>
+                <th>No</th>
+                <th>Created Time</th>
+                <th>User</th>
+                <th></th>
+              </tr>
+              <% @video_sessions.each do |video_session| %>
+                <tr>
+                  <td><%= video_session.id %></td>
+                  <td><%= video_session.created_at.strftime("%B %-d, %Y %I:%M %P") %></td>
+                  <td><%= video_session.user.try(:name) %></td>
+                  <td><%= link_to 'View', video_session_path(video_session) %></td>
+                </tr>
+              <% end %>
+            </table>
+            <div class="text-center"><%= will_paginate @video_sessions, param_name: :scheduled_visit_page %></div>
+          <% else %>
+            <div class="text-center">No Scheduled Visits.</div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <%= javascript_tag do %>
+      init_dashboard();
+    <% end %>
+  <% else %>
+    <% if @video_sessions.count > 0 %>
+      <div class="panel panel-profile no-bg">
+        <div class="panel-heading overflow-h">
+          <h2 class="panel-title heading-sm pull-left">Waiting Visit</h2>
+        </div>
+
+        <div class="row panel-body">
+          <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
+            <table class="table">
+              <tr>
+                <th>No</th>
+                <th>Created Time</th>
+                <th>User</th>
+                <th></th>
+              </tr>
+              <% @video_sessions.each do |video_session| %>
+                <tr>
+                  <td><%= video_session.id %></td>
+                  <td><%= video_session.created_at.strftime("%B %-d, %Y %I:%M %P") %></td>
+                  <td><%= video_session.user.try(:name) %></td>
+                  <td><%= link_to 'View', video_session_path(video_session) %></td>
+                </tr>
+              <% end %>
+            </table>
+            <div class="text-center"><%= will_paginate @video_sessions, param_name: :scheduled_visit_page %></div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div class="panel panel-profile no-bg">
+    <div class="panel-heading overflow-h">
+      <h2 class="panel-title heading-sm pull-left">Scheduled Online Visits</h2>
+    </div>
+
+    <div class="row panel-body">
+      <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
+        <div class="form-group">
+          <div class="online-visit-calendar">&nbsp;</div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= render 'online_visit' %>
+<%= javascript_tag do %>
+  renderOnlineVisitCalendar(<%= current_user.id %>, "<%= current_user.user_type %>", <%= raw @online_visits.to_json %>, <%= raw @call_backs.to_json %>);
+<% end %>
+

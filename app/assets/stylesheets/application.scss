@@ -16,6 +16,12 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
 @import 'bootstrap-datetimepicker';
+@import 'jquery-ui';
+@import 'jquery-ui/theme';
+@import 'jquery-ui/core';
+@import 'jquery-ui/datepicker';
+@import 'jquery.timepicker';
+
 @import 'chosen';
 @import 'custom';
 @import 'video_sessions';

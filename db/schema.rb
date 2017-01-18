@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20160709033703) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
     t.text     "message"
@@ -64,7 +67,7 @@ ActiveRecord::Schema.define(version: 20160709033703) do
     t.datetime "updated_at"
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "favorite_clinics", force: :cascade do |t|
     t.integer  "user_id"
@@ -112,7 +115,7 @@ ActiveRecord::Schema.define(version: 20160709033703) do
     t.datetime "updated_at",       null: false
   end
 
-  add_index "opentok_sessions", ["video_session_id"], name: "index_opentok_sessions_on_video_session_id"
+  add_index "opentok_sessions", ["video_session_id"], name: "index_opentok_sessions_on_video_session_id", using: :btree
 
   create_table "photos", force: :cascade do |t|
     t.integer  "video_session_id"
@@ -160,7 +163,7 @@ ActiveRecord::Schema.define(version: 20160709033703) do
     t.string   "presence_token"
   end
 
-  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token"
+  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
 
   create_table "video_sessions", force: :cascade do |t|
     t.integer  "user_id"
@@ -189,6 +192,8 @@ ActiveRecord::Schema.define(version: 20160709033703) do
     t.datetime "updated_at",            null: false
   end
 
-  add_index "working_schedules", ["user_id"], name: "index_working_schedules_on_user_id"
+  add_index "working_schedules", ["user_id"], name: "index_working_schedules_on_user_id", using: :btree
 
+  add_foreign_key "opentok_sessions", "video_sessions"
+  add_foreign_key "working_schedules", "users"
 end

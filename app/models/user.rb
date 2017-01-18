@@ -105,6 +105,10 @@ class User < ActiveRecord::Base
   def send_activation_email
     UserMailer.account_activation(self).deliver_now
   end
+
+  def send_auto_generated_email
+    UserMailer.account_auto_create(self).deliver_now
+  end
   
     # Sets the password reset attributes.
   def create_reset_digest
@@ -123,6 +127,19 @@ class User < ActiveRecord::Base
     reset_sent_at < 2.hours.ago
   end
   
+  def set_default_params_for_auto_generate
+    # self.password = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{self.name}--")[10, 16]
+    # self.mspnum = "987654321"
+  end
+
+  def self.create_user(params)
+    user = User.new(email: params[:appointment][:email], name: params[:appointment][:user_name])
+    # set_default_params_for_auto_generate
+    user.password = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{self.name}--")[10, 16]
+    user.mspnum = "987654321"
+    user.save ? user : false
+  end
+
   private
 
     # Converts email to all lower-case.
