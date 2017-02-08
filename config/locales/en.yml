@@ -249,6 +249,7 @@ en:
     community: "Meet Our Folks"
     thuan: "Thuan Pham"
     contact: "Contact Us"
+    before_footer: "Before Footer"
   form_header:
     login: 'Login to your account'
     signup: 'Register a new account'

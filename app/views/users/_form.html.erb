@@ -14,13 +14,13 @@
       <%= @user.user_type_string %>
     </div>
   <% else %>
-    <!--
+    <!-- 
     <%= f.label :user_type %>
     <%= f.select :user_type, [], {}, {class: 'form-control'} do %>
       <%= content_tag(:option, 'Patient', value: 'patient') %>
       <%= content_tag(:option, 'Doctor', value: 'doctor', selected: @user.doctor?) %>
     <% end %>
-    -->
+     -->
   <% end %>
 
   <div class="select_clinic_section">
@@ -44,7 +44,7 @@
       </div>
     </div>
   </div>
-
+  
   <%= f.label :name %>
   <%= f.text_field :name, class: 'form-control' %>
 
