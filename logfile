@@ -39,3 +39,7 @@ STATEMENT:  CREATE DATABASE profitability_tool_development
 ERROR:  syntax error at or near "GRANT" at character 77
 STATEMENT:  GRANT ALL PRIVILEGES ON DATABASE profitability_tool_development to chenzhen
 	GRANT ALL PRIVILEGES ON DATABASE profitability_tool_development to chenzhen;
+LOG:  received smart shutdown request
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
