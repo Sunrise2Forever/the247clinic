@@ -10,113 +10,135 @@
           <%= link_to 'Working Schedule', working_schedules_path, class: 'btn btn-default pull-right' %>
           <button class="glyphicon glyphicon-plus" id="addBtn"></button>
         </div>
-
+        
         <!--    Add form     -->
-        <div id="contactdiv">
-          <form class="addform" action="#" id="contact">
-            <div class="addform_title">
-              <h3>Add Information</h3>
-            </div>
-            <hr/>
-            <div class="first">
-              <div class="first_left">
-                <div class="first_l1">
-                  <label>First Name(*): </label>
-                  <input type="text" id="fname" placeholder="First Name" required />
-                </div>
+        <%= content_tag :div, :id=>'contactdiv' do %>
+          <%= form_tag({controller: "video_sessions"}, method: "post", class: "addform", id: "contact") do -%>
+          <!-- <form class="addform" action="#" id="contact"> -->
+            <%= content_tag :div, :class=>'addform_title' do 
+              content_tag :h3, "Add Information"
+              
+            end %>
+            <%= content_tag :hr %>
+            <%= content_tag :div, :class=>'first' do %>
+              <%= content_tag :div, :class=>'first_left' do %>
+                <%= content_tag :div, :class=>'first_l1' do %>
+                  <%= label_tag 'fname', 'First Name(*): ' %>
+                  <%= text_field_tag 'fname', nil, placeholder: 'First Name', type: 'text', required: true %>
+                  <!-- <label>First Name(*): </label> -->
+                  <!-- <input type="text" id="fname" placeholder="First Name" required /> -->
+                <% end %>
                 
-                <div class="first_l2">
-                  <label>Email(*): </label>
-                  <input type="email" id="addemail" placeholder="Email" required />
-                </div>
+                <%= content_tag :div, :class=>'first_l2' do %>
+                  <%= label_tag 'addemail', 'Email(*): ' %>
+                  <%= text_field_tag 'addemail', nil, placeholder: 'Email', type: 'email', required: true %>
+                  <!-- <label>Email(*): </label>
+                  <input type="email" id="addemail" placeholder="Email" required /> -->
+                <% end %>
 
-                <div class="first_l3">
-                  <label>Phone(*): </label>
-                  <input type="text" id="addphone" placeholder="Phone Number" required />
-                  
-                </div>
-              </div>
+                <%= content_tag :div, :class=>'first_l3' do %>
+                  <%= label_tag 'addphone', 'Phone(*): ' %>
+                  <%= text_field_tag 'addphone', nil, placeholder: 'Phone Number', type: 'number', required: true %>
+                  <!-- <label>Phone(*): </label>
+                  <input type="text" id="addphone" placeholder="Phone Number" required /> -->
+                <% end %>
+              <% end %>
 
-              <div class="first_right">
-                <div class="first_r1">
-                  <label>Last Name(*): </label>
-                  <input type="text" id="lname" placeholder="Last Name" required /> 
-                  
-                </div>
+              <%= content_tag :div, :class=>'first_right' do %>
+                <%= content_tag :div, :class=>'first_r1' do %>
+                  <%= label_tag 'lname', 'Last Name(*): ' %>
+                  <%= text_field_tag 'lname', nil, placeholder: 'Last Name', type: 'text', required: true %>
+                  <!-- <label>Last Name(*): </label>
+                  <input type="text" id="lname" placeholder="Last Name" required />  -->
+                <% end %>
               
 
-                <div class="first_r2">
-                  <label>PHN(*): </label>
-                  <input type="text" id="addphn" placeholder="PHN" required />
-                    
-                </div>
-              </div>
-            </div>
-
-            <div class="clear"></div> 
-
+                <%= content_tag :div, :class=>'first_r2' do %>
+                  <%= label_tag 'addphn', 'PHN(*): ' %>
+                  <%= text_field_tag 'addphn', nil, placeholder: 'PHN', type: 'number', required: true %>
+                  <!-- <label>PHN(*): </label>
+                  <input type="text" id="addphn" placeholder="PHN" required /> -->
+                <% end %>
+              <% end %>
             
+            <% end %>
+
+            <%= content_tag :div, nil, :class=>'clear' %>
               
-            <div class="second">
-              <div class="second_left">
-                <div class="second_l1">
-                  <label>Type: </label>
-                  <input type="text" id="addtype" placeholder="Type"/>
-                </div>
+            <%= content_tag :div, :class=>'second' do %>
+              <%= content_tag :div, :class=>'second_left' do %>
+                <%= content_tag :div, :class=>'second_l1' do %>
+                  <%= label_tag 'addtype', 'Type: ' %>
+                  <%= text_field_tag 'addtype', nil, placeholder: 'Type', type: 'text' %>
+                  <!-- <label>Type: </label>
+                  <input type="text" id="addtype" placeholder="Type"/> -->
+                <% end %>
 
-                <div class="second_l2">
-                  <label>Date(*): </label>
-                  <input type="text" id="adddate" placeholder="Date" required />
-                </div>
+                <%= content_tag :div, :class=>'second_l2' do %>
+                  <%= label_tag 'adddate', 'Date(*): ' %>
+                  <%= text_field_tag 'adddate', nil, placeholder: 'Date', type: 'text', required: true %>
+                  <!-- <label>Date(*): </label>
+                  <input type="text" id="adddate" placeholder="Date" required /> -->
+                <% end %>
 
-                <div class="second_l3">
-                  <label>Duration(*): </label>
+                <%= content_tag :div, :class=>'second_l3' do %>
+                  <%= label_tag 'addduration', 'Duration(*): ' %>
+                  <!-- <label>Duration(*): </label> -->
                  <!--  <input type="text" id="addduration" placeholder="Duration" required /> -->
-                  <select id="addduration" class="addduration">
+                  <%=  select_tag("addduration", options_for_select([['1mins', '1'], ['5mins', '2'], ['10mins', '3']], '1'), id: "addduration") %>
+
+                  <!-- 
+                  <select id="addduration">
                     <option>1mins</option>
                     <option>5mins</option>
                     <option>10mins</option>
-                  </select>
+                  </select> -->
 
+                <% end %>
+              <% end %>
 
-                </div>
-              </div>
+              <%= content_tag :div, :class=>'second_right' do %>
+                <%= content_tag :div, :class=>'second_r1' do %>
+                  <%= label_tag 'addconcern', 'Concern: ' %>
+                  <%= text_field_tag 'addconcern', nil, placeholder: 'Concern', type: 'text' %>
+                  <!-- <label>Concern: </label>
+                  <input type="text" id="addconcern" placeholder="Concern" /> -->
+                <% end %>
 
-              <div class="second_right">
-                <div class="second_r1">
-                  <label>Concern: </label>
-                  <input type="text" id="addconcern" placeholder="Concern" />
-                  
-                </div> 
+                <%= content_tag :div, :class=>'second_r2' do %>
+                  <%= label_tag 'addtime', 'Time(*): ' %>
+                  <%= text_field_tag 'addtime', nil, placeholder: 'Time', type: 'text', required: true %>
+                  <!-- <label>Time(*): </label>
+                  <input type="text" id="addtime" placeholder="Time" required /> -->
+                <% end %>
 
-                <div class="second_r2">
-                  <label>Time(*): </label>
-                  <input type="text" id="addtime" placeholder="Time" required />
-                  
-                </div>
-
-                <div class="second_r3">
-                  <label>Status(*): </label>
+                <%= content_tag :div, :class=>'second_r3' do %>
+                  <%= label_tag 'addstatus', 'Status(*): ' %>
+                  <!-- <label>Status(*): </label> -->
                   <!-- <input type="text" id="addstatus" placeholder="Status" required /> -->
-                  <select id="addstatus" class="addstatus">
+                  <%=  select_tag("addstatus", options_for_select([['Present', '1'], ['Online', '2'], ['Offline', '3']], '1'), id: "addstatus") %>
+                  <!-- <select id="addstatus">
                     <option>Status1</option>
                     <option>Status2</option>
                     <option>Status3</option>
                   </select>
-                  
-                </div>
-              </div>  
-            </div>
-            <div class="clear "></div>    
+                   -->
+                <% end %>
+              <% end %> 
+            <% end %>
+            
+            <%= content_tag :div, nil, :class=>'clear' %>
 
-            <input type="submit" id="send" value="Add"/>
-            <input type="button" id="cancel" value="Cancel"/>
-            <br/>
-          </form>
-      </div>
+            <%= submit_tag 'Add', id: 'send' %>
+            <%= button_tag 'Cancel', id: 'cancel', type: 'button' %>
+            <!-- <input type="submit" id="send" value="Add"/> -->
+            <!-- <input type="button" id="cancel" value="Cancel"/> -->
+            <%= tag(:br) %>
+          <!-- </form> -->
+          <% end -%>
+        <% end %>
 
         <!--      end form           -->
-
 
         <div class="panel-body">
           <div class="col-md-12 col-sm-12 col-xs-12">

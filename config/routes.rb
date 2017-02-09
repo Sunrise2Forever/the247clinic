@@ -15,10 +15,12 @@ Rails.application.routes.draw do
   
     get 'frequently_asked_questions' => 'static_pages#frequently_asked_questions'
   
-  
+
     get 'about' =>  'static_pages#about'
     get 'jobs' =>  'static_pages#jobs'
     get 'community' =>  'static_pages#community'
+    get 'before_footer' => 'static_pages#before_footer'
+    
     
     
     #//----------------------------------------JOBS------------//

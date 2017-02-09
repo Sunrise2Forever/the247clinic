@@ -24,8 +24,8 @@ default: &default
   adapter: postgresql
   encoding: unicode
   database: clinic_dev
-  username: chenzhen
-  password: root
+  username: bjorn
+  password: bjornlinder
   host: localhost
   pool: 5
 

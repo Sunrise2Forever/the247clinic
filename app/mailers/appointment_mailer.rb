@@ -5,12 +5,12 @@ class AppointmentMailer < ApplicationMailer
   #
   #   en.user_mailer.account_activation.subject
   #
-  def appointment_email_to_doctor(appointment) do
+  def appointment_email_to_doctor(appointment)
     @appointment = appointment
     mail to: appointment.doctor.email, subject: "You have received the appointment"
   end
 
-  def appointment_email_to_user(appointment) do
+  def appointment_email_to_user(appointment)
     @appointment = appointment
     mail to: appointment.user.email, subject: "You have created a appointment"
   end
